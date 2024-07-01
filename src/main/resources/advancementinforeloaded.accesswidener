@@ -1,0 +1,3 @@
+accessWidener v2 named
+accessible method net/minecraft/client/gui/screen/advancement/AdvancementsScreen drawAdvancementTree (Lnet/minecraft/client/gui/DrawContext;IIII)V
+accessible method net/minecraft/client/gui/screen/advancement/AdvancementsScreen drawWidgetTooltip (Lnet/minecraft/client/gui/DrawContext;IIII)V

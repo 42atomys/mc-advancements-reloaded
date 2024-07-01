@@ -1,4 +1,5 @@
 pluginManagement {
+<<<<<<< HEAD
     repositories {
         maven { url "https://maven.fabricmc.net/" } // Fabric Maven Repository
         maven { url "https://maven.architectury.dev/" } // Architectury Maven Repository
@@ -14,3 +15,14 @@ include("fabric") // Fabric directory
 include("neoforge") // NeoForge directory
 include("forge") // Forge directory
 rootProject.name = 'advancements_reloaded'
+=======
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+>>>>>>> 1e1cae6 (chore: initial release)

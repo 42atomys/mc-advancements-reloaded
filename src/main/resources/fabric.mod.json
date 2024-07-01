@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"id": "advancementinforeloaded",
+	"version": "0.1.0-1.21",
+	"name": "AdvancementInfo Reloaded",
+	"description": "Make it easier to see which advancements you have and what's missing.",
+  "authors": ["@42atomys"],
+  "contributors": ["@42atomys"],
+  "contact": {
+    "homepage": "https://github.com/42atomys/fabric-advancementinfo-reloaded",
+    "sources": "https://github.com/42atomys/fabric-advancementinfo-reloaded",
+    "issues": "https://github.com/42atomys/fabric-advancementinfo-reloaded/issues"
+  },
+  "license": "MIT",
+	"icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+		"main": [
+			"codes.atomys.advancementinforeloaded.AdvancementInfoReloaded"
+		],
+		"client": [
+			"codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient"
+		]
+	},
+	"mixins": [
+		"advancementinforeloaded.mixins.json",
+		{
+			"config": "advancementinforeloaded.client.mixins.json",
+			"environment": "client"
+		}
+	],
+  "accessWidenerPath": "advancementinforeloaded.accesswidener",
+	"depends": {
+		"minecraft": "~1.21",
+		"fabricloader": ">=0.15.11",
+		"fabric-api": "*",
+		"java": ">=21",
+    "owo-lib": "*"
+	},
+  "recommends": {
+    "modmenu" : ">=2.0.0"
+  }
+}

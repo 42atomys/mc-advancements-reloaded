@@ -1,0 +1,117 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+name: Detect upgrade each day
+
+permissions:
+  issues: write
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  detect-upgrade:
+    name: Detect upgrade
+    runs-on: ubuntu-latest
+    outputs:
+      trigger: ${{ steps.detect-upgrade.outputs.trigger }}
+      game_version: ${{ steps.detect-upgrade.outputs.game_version }}
+      game_release: ${{ steps.detect-upgrade.outputs.game_release }}
+      loader_version: ${{ steps.detect-upgrade.outputs.loader_version }}
+      yarn_version: ${{ steps.detect-upgrade.outputs.yarn_version }}
+      fabric_api_version: ${{ steps.detect-upgrade.outputs.fabric_api_version }}
+      loom_version: ${{ steps.detect-upgrade.outputs.loom_version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up xmllint
+        run: sudo apt-get install -y libxml2-utils
+      - name: Detect upgrade
+        id: detect-upgrade
+        continue-on-error: true
+        run: |
+          make upgrade
+          git diff --exit-code || echo "trigger=true" >> "$GITHUB_OUTPUT"
+  
+  test-upgrade:
+    name: Test upgrade before push
+    runs-on: ubuntu-latest
+    needs: detect-upgrade
+    if: needs.detect-upgrade.outputs.trigger == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up xmllint
+        run: sudo apt-get install -y libxml2-utils
+      - name: Set up JDK 1.21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Test upgrade
+        run: make upgrade build
+      - name: Create issue if test fails
+        if: ${{ failure() }}
+        uses: actions/github-script@v7
+        with:
+          retries: 3
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `bug: upgrade test to version ${{ needs.detect-upgrade.outputs.game_version }} [loader: ${{ needs.detect-upgrade.outputs.loader_version }}] failed`,
+              body: `An upgrade test to a new version failed. Please check the logs for more information.
+
+              - Game version: \`${{ needs.detect-upgrade.outputs.game_version }}\`
+              - Loader version: \`${{ needs.detect-upgrade.outputs.loader_version }}\`
+              - Yarn version: \`${{ needs.detect-upgrade.outputs.yarn_version }}\`
+              - Fabric API version: \`${{ needs.detect-upgrade.outputs.fabric_api_version }}\`
+              - Loom version: \`${{ needs.detect-upgrade.outputs.loom_version }}\`
+
+              [Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+              :wave: @${{ github.repository_owner }}
+
+              This issue was created automatically by a GitHub Action. If you believe there is an issue with the test, please comment here.`
+            })
+
+  push-upgrade:
+    name: Push upgrade
+    runs-on: ubuntu-latest
+    needs: [detect-upgrade, test-upgrade]
+    if: needs.detect-upgrade.outputs.trigger == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up xmllint
+        run: sudo apt-get install -y libxml2-utils
+      - name: Push upgrade
+        run: make upgrade
+      - name: Push changes
+        run: |
+          message='build(ci): automated version upgrade'
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+          git config alias.switchoc '!f() { git switch $1 2>/dev/null || git switch -c $1; }; f' 
+          git switchoc mc-${{ needs.detect-upgrade.outputs.game_release }}
+
+          git add gradle.properties
+          git commit -m "${message}"
+          git push origin mc-${{ needs.detect-upgrade.outputs.game_release }}
+
+  trigger-release:
+    name: Trigger release process
+    needs: [detect-upgrade, push-upgrade]
+    uses: ./.github/workflows/trigger-release.yaml
+    with:
+      version: ${{ needs.detect-upgrade.outputs.game_version }}
+      branch: mc-${{ needs.detect-upgrade.outputs.game_release }}
+    secrets: 
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+

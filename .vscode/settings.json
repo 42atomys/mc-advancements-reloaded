@@ -1,5 +1,16 @@
 {
+<<<<<<< HEAD
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.checkstyle.configuration": "${workspaceFolder}\\.checkstyle\\checkstyle.xml"
+=======
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.project.explorer.showNonJavaResources": false,
+  "java.dependency.packagePresentation": "hierarchical",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "javac-linter.classpath": [
+    ".",
+    "src\\generated\\java"
+  ]
+>>>>>>> 1e1cae6 (chore: initial release)
 }
