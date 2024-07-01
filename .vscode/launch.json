@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Minecraft Client",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "net.fabricmc.devlaunchinjector.Main",
+      "vmArgs": "-javaagent:C:\\Users\\gdalm\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\sponge-mixin\\0.13.3+mixin.0.8.5\\9527e6b0d2449408958fd1302594dc65ec5ade9c\\sponge-mixin-0.13.3+mixin.0.8.5.jar -Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\fabric-advancementinfo\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.fabricmc.loader.impl.launch.knot.KnotClient",
+      "args": "--username 42atomys",
+      "env": {},
+      "projectName": "fabric-advancementinfo"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "net.fabricmc.devlaunchinjector.Main",
+      "vmArgs": "-javaagent:003dC:\\Users\\gdalm\\.gradle\\caches\\modules-2\\files-2.1\\net.fabricmc\\sponge-mixin\\0.13.3+mixin.0.8.5\\9527e6b0d2449408958fd1302594dc65ec5ade9c\\sponge-mixin-0.13.3+mixin.0.8.5.jar -Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\fabric-advancementinfo\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.fabricmc.loader.impl.launch.knot.KnotServer",
+      "args": "nogui",
+      "env": {},
+      "projectName": "fabric-advancementinfo"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "codes.atomys.advancementinforeloaded.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MinecraftClientMixin",
+    "GameMenuScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
