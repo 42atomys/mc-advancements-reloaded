@@ -29,4 +29,8 @@ public class AdvancementInfoReloaded implements ModInitializer {
 
 		LOGGER.info("Hello Fabric world!");
 	}
+
+  public static AdvancementInfoReloadedConfig getConfig() {
+    return CONFIG;
+  }
 }

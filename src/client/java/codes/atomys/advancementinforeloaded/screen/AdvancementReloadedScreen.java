@@ -6,7 +6,6 @@ import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlacedAdvancement;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
 import net.minecraft.client.network.ClientAdvancementManager;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.texture.TextureManager;
@@ -27,24 +26,16 @@ import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
 import codes.atomys.advancementinforeloaded.AdvancementReloadedStep;
 import codes.atomys.advancementinforeloaded.ClickableRegion;
-import codes.atomys.advancementinforeloaded.PlaceholderConfig;
 
 public class AdvancementReloadedScreen extends Screen implements ClientAdvancementManager.Listener {
-  // public static final int WINDOW_WIDTH = 252;
-  // public static final int WINDOW_HEIGHT = 140;
-  // private static final int PAGE_OFFSET_X = 9;
-  // private static final int PAGE_OFFSET_Y = 18;
-  // public static final int PAGE_WIDTH = 234;
-  // public static final int PAGE_HEIGHT = 113;
   // private static final int TITLE_OFFSET_X = 8;
   // private static final int TITLE_OFFSET_Y = 6;
   // public static final int field_32302 = 16;
   // public static final int field_32303 = 16;
-  // public static final int field_32304 = 14;
-  // public static final int field_32305 = 7;
   // private static final double field_45431 = 16.0;
   private static final Identifier criteriasSeparator = Identifier
       .of("advancementinforeloaded:textures/gui/inworld_right_separator.png");
@@ -94,18 +85,18 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private void setClickableRegions() {
     this.clickableRegions = new ArrayList<ClickableRegion>();
     clickableRegions.add(
-        ClickableRegion.create("advancement_tree", 0, PlaceholderConfig.HEADER_HEIGHT + 1,
-            width - (hasSelectedWidget() ? PlaceholderConfig.CRITERIAS_WIDTH : 0),
-            height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT));
+        ClickableRegion.create("advancement_tree", 0, AdvancementInfoReloaded.getConfig().headerHeight() + 1,
+            width - (hasSelectedWidget() ? AdvancementInfoReloaded.getConfig().criteriasWidth() : 0),
+            height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight()));
 
     if (hasSelectedWidget()) {
       clickableRegions.add(
-          ClickableRegion.create("advancement_criterias", width - PlaceholderConfig.CRITERIAS_WIDTH,
-              PlaceholderConfig.HEADER_HEIGHT + 1, PlaceholderConfig.CRITERIAS_WIDTH - 6,
-              height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT));
+          ClickableRegion.create("advancement_criterias", width - AdvancementInfoReloaded.getConfig().criteriasWidth(),
+              AdvancementInfoReloaded.getConfig().headerHeight() + 1, AdvancementInfoReloaded.getConfig().criteriasWidth() - 6,
+              height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight()));
       clickableRegions.add(
-          ClickableRegion.create("advancement_criterias_scrollbar", width - 6, PlaceholderConfig.HEADER_HEIGHT + 1, 6,
-              height - PlaceholderConfig.FOOTER_HEIGHT));
+          ClickableRegion.create("advancement_criterias_scrollbar", width - 6, AdvancementInfoReloaded.getConfig().headerHeight() + 1, 6,
+              height - AdvancementInfoReloaded.getConfig().footerHeight()));
     }
 
     System.out.println("Clickable regions: " + this.clickableRegions);
@@ -133,7 +124,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       });
 
       int i = 0;
-      int j = PlaceholderConfig.HEADER_HEIGHT;
+      int j = AdvancementInfoReloaded.getConfig().headerHeight();
 
       for (AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab == this.selectedTab) {
@@ -166,11 +157,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   private void moveScrollbarTo(double mouseY) {
     // Calculate the viewable height (excluding header and footer)
-    int viewableHeight = height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT;
+    int viewableHeight = height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight();
 
     // Calculate the start and end positions of the scrollbar container
-    int scrollbarStart = PlaceholderConfig.HEADER_HEIGHT + 1;
-    int scrollbarEnd = height - PlaceholderConfig.FOOTER_HEIGHT - 1;
+    int scrollbarStart = AdvancementInfoReloaded.getConfig().headerHeight() + 1;
+    int scrollbarEnd = height - AdvancementInfoReloaded.getConfig().footerHeight() - 1;
 
     // Calculate the scroll range
     int scrollRange = contentHeight - viewableHeight;
@@ -260,7 +251,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     super.render(context, mouseX, mouseY, delta);
 
     int i = 0;
-    int j = PlaceholderConfig.HEADER_HEIGHT + 1; // 1 are the separator pixels
+    int j = AdvancementInfoReloaded.getConfig().headerHeight() + 1; // 1 are the separator pixels
     this.drawAdvancementTree(context, mouseX, mouseY, i, j);
     this.drawWindow(context, i, j);
     this.drawWidgetTooltip(context, mouseX, mouseY, i, j);
@@ -269,11 +260,13 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   private void drawAdvancementTree(DrawContext context, int mouseX, int mouseY, int x, int y) {
     AdvancementReloadedTab advancementTab = this.selectedTab;
+    if (AdvancementInfoReloaded.getConfig().blackBackground()) {
+      context.fill(0, 0, width, height, Colors.BLACK);
+    }
+
     if (advancementTab == null) {
-      context.fill(x + 9, y + 18, x + 9 + 234, y + 18 + 113, -16777216);
-      int i = x + 9 + 117;
-      context.drawCenteredTextWithShadow(this.textRenderer, EMPTY_TEXT, i, y + 18 + 56 - 9 / 2, Colors.WHITE);
-      context.drawCenteredTextWithShadow(this.textRenderer, SAD_LABEL_TEXT, i, y + 18 + 113 - 9, Colors.WHITE);
+      context.drawCenteredTextWithShadow(this.textRenderer, EMPTY_TEXT, width/2, (height / 2) - this.textRenderer.fontHeight * 2, Colors.WHITE);
+      context.drawCenteredTextWithShadow(this.textRenderer, SAD_LABEL_TEXT, width/2, (height / 2) + this.textRenderer.fontHeight * 2, Colors.WHITE);
     } else {
       advancementTab.render(context, x, y);
     }
@@ -283,21 +276,21 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private int contentHeight = 0;
 
   public void drawAdvancementCriterias(DrawContext context, int x, int y) {
-    if (!hasSelectedWidget() || PlaceholderConfig.CRITERIAS_WIDTH == 0)
+    if (!hasSelectedWidget() || AdvancementInfoReloaded.getConfig().criteriasWidth() == 0)
       return;
 
-    int paddingTop = PlaceholderConfig.HEADER_HEIGHT + 6;
-    final int textWidth = PlaceholderConfig.CRITERIAS_WIDTH - 12 - 6;
+    int paddingTop = AdvancementInfoReloaded.getConfig().headerHeight() + 6;
+    final int textWidth = AdvancementInfoReloaded.getConfig().criteriasWidth() - 12 - 6;
 
     Text title = getSelectedWidget().getAdvancement().name().get();
     Text description = getSelectedWidget().getAdvancement().display().get().getDescription();
 
-    context.fill(width - PlaceholderConfig.CRITERIAS_WIDTH, PlaceholderConfig.HEADER_HEIGHT, width,
-        height - PlaceholderConfig.FOOTER_HEIGHT, MathHelper.floor(0.5F * 255.0F) << 24);
+    context.fill(width - AdvancementInfoReloaded.getConfig().criteriasWidth(), AdvancementInfoReloaded.getConfig().headerHeight(), width,
+        height - AdvancementInfoReloaded.getConfig().footerHeight(), MathHelper.floor(0.5F * 255.0F) << 24);
 
-    context.drawTexture(criteriasSeparator, width - PlaceholderConfig.CRITERIAS_WIDTH,
-        PlaceholderConfig.HEADER_HEIGHT + 1, 0.0F, 0.0F, 2,
-        height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT - 2, 2, 32);
+    context.drawTexture(criteriasSeparator, width - AdvancementInfoReloaded.getConfig().criteriasWidth(),
+        AdvancementInfoReloaded.getConfig().headerHeight() + 1, 0.0F, 0.0F, 2,
+        height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight() - 2, 2, 32);
 
     MatrixStack matrixStack = context.getMatrices();
     matrixStack.push();
@@ -306,27 +299,27 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     contentHeight = 6; // 6 are the bottom margin
 
     // Drawing title
-    context.drawTextWrapped(this.textRenderer, title, width - PlaceholderConfig.CRITERIAS_WIDTH + 8, paddingTop,
+    context.drawTextWrapped(this.textRenderer, title, width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8, paddingTop,
         textWidth, Colors.WHITE);
     paddingTop += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(title, textWidth).size() + 4;
     contentHeight += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(title, textWidth).size() + 4;
 
     // Drawing description
-    if (description != null) {
-      context.drawTextWrapped(this.textRenderer, description, width - PlaceholderConfig.CRITERIAS_WIDTH + 8,
+    if (AdvancementInfoReloaded.getConfig().showDescription() && description != null) {
+      context.drawTextWrapped(this.textRenderer, description, width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8,
           paddingTop,
           textWidth, Colors.GRAY);
       paddingTop += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(description, textWidth).size() + 4;
       contentHeight += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(description, textWidth).size() + 4;
-
-      context.drawHorizontalLine(width - PlaceholderConfig.CRITERIAS_WIDTH + 8, width - 12, paddingTop, Colors.LIGHT_GRAY);
-      paddingTop += 5;
-      contentHeight += 5;
     }
+
+    context.drawHorizontalLine(width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8, width - 12, paddingTop, Colors.LIGHT_GRAY);
+    paddingTop += 5;
+    contentHeight += 5;
 
     // Drawing criterias
     for (AdvancementReloadedStep step : getSelectedWidget().getSteps()) {
-      context.drawTextWrapped(this.textRenderer, step.getTitle(), width - PlaceholderConfig.CRITERIAS_WIDTH + 8,
+      context.drawTextWrapped(this.textRenderer, step.getTitle(), width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8,
           paddingTop, textWidth, step.getColor());
       paddingTop += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(step.getTitle(), textWidth).size()
           + 4;
@@ -340,16 +333,16 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     if (needScrollbarOnCriterias()) {
       // Drawing scrollbar background
       context.drawTexture(SCROLLER_BACKGROUND_TEXTURE, width - 6,
-          PlaceholderConfig.HEADER_HEIGHT + 1, 0.0F, 0.0F, 6,
-          height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT - 2, 6, 32);
+          AdvancementInfoReloaded.getConfig().headerHeight() + 1, 0.0F, 0.0F, 6,
+          height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight() - 2, 6, 32);
 
       // Drawing the scrollbar
-      int scrollBarHeight = (int) ((height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT)
-          * (height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT) / (double) contentHeight);
-      int scrollBarY = PlaceholderConfig.HEADER_HEIGHT
-          + (int) ((height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT - scrollBarHeight)
+      int scrollBarHeight = (int) ((height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight())
+          * (height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight()) / (double) contentHeight);
+      int scrollBarY = AdvancementInfoReloaded.getConfig().headerHeight()
+          + (int) ((height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight() - scrollBarHeight)
               * (scrollOffset / (double) (contentHeight
-                  - (height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT))));
+                  - (height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight()))));
 
       int bottomHeight = 2; // bottom pixel height of the scrollbar
       int middleHeight = 32 - bottomHeight;
@@ -370,7 +363,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   private boolean needScrollbarOnCriterias() {
-    return contentHeight > height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT;
+    return contentHeight > height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight();
   }
 
   public boolean hasSelectedWidget() {
@@ -387,28 +380,40 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       Identifier textureIdentifier = display.getBackground().orElse(TextureManager.MISSING_IDENTIFIER);
 
       // Draw header
+      int headerDrawHeight = AdvancementInfoReloaded.getConfig().headerHeight() / 16 + 1;
       for (int m = 0; m <= width / 16; m++) {
-        for (int n = 0; n < PlaceholderConfig.HEADER_HEIGHT / 16; n++) {
-          context.drawTexture(textureIdentifier, 16 * m, 16 * n, 0.0F, 0.0F, 16, 16, 16, 16);
+        for (int n = 0; n < headerDrawHeight; n++) {
+          int textureHeight = 16;
+          if (n == headerDrawHeight-1) {
+            textureHeight = AdvancementInfoReloaded.getConfig().headerHeight() % 16;
+          }
+
+          context.drawTexture(textureIdentifier, 16 * m, 16 * n, 0.0F, 0.0F, 16, textureHeight, 16, 16);
         }
       }
-      context.fill(0, 0, width, PlaceholderConfig.HEADER_HEIGHT, MathHelper.floor(0.3F * 255.0F) << 24);
+      context.fill(0, 0, width, AdvancementInfoReloaded.getConfig().headerHeight(), MathHelper.floor(0.3F * 255.0F) << 24);
 
       // Draw footer
+      int footerDrawHeight = AdvancementInfoReloaded.getConfig().footerHeight() / 16 + 1;
       for (int m = 0; m <= width / 16; m++) {
-        for (int n = 0; n < (PlaceholderConfig.FOOTER_HEIGHT) / 16; n++) {
-          context.drawTexture(textureIdentifier, 16 * m, (height - PlaceholderConfig.FOOTER_HEIGHT) + 16 * n, 0.0F,
-              0.0F, 16, 16, 16, 16);
+        for (int n = 0; n < footerDrawHeight; n++) {
+          int textureHeight = 16;
+          if (n == headerDrawHeight-1) {
+            textureHeight = AdvancementInfoReloaded.getConfig().headerHeight() % 16;
+          }
+
+          context.drawTexture(textureIdentifier, 16 * m, (height - AdvancementInfoReloaded.getConfig().footerHeight()) + 16 * n, 0.0F,
+              0.0F, 16, textureHeight, 16, 16);
         }
       }
-      context.fill(0, height - PlaceholderConfig.FOOTER_HEIGHT, width, height, MathHelper.floor(0.3F * 255.0F) << 24);
+      context.fill(0, height - AdvancementInfoReloaded.getConfig().footerHeight(), width, height, MathHelper.floor(0.3F * 255.0F) << 24);
 
       // Draw separators
       drawSeparators(context, 0.7F);
 
       // Draw title on header
       context.drawCenteredTextWithShadow(this.textRenderer, display.getTitle(), width / 2,
-          (PlaceholderConfig.HEADER_HEIGHT - 20) / 2 - this.textRenderer.fontHeight / 2, 0xffffff);
+          (AdvancementInfoReloaded.getConfig().headerHeight() - 20) / 2 - this.textRenderer.fontHeight / 2, 0xffffff);
     }
 
     context.getMatrices().pop();
@@ -416,7 +421,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     if (this.tabs.size() > 1) {
       for (AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab.getType() == AdvancementReloadedTabType.BELOW) {
-          y = height - PlaceholderConfig.FOOTER_HEIGHT - 1;
+          y = height - AdvancementInfoReloaded.getConfig().footerHeight() - 1;
         }
         advancementTab.setPos(x + 4, y);
         advancementTab.drawBackground(context, advancementTab == this.selectedTab);
@@ -436,12 +441,12 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     // Bind and draw header texture
     RenderSystem.setShaderTexture(0, Screen.INWORLD_HEADER_SEPARATOR_TEXTURE);
-    context.drawTexture(Screen.INWORLD_HEADER_SEPARATOR_TEXTURE, 0, PlaceholderConfig.HEADER_HEIGHT - 1, 0.0F, 0.0F,
+    context.drawTexture(Screen.INWORLD_HEADER_SEPARATOR_TEXTURE, 0, AdvancementInfoReloaded.getConfig().headerHeight() - 1, 0.0F, 0.0F,
         width, 2, 32, 2);
 
     // Bind and draw footer texture
     RenderSystem.setShaderTexture(0, Screen.INWORLD_FOOTER_SEPARATOR_TEXTURE);
-    context.drawTexture(Screen.INWORLD_FOOTER_SEPARATOR_TEXTURE, 0, height - PlaceholderConfig.FOOTER_HEIGHT - 1, 0.0F,
+    context.drawTexture(Screen.INWORLD_FOOTER_SEPARATOR_TEXTURE, 0, height - AdvancementInfoReloaded.getConfig().footerHeight() - 1, 0.0F,
         0.0F, width, 2, 32, 2);
 
     // Reset shader color to avoid affecting subsequent draws
@@ -515,12 +520,14 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.scrollOffset = 0;
     AdvancementInfoReloadedClient.setCurrentWidget(widget);
     setClickableRegions();
+    if (this.selectedTab != null)
+      this.selectedTab.refresh();
   }
 
   private void setScrollOffset(int value) {
     if (!needScrollbarOnCriterias())
       return;
-    int max = contentHeight - (height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT);
+    int max = contentHeight - (height - AdvancementInfoReloaded.getConfig().headerHeight() - AdvancementInfoReloaded.getConfig().footerHeight());
     this.scrollOffset = MathHelper.clamp(value, 0, max);
   }
 
