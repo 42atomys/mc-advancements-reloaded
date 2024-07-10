@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "advancementinforeloaded",
-	"version": "0.1.0-1.21",
+	"version": "0.2.0-1.21",
 	"name": "AdvancementInfo Reloaded",
 	"description": "Make it easier to see which advancements you have and what's missing.",
   "authors": ["@42atomys"],
@@ -12,7 +12,7 @@
     "issues": "https://github.com/42atomys/fabric-advancementinfo-reloaded/issues"
   },
   "license": "MIT",
-	"icon": "icon.png",
+	"icon": "assets/advancementinforeloaded/icon.png",
   "environment": "client",
   "entrypoints": {
 		"main": [
