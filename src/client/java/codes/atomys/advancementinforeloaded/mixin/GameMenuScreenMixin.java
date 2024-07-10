@@ -12,23 +12,18 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.advancement.AdvancementsScreen;
 import net.minecraft.text.Text;
 
-@Mixin(GameMenuScreen.class)
+@Mixin(value = GameMenuScreen.class, priority = 1001)
 public abstract class GameMenuScreenMixin extends Screen {
 
   protected GameMenuScreenMixin(Text title) {
     super(title);
   }
 
-  @ModifyArg(
-    method = "initWidgets",
-    at = @At(
-      value = "INVOKE",
-      target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;createButton(Lnet/minecraft/text/Text;Ljava/util/function/Supplier;)Lnet/minecraft/client/gui/widget/ButtonWidget;"
-    ),
-    index = 1
-  )  private Supplier<Screen> modifyAdvancementsButton(Supplier<Screen> original) {
+  @ModifyArg(method = "initWidgets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/GameMenuScreen;createButton(Lnet/minecraft/text/Text;Ljava/util/function/Supplier;)Lnet/minecraft/client/gui/widget/ButtonWidget;"), index = 1)
+  private Supplier<Screen> modifyAdvancementsButton(Supplier<Screen> original) {
     if (original.get() instanceof AdvancementsScreen) {
-      return () -> new AdvancementReloadedScreen(client.player.networkHandler.getAdvancementHandler(), this);
+      return () -> new AdvancementReloadedScreen(client.player.networkHandler.getAdvancementHandler(),
+          this);
     } else {
       return original;
     }
