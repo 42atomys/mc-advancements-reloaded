@@ -33,12 +33,12 @@ I decided to revive and enhance the original [AdvancementInfo](https://modrinth.
 This mod is a continuation of the original [AdvancementInfo](https://modrinth.com/mod/advancementinfo) mod, picking up from version 1.21 and beyond. It aims to keep the spirit of the original mod while adding significant improvements.
 
 # Not Implemented Yet / Known Issues
-- Configuration options are not yet available.
-- Implementing an API to allow datapack creators to customize the UI directly from their datapacks.
-- Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
-- Achievement categories may display incorrectly on certain GUI scales.
-- Potential incompatibility with other mods.
-- Possible bugs as this is an alpha version.
+- [x] ~~Configuration options are not yet available.~~ **Implemented in 0.2.0**
+- [ ] Implementing an API to allow datapack creators to customize the UI directly from their datapacks.
+- [ ] Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
+- [x] ~~Achievement categories may display incorrectly on certain GUI scales.~~ **Implemented in 0.2.0 by configuration**
+- [ ] Potential incompatibility with other mods.
+- [ ] Possible bugs as this is an alpha version.
 
 # Support and Sponsorship
 If you enjoy using this mod and would like to support its development, please consider sponsoring via [GitHub Sponsors](https://github.com/sponsors/42atomys) or [Patreon](https://patreon.com/42atomys). Your support will help improve and maintain this project, allowing for more frequent updates and new features.

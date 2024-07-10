@@ -12,6 +12,10 @@ public class AdvancementInfoReloadedClient implements ClientModInitializer {
     return currentWidget;
   }
 
+  public static boolean hasCurrentWidget() {
+    return currentWidget != null;
+  }
+
   public static void setCurrentWidget(AdvancementReloadedWidget widget) {
     currentWidget = widget;
   }

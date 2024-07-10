@@ -2,7 +2,8 @@ package codes.atomys.advancementinforeloaded.screen;
 
 import com.google.common.collect.Maps;
 
-import codes.atomys.advancementinforeloaded.PlaceholderConfig;
+import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
+import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -105,20 +106,25 @@ public class AdvancementReloadedTab {
 
   public int getWidth() {
     if (screen.getSelectedWidget() != null)
-      return screen.width - PlaceholderConfig.CRITERIAS_WIDTH;
+      return screen.width - AdvancementInfoReloaded.getConfig().criteriasWidth();
 
     return screen.width;
   }
 
   public int getHeight() {
     // 2 are the separator lines
-    return screen.height - PlaceholderConfig.HEADER_HEIGHT - PlaceholderConfig.FOOTER_HEIGHT - 2;
+    return screen.height - AdvancementInfoReloaded.getConfig().headerHeight()
+        - AdvancementInfoReloaded.getConfig().footerHeight() - 2;
+  }
+
+  public void refresh() {
+    this.initialized = false;
   }
 
   public void render(DrawContext context, int x, int y) {
     if (!this.initialized) {
       this.originX = (double) ((getWidth() / 2) - (this.maxPanX + this.minPanX) / 2);
-      this.originY = (double) ((screen.height / 2 - PlaceholderConfig.HEADER_HEIGHT - 1)
+      this.originY = (double) ((screen.height / 2 - AdvancementInfoReloaded.getConfig().headerHeight() - 1)
           - (this.maxPanY + this.minPanY) / 2);
       this.initialized = true;
     }
@@ -172,11 +178,11 @@ public class AdvancementReloadedTab {
   @Nullable
   public AdvancementReloadedWidget clickOnWidget(int screenX, int screenY, double mouseX, double mouseY) {
     int flooredOriginX = MathHelper.floor(this.originX);
-    int flooredOriginY = MathHelper.floor(this.originY + PlaceholderConfig.HEADER_HEIGHT - 1);
+    int flooredOriginY = MathHelper.floor(this.originY + AdvancementInfoReloaded.getConfig().headerHeight() - 1);
 
     // Prevent click outside of the advancement tree
     if (mouseX < screenX || mouseX > getWidth() || mouseY < screenY
-        || mouseY > screen.height - PlaceholderConfig.FOOTER_HEIGHT - 1)
+        || mouseY > screen.height - AdvancementInfoReloaded.getConfig().footerHeight() - 1)
       return null;
 
     Iterator<AdvancementReloadedWidget> widgets = this.widgets.values().iterator();

@@ -1,0 +1,17 @@
+{
+  "text.config.advancementinforeloaded.title": "Advancements Reloaded",
+  "text.config.advancementinforeloaded.option.headerHeight": "Header Height",
+  "text.config.advancementinforeloaded.option.headerHeight.tooltip": "The height of the header area, measured in pixels.\nAdjust this value to increase or decrease the vertical space for the header.",
+  "text.config.advancementinforeloaded.option.footerHeight": "Footer Height",
+  "text.config.advancementinforeloaded.option.footerHeight.tooltip": "The height of the footer area, measured in pixels.\nAdjust this value to increase or decrease the vertical space for the footer.",
+  "text.config.advancementinforeloaded.option.criteriasWidth": "Criteria Area Width",
+  "text.config.advancementinforeloaded.option.criteriasWidth.tooltip": "The width of the criteria area, measured in pixels.\nThis determines how much horizontal space is allocated for displaying criteria.",
+  "text.config.advancementinforeloaded.option.blackBackground": "Show Black Background",
+  "text.config.advancementinforeloaded.option.blackBackground.tooltip": "[true] Display a transparent background on the advancement screen\n[false] Display a solid black background on the advancement screen. Choose this option based on your visual preference for background contrast.",
+  "text.config.advancementinforeloaded.option.showDescription": "Show Description in Criteria Area",
+  "text.config.advancementinforeloaded.option.showDescription.tooltip": "[true] Display the description text within the criteria area\n[false] Hide the description text in the criteria area. Use this to toggle the visibility of additional information in the criteria area.",
+  "text.config.advancementinforeloaded.option.aboveWidgetLimit": "Header Widget Limit",
+  "text.config.advancementinforeloaded.option.aboveWidgetLimit.tooltip": "The maximum number of widgets that can be displayed in the header area.\nThis sets the upper limit for how many interactive elements can be shown in the header.\n\nWarning: Be careful because too many widgets can cause some to be hidden off-screen.",
+  "text.config.advancementinforeloaded.option.belowWidgetLimit": "Footer Widget Limit",
+  "text.config.advancementinforeloaded.option.belowWidgetLimit.tooltip": "The maximum number of widgets that can be displayed in the footer area.\nThis sets the upper limit for how many interactive elements can be shown in the footer.\n\nWarning: Be careful because too many widgets can cause some to be hidden off-screen."
+}

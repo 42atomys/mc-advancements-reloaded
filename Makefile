@@ -7,9 +7,14 @@ build: update
 run:
 	gradle run
 clean:
-	gradle clean
+	@./gradlew clean
 	rm -rf ~/.gradle
 	rm -rf .gradle run remappedSrc
+
+hard-clean: clean
+	@./gradlew build --refresh-dependencies
+	@./gradlew genSources
+
 test:
 	gradle test
 package:
@@ -20,10 +25,6 @@ update:
 
 upgrade:
 	bash ./upgrade_gradle_properties_to_latest.sh
-
-gradle-update:
-	@echo "Update gradle wrapper to version $(GRADLE_VERSION)"
-	@bash ./upgrade_gradle.sh $(GRADLE_VERSION)
 
 gen-minecraft-source:
 	@echo "Generate Minecraft source code"

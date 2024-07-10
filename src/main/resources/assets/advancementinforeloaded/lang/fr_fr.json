@@ -1,0 +1,17 @@
+{
+  "text.config.advancementinforeloaded.title": "Advancements Reloaded",
+  "text.config.advancementinforeloaded.option.headerHeight": "Hauteur de l'en-tête",
+  "text.config.advancementinforeloaded.option.headerHeight.tooltip": "La hauteur de la zone de l'en-tête, mesurée en pixels.\nAjustez cette valeur pour augmenter ou diminuer l'espace vertical de l'en-tête.",
+  "text.config.advancementinforeloaded.option.footerHeight": "Hauteur du pied de page",
+  "text.config.advancementinforeloaded.option.footerHeight.tooltip": "La hauteur de la zone du pied de page, mesurée en pixels.\nAjustez cette valeur pour augmenter ou diminuer l'espace vertical du pied de page.",
+  "text.config.advancementinforeloaded.option.criteriasWidth": "Largeur de la zone des critères",
+  "text.config.advancementinforeloaded.option.criteriasWidth.tooltip": "La largeur de la zone des critères, mesurée en pixels.\nCette valeur détermine la largeur allouée à l'affichage des critères.",
+  "text.config.advancementinforeloaded.option.blackBackground": "Afficher un arrière-plan noir",
+  "text.config.advancementinforeloaded.option.blackBackground.tooltip": "[true] Afficher un arrière-plan transparent sur l'écran des avancements\n[false] Afficher un arrière-plan noir sur l'écran des avancements. Choisissez cette option en fonction de votre préférence visuelle pour le contraste de l'arrière-plan.",
+  "text.config.advancementinforeloaded.option.showDescription": "Afficher la description dans la zone des critères",
+  "text.config.advancementinforeloaded.option.showDescription.tooltip": "[true] Afficher le texte de la description dans la zone des critères\n[false] Masquer le texte de la description dans la zone des critères. Utilisez ceci pour basculer la visibilité des informations supplémentaires dans la zone des critères.",
+  "text.config.advancementinforeloaded.option.aboveWidgetLimit": "Limite des widgets de l'en-tête",
+  "text.config.advancementinforeloaded.option.aboveWidgetLimit.tooltip": "Le nombre maximal de widgets pouvant être affichés dans la zone de l'en-tête.\nCette valeur définit la limite supérieure du nombre d'éléments interactifs pouvant être affichés dans l'en-tête.\n\nAvertissement: Faites attention car trop de widgets peuvent en cacher certains hors de l'écran.",
+  "text.config.advancementinforeloaded.option.belowWidgetLimit": "Limite des widgets du pied de page",
+  "text.config.advancementinforeloaded.option.belowWidgetLimit.tooltip": "Le nombre maximal de widgets pouvant être affichés dans la zone du pied de page.\nCette valeur définit la limite supérieure du nombre d'éléments interactifs pouvant être affichés dans le pied de page.\n\nAvertissement: Faites attention car trop de widgets peuvent en cacher certains hors de l'écran."
+}
