@@ -117,10 +117,6 @@ public class AdvancementReloadedTab {
         - AdvancementInfoReloaded.getConfig().footerHeight() - 2;
   }
 
-  public void refresh() {
-    this.initialized = false;
-  }
-
   public void render(DrawContext context, int x, int y) {
     if (!this.initialized) {
       this.originX = (double) ((getWidth() / 2) - (this.maxPanX + this.minPanX) / 2);
