@@ -85,11 +85,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.clickableRegions = new ArrayList<ClickableRegion>();
     clickableRegions.add(
         ClickableRegion.create("advancement_tree", 0, AdvancementInfoReloaded.getConfig().headerHeight() + 1,
-            width - (hasSelectedWidget() ? AdvancementInfoReloaded.getConfig().criteriasWidth() : 0),
+            width - (hasVisibleSidebar() ? AdvancementInfoReloaded.getConfig().criteriasWidth() : 0),
             height - AdvancementInfoReloaded.getConfig().headerHeight()
                 - AdvancementInfoReloaded.getConfig().footerHeight()));
 
-    if (hasSelectedWidget()) {
+    if (hasVisibleSidebar()) {
       clickableRegions.add(
           ClickableRegion.create("advancement_criterias", width - AdvancementInfoReloaded.getConfig().criteriasWidth(),
               AdvancementInfoReloaded.getConfig().headerHeight() + 1,
@@ -239,7 +239,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       this.client.setScreen(null);
       this.client.mouse.lockCursor();
       return true;
-    } else if (InputUtil.GLFW_KEY_ESCAPE == keyCode && hasSelectedWidget()) {
+    } else if (InputUtil.GLFW_KEY_ESCAPE == keyCode && hasVisibleSidebar()) {
       setSelectedWidget(null);
       init();
       return true;
@@ -281,7 +281,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private int contentHeight = 0;
 
   public void drawAdvancementCriterias(DrawContext context, int x, int y) {
-    if (!hasSelectedWidget() || AdvancementInfoReloaded.getConfig().criteriasWidth() == 0)
+    if (!hasVisibleSidebar() || AdvancementInfoReloaded.getConfig().criteriasWidth() == 0)
       return;
 
     int paddingTop = AdvancementInfoReloaded.getConfig().headerHeight() + 6;
@@ -314,7 +314,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     contentHeight += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(title, textWidth).size() + 4;
 
     // Drawing description
-    if (AdvancementInfoReloaded.getConfig().showDescription() && description != null) {
+    if (AdvancementInfoReloaded.getConfig().displayDescription() && description != null) {
       context.drawTextWrapped(this.textRenderer, description,
           width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8,
           paddingTop,
@@ -374,8 +374,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         - AdvancementInfoReloaded.getConfig().footerHeight();
   }
 
-  public boolean hasSelectedWidget() {
-    return getSelectedWidget() != null;
+  public boolean hasVisibleSidebar() {
+    return getSelectedWidget() != null && AdvancementInfoReloaded.getConfig().displaySidebar();
   }
 
   public void drawWindow(DrawContext context, int x, int y) {
