@@ -3,11 +3,14 @@ package codes.atomys.advancementinforeloaded.screen;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementReloadedStep;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.TreeSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.Advancement;
@@ -206,13 +209,27 @@ public class AdvancementReloadedWidget {
 
   public void setSteps(AdvancementProgress progress) {
     List<AdvancementReloadedStep> steps = new ArrayList<>();
+    Iterable<String> unobtainedIterable = progress.getUnobtainedCriteria();
+    Iterable<String> obtainedIterable = progress.getObtainedCriteria();
 
-    progress.getUnobtainedCriteria().forEach((criterion) -> {
-      steps.add(new AdvancementReloadedStep(this.advancement.getAdvancement(), progress, criterion));
+    if (AdvancementInfoReloaded.getConfig().alphabeticOrder()) {
+        List<String> unobtainedList = new ArrayList<>();
+        List<String> obtainedList = new ArrayList<>();
+        unobtainedIterable.forEach(unobtainedList::add);
+        obtainedIterable.forEach(obtainedList::add);
+        unobtainedList.sort(String::compareToIgnoreCase);
+        obtainedList.sort(String::compareToIgnoreCase);
+        unobtainedIterable = unobtainedList;
+        obtainedIterable = obtainedList;
+    }
+
+    unobtainedIterable.forEach((criterion) -> {
+        steps.add(new AdvancementReloadedStep(this.advancement.getAdvancement(), progress, criterion));
     });
-    progress.getObtainedCriteria().forEach((criterion) -> {
-      steps.add(new AdvancementReloadedStep(this.advancement.getAdvancement(), progress, criterion));
+    obtainedIterable.forEach((criterion) -> {
+        steps.add(new AdvancementReloadedStep(this.advancement.getAdvancement(), progress, criterion));
     });
+    
 
     this.steps = steps;
   }

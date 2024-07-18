@@ -3,24 +3,27 @@ package codes.atomys.advancementinforeloaded;
 import io.wispforest.owo.config.annotation.Config;
 import io.wispforest.owo.config.annotation.Modmenu;
 import io.wispforest.owo.config.annotation.RangeConstraint;
+import io.wispforest.owo.config.annotation.SectionHeader;
 
 @Modmenu(modId = AdvancementInfoReloaded.MOD_ID)
 @Config(name = "advancementinforeloaded", wrapperName = "AdvancementInfoReloadedConfig")
 public class AdvancementInfoReloadedConfigModel {
+  @SectionHeader("appearance")
+  public boolean displaySidebar = true; // added in v0.3
+    public boolean displayDescription = true; // added in v0.2
+    public boolean alphabeticOrder = false; // added in v0.3
+    public boolean blackBackground = false; // added in v0.2
+
+
+  @SectionHeader("advanced_customization")
   @RangeConstraint(min = 32, max = 128)
-  public int headerHeight = 48;
+  public int headerHeight = 48; // added in v0.2
   @RangeConstraint(min = 32, max = 128)
-  public int footerHeight = 32;
+  public int footerHeight = 32; // added in v0.2
   @RangeConstraint(min = 50, max = 512)
-  public int criteriasWidth = 142;
-
-  public boolean blackBackground = false;
-
-  public boolean showDescription = true;
-
+  public int criteriasWidth = 142; // added in v0.2
   @RangeConstraint(min = 0, max = 42)
-  public int aboveWidgetLimit = 14;
-
+  public int aboveWidgetLimit = 14; // added in v0.2
   @RangeConstraint(min = 0, max = 42)
-  public int belowWidgetLimit = 14;
+  public int belowWidgetLimit = 14; // added in v0.2
 }

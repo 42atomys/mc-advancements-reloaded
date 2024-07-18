@@ -105,7 +105,7 @@ public class AdvancementReloadedTab {
   }
 
   public int getWidth() {
-    if (screen.getSelectedWidget() != null)
+    if (screen.hasVisibleSidebar())
       return screen.width - AdvancementInfoReloaded.getConfig().criteriasWidth();
 
     return screen.width;
