@@ -16,7 +16,7 @@ public class AdvancementInfoReloadedConfig extends ConfigWrapper<codes.atomys.ad
     private final Option<java.lang.Boolean> displaySidebar = this.optionForKey(this.keys.displaySidebar);
     private final Option<java.lang.Boolean> displayDescription = this.optionForKey(this.keys.displayDescription);
     private final Option<java.lang.Boolean> alphabeticOrder = this.optionForKey(this.keys.alphabeticOrder);
-    private final Option<java.lang.Boolean> blackBackground = this.optionForKey(this.keys.blackBackground);
+    private final Option<codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle> backgroundStyle = this.optionForKey(this.keys.backgroundStyle);
     private final Option<java.lang.Integer> headerHeight = this.optionForKey(this.keys.headerHeight);
     private final Option<java.lang.Integer> footerHeight = this.optionForKey(this.keys.footerHeight);
     private final Option<java.lang.Integer> criteriasWidth = this.optionForKey(this.keys.criteriasWidth);
@@ -67,12 +67,12 @@ public class AdvancementInfoReloadedConfig extends ConfigWrapper<codes.atomys.ad
         alphabeticOrder.set(value);
     }
 
-    public boolean blackBackground() {
-        return blackBackground.value();
+    public codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle backgroundStyle() {
+        return backgroundStyle.value();
     }
 
-    public void blackBackground(boolean value) {
-        blackBackground.set(value);
+    public void backgroundStyle(codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle value) {
+        backgroundStyle.set(value);
     }
 
     public int headerHeight() {
@@ -120,7 +120,7 @@ public class AdvancementInfoReloadedConfig extends ConfigWrapper<codes.atomys.ad
         public final Option.Key displaySidebar = new Option.Key("displaySidebar");
         public final Option.Key displayDescription = new Option.Key("displayDescription");
         public final Option.Key alphabeticOrder = new Option.Key("alphabeticOrder");
-        public final Option.Key blackBackground = new Option.Key("blackBackground");
+        public final Option.Key backgroundStyle = new Option.Key("backgroundStyle");
         public final Option.Key headerHeight = new Option.Key("headerHeight");
         public final Option.Key footerHeight = new Option.Key("footerHeight");
         public final Option.Key criteriasWidth = new Option.Key("criteriasWidth");

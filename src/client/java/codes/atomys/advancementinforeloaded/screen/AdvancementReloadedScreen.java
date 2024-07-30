@@ -28,6 +28,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
+import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel;
 import codes.atomys.advancementinforeloaded.AdvancementReloadedStep;
 import codes.atomys.advancementinforeloaded.ClickableRegion;
 
@@ -263,8 +264,20 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   private void drawAdvancementTree(DrawContext context, int mouseX, int mouseY, int x, int y) {
     AdvancementReloadedTab advancementTab = this.selectedTab;
-    if (AdvancementInfoReloaded.getConfig().blackBackground()) {
-      context.fill(0, 0, width, height, Colors.BLACK);
+
+    switch (AdvancementInfoReloaded.getConfig().backgroundStyle()) {
+      case AdvancementInfoReloadedConfigModel.BackgroundStyle.TRANSPARENT:
+        break;
+      case AdvancementInfoReloadedConfigModel.BackgroundStyle.BLACK:
+        context.fill(0, 0, width, height, Colors.BLACK);
+        break;
+      case AdvancementInfoReloadedConfigModel.BackgroundStyle.ACHIEVEMENT:
+        Identifier textureIdentifier = this.selectedTab.getDisplay().getBackground().orElse(TextureManager.MISSING_IDENTIFIER);
+        context.drawTexture(textureIdentifier, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
+        context.fill(0, 0, width, height, -200, MathHelper.floor(0.7 * 255.0F) << 24);
+        context.getMatrices().push();
+        context.getMatrices().translate(0.0F, 0.0F, 300.0F);
+        break;
     }
 
     if (advancementTab == null) {

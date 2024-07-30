@@ -34,6 +34,7 @@ This mod is a continuation of the original [AdvancementInfo](https://modrinth.co
 
 # Not Implemented Yet / Known Issues
 - [x] ~~Configuration options are not yet available.~~ **Implemented in 0.2.0**
+- [ ] Implement a search engine to locate criterias and advancements
 - [ ] Implementing an API to allow datapack creators to customize the UI directly from their datapacks.
 - [ ] Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
 - [x] ~~Achievement categories may display incorrectly on certain GUI scales.~~ **Implemented in 0.2.0 by configuration**
