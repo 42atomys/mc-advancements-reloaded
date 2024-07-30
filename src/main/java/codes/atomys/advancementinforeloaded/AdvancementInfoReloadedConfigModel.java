@@ -12,7 +12,13 @@ public class AdvancementInfoReloadedConfigModel {
   public boolean displaySidebar = true; // added in v0.3
     public boolean displayDescription = true; // added in v0.2
     public boolean alphabeticOrder = false; // added in v0.3
-    public boolean blackBackground = false; // added in v0.2
+    public BackgroundStyle backgroundStyle = BackgroundStyle.TRANSPARENT; // added in v0.4
+    
+    public enum BackgroundStyle {
+      TRANSPARENT,
+      ACHIEVEMENT,
+      BLACK,
+    }
 
 
   @SectionHeader("advanced_customization")
