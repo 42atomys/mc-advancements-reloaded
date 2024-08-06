@@ -102,8 +102,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
               AdvancementInfoReloaded.getConfig().headerHeight() + 1, 6,
               height - AdvancementInfoReloaded.getConfig().footerHeight()));
     }
-
-    System.out.println("Clickable regions: " + this.clickableRegions);
   }
 
   @Override
@@ -154,8 +152,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       }
     }
 
-    System.out.println("Mouse clicked at " + mouseX + ", " + mouseY + " with button " + button + " on regions "
-        + ClickableRegion.foundRegions(clickableRegions, mouseX, mouseY));
     return super.mouseClicked(mouseX, mouseY, button);
   }
 
@@ -186,7 +182,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public boolean mouseReleased(double mouseX, double mouseY, int button) {
     if (button == 0) {
       ClickableRegion.foundClickedRegions(clickableRegions).forEach(region -> {
-        System.out.println("Mouse released on region " + region.getName());
         region.setClicked(false);
       });
     }
