@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
-import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfig;
+import codes.atomys.advancementinforeloaded.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 

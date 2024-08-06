@@ -6,8 +6,8 @@ import io.wispforest.owo.config.annotation.RangeConstraint;
 import io.wispforest.owo.config.annotation.SectionHeader;
 
 @Modmenu(modId = AdvancementInfoReloaded.MOD_ID)
-@Config(name = "advancementinforeloaded", wrapperName = "AdvancementInfoReloadedConfig")
-public class AdvancementInfoReloadedConfigModel {
+@Config(name = "advancementinforeloaded", wrapperName = "Config")
+public class ConfigModel {
   @SectionHeader("appearance")
   public boolean displaySidebar = true; // added in v0.3
     public boolean displayDescription = true; // added in v0.2
