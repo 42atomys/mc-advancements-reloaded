@@ -9,36 +9,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class AdvancementInfoReloadedConfig extends ConfigWrapper<codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel> {
+public class Config extends ConfigWrapper<codes.atomys.advancementinforeloaded.ConfigModel> {
 
     public final Keys keys = new Keys();
 
     private final Option<java.lang.Boolean> displaySidebar = this.optionForKey(this.keys.displaySidebar);
     private final Option<java.lang.Boolean> displayDescription = this.optionForKey(this.keys.displayDescription);
     private final Option<java.lang.Boolean> alphabeticOrder = this.optionForKey(this.keys.alphabeticOrder);
-    private final Option<codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle> backgroundStyle = this.optionForKey(this.keys.backgroundStyle);
+    private final Option<codes.atomys.advancementinforeloaded.ConfigModel.BackgroundStyle> backgroundStyle = this.optionForKey(this.keys.backgroundStyle);
     private final Option<java.lang.Integer> headerHeight = this.optionForKey(this.keys.headerHeight);
     private final Option<java.lang.Integer> footerHeight = this.optionForKey(this.keys.footerHeight);
     private final Option<java.lang.Integer> criteriasWidth = this.optionForKey(this.keys.criteriasWidth);
     private final Option<java.lang.Integer> aboveWidgetLimit = this.optionForKey(this.keys.aboveWidgetLimit);
     private final Option<java.lang.Integer> belowWidgetLimit = this.optionForKey(this.keys.belowWidgetLimit);
 
-    private AdvancementInfoReloadedConfig() {
-        super(codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.class);
+    private Config() {
+        super(codes.atomys.advancementinforeloaded.ConfigModel.class);
     }
 
-    private AdvancementInfoReloadedConfig(Consumer<Jankson.Builder> janksonBuilder) {
-        super(codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.class, janksonBuilder);
+    private Config(Consumer<Jankson.Builder> janksonBuilder) {
+        super(codes.atomys.advancementinforeloaded.ConfigModel.class, janksonBuilder);
     }
 
-    public static AdvancementInfoReloadedConfig createAndLoad() {
-        var wrapper = new AdvancementInfoReloadedConfig();
+    public static Config createAndLoad() {
+        var wrapper = new Config();
         wrapper.load();
         return wrapper;
     }
 
-    public static AdvancementInfoReloadedConfig createAndLoad(Consumer<Jankson.Builder> janksonBuilder) {
-        var wrapper = new AdvancementInfoReloadedConfig(janksonBuilder);
+    public static Config createAndLoad(Consumer<Jankson.Builder> janksonBuilder) {
+        var wrapper = new Config(janksonBuilder);
         wrapper.load();
         return wrapper;
     }
@@ -67,11 +67,11 @@ public class AdvancementInfoReloadedConfig extends ConfigWrapper<codes.atomys.ad
         alphabeticOrder.set(value);
     }
 
-    public codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle backgroundStyle() {
+    public codes.atomys.advancementinforeloaded.ConfigModel.BackgroundStyle backgroundStyle() {
         return backgroundStyle.value();
     }
 
-    public void backgroundStyle(codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel.BackgroundStyle value) {
+    public void backgroundStyle(codes.atomys.advancementinforeloaded.ConfigModel.BackgroundStyle value) {
         backgroundStyle.set(value);
     }
 

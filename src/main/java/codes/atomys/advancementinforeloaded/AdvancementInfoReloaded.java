@@ -14,7 +14,7 @@ public class AdvancementInfoReloaded implements ModInitializer {
   public static final Style SUCCESS_STYLE = Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.GREEN));
   public static final Style ERROR_STYLE = Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED));
 
-  public static final AdvancementInfoReloadedConfig CONFIG = AdvancementInfoReloadedConfig.createAndLoad();
+  public static final Config CONFIG = Config.createAndLoad();
 
   // This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -30,7 +30,7 @@ public class AdvancementInfoReloaded implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 	}
 
-  public static AdvancementInfoReloadedConfig getConfig() {
+  public static Config getConfig() {
     return CONFIG;
   }
 }

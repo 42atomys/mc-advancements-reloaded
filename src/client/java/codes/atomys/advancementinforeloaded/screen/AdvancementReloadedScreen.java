@@ -20,6 +20,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +29,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
-import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedConfigModel;
+import codes.atomys.advancementinforeloaded.ConfigModel;
 import codes.atomys.advancementinforeloaded.AdvancementReloadedStep;
 import codes.atomys.advancementinforeloaded.ClickableRegion;
 
@@ -51,7 +52,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private final Map<AdvancementEntry, AdvancementReloadedTab> tabs = Maps
       .<AdvancementEntry, AdvancementReloadedTab>newLinkedHashMap();
   @Nullable
-  private AdvancementReloadedTab selectedTab;
+  private Optional<AdvancementReloadedTab> selectedTab;
   private AdvancementReloadedWidget selectedWidget;
   private List<ClickableRegion> clickableRegions;
 
@@ -71,12 +72,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.selectedTab = null;
     this.selectedWidget = AdvancementInfoReloadedClient.getCurrentWidget();
     this.advancementHandler.setListener(this);
-    if (this.selectedTab == null && !this.tabs.isEmpty()) {
+    if (this.selectedTab.isEmpty() && !this.tabs.isEmpty()) {
       AdvancementReloadedTab advancementTab = (AdvancementReloadedTab) this.tabs.values().iterator().next();
       this.advancementHandler.selectTab(advancementTab.getRoot().getAdvancementEntry(), true);
     } else {
-      this.advancementHandler
-          .selectTab(this.selectedTab == null ? null : this.selectedTab.getRoot().getAdvancementEntry(), true);
+      this.selectedTab.ifPresent(tab -> this.advancementHandler.selectTab(tab.getRoot().getAdvancementEntry(), true));
     }
 
     setClickableRegions();
@@ -131,7 +131,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       int j = AdvancementInfoReloaded.getConfig().headerHeight();
 
       for (AdvancementReloadedTab advancementTab : this.tabs.values()) {
-        if (advancementTab == this.selectedTab) {
+        if (advancementTab == this.selectedTab.orElse(null)) {
           AdvancementReloadedWidget clickedWidget = advancementTab.clickOnWidget(i, j, mouseX, mouseY);
           if (clickedWidget != null) {
             setSelectedWidget(clickedWidget);
@@ -199,8 +199,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     ClickableRegion.foundClickedRegions(clickableRegions).forEach(region -> {
       switch (region.getName()) {
         case "advancement_tree":
-          if (this.selectedTab != null) {
-            this.selectedTab.move(deltaX, deltaY);
+          if (this.selectedTab.isPresent()) {
+            this.selectedTab.get().move(deltaX, deltaY);
           }
           break;
         case "advancement_criterias":
@@ -222,8 +222,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     ClickableRegion.foundRegions(clickableRegions, mouseX, mouseY).forEach(region -> {
       switch (region.getName()) {
         case "advancement_tree":
-          if (this.selectedTab != null)
-            this.selectedTab.move(horizontalAmount * 16.0, verticalAmount * 16.0);
+          if (this.selectedTab.isPresent())
+            this.selectedTab.get().move(horizontalAmount * 16.0, verticalAmount * 16.0);
           break;
         case "advancement_criterias", "advancement_criterias_scrollbar":
           setScrollOffset(scrollOffset - (int) verticalAmount * 16);
@@ -263,30 +263,31 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   private void drawAdvancementTree(DrawContext context, int mouseX, int mouseY, int x, int y) {
-    AdvancementReloadedTab advancementTab = this.selectedTab;
 
     switch (AdvancementInfoReloaded.getConfig().backgroundStyle()) {
-      case AdvancementInfoReloadedConfigModel.BackgroundStyle.TRANSPARENT:
+      case ConfigModel.BackgroundStyle.TRANSPARENT:
         break;
-      case AdvancementInfoReloadedConfigModel.BackgroundStyle.BLACK:
+      case ConfigModel.BackgroundStyle.BLACK:
         context.fill(0, 0, width, height, Colors.BLACK);
         break;
-      case AdvancementInfoReloadedConfigModel.BackgroundStyle.ACHIEVEMENT:
-        Identifier textureIdentifier = this.selectedTab.getDisplay().getBackground().orElse(TextureManager.MISSING_IDENTIFIER);
-        context.drawTexture(textureIdentifier, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
+      case ConfigModel.BackgroundStyle.ACHIEVEMENT:
+        this.selectedTab.ifPresent(tab -> {
+            Identifier textureIdentifier = tab.getDisplay().getBackground().orElse(TextureManager.MISSING_IDENTIFIER);
+            context.drawTexture(textureIdentifier, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
+        });
         context.fill(0, 0, width, height, -200, MathHelper.floor(0.7 * 255.0F) << 24);
         context.getMatrices().push();
         context.getMatrices().translate(0.0F, 0.0F, 300.0F);
         break;
     }
 
-    if (advancementTab == null) {
+    if (this.selectedTab.isEmpty()) {
       context.drawCenteredTextWithShadow(this.textRenderer, EMPTY_TEXT, width / 2,
           (height / 2) - this.textRenderer.fontHeight * 2, Colors.WHITE);
       context.drawCenteredTextWithShadow(this.textRenderer, SAD_LABEL_TEXT, width / 2,
           (height / 2) + this.textRenderer.fontHeight * 2, Colors.WHITE);
     } else {
-      advancementTab.render(context, x, y);
+      this.selectedTab.get().render(context, x, y);
     }
   }
 
@@ -396,8 +397,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     context.getMatrices().push();
     context.getMatrices().translate(0.0F, 0.0F, 100.0F);
 
-    if (this.selectedTab != null) {
-      AdvancementDisplay display = this.selectedTab.getDisplay();
+    if (this.selectedTab.isPresent()) {
+      AdvancementDisplay display = this.selectedTab.get().getDisplay();
       Identifier textureIdentifier = display.getBackground().orElse(TextureManager.MISSING_IDENTIFIER);
 
       // Draw header
@@ -448,7 +449,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
           y = height - AdvancementInfoReloaded.getConfig().footerHeight() - 1;
         }
         advancementTab.setPos(x + 4, y);
-        advancementTab.drawBackground(context, advancementTab == this.selectedTab);
+        advancementTab.drawBackground(context, advancementTab == this.selectedTab.orElse(null));
         advancementTab.drawIcon(context);
       }
     }
@@ -481,11 +482,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   private void drawWidgetTooltip(DrawContext context, int mouseX, int mouseY, int x, int y) {
-    if (this.selectedTab != null) {
+    if (this.selectedTab.isPresent()) {
       context.getMatrices().push();
       context.getMatrices().translate((float) (x), (float) (y), 400.0F);
       RenderSystem.enableDepthTest();
-      this.selectedTab.drawWidgetTooltip(context, mouseX - x, mouseY - y, x, y);
+      this.selectedTab.get().drawWidgetTooltip(context, mouseX - x, mouseY - y, x, y);
       RenderSystem.disableDepthTest();
       context.getMatrices().pop();
     }
@@ -533,6 +534,10 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   public void setSelectedTab(AdvancementReloadedTab tab) {
+    this.setSelectedTab(Optional.ofNullable(tab));
+  }
+
+  public void setSelectedTab(Optional<AdvancementReloadedTab> tab) {
     this.selectedTab = tab;
     setClickableRegions();
   }
