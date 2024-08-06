@@ -3,7 +3,6 @@ package codes.atomys.advancementinforeloaded.screen;
 import com.google.common.collect.Maps;
 
 import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
-import codes.atomys.advancementinforeloaded.AdvancementInfoReloadedClient;
 
 import java.util.Iterator;
 import java.util.Map;

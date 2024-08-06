@@ -7,10 +7,8 @@ import codes.atomys.advancementinforeloaded.AdvancementInfoReloaded;
 import codes.atomys.advancementinforeloaded.AdvancementReloadedStep;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.TreeSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.Advancement;
