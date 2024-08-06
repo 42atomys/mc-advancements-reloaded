@@ -327,7 +327,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       context.drawTextWrapped(this.textRenderer, description,
           width - AdvancementInfoReloaded.getConfig().criteriasWidth() + 8,
           paddingTop,
-          textWidth, Colors.GRAY);
+          textWidth,
+          getSelectedWidget().getAdvancement().display().get().getFrame().getTitleFormat().getColorValue()
+      );
       paddingTop += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(description, textWidth).size() + 4;
       contentHeight += (this.textRenderer.fontHeight) * this.textRenderer.wrapLines(description, textWidth).size() + 4;
     }
