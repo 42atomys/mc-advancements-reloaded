@@ -15,7 +15,7 @@ fabric_version=${FABRIC_API_VERSION}
 loom_version=${LOOM_VERSION}
 
 # Mod Properties
-mod_version=0.1.0-${GAME_VERSION}
+mod_version=0.4.2-${GAME_RELEASE}
 maven_group=codes.atomys
 archives_base_name=advancementinforeloaded
 
