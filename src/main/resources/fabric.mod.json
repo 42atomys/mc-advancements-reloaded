@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "advancementinforeloaded",
-	"version": "0.4.1-1.21",
+	"version": "0.4.2-1.21",
 	"name": "AdvancementInfo Reloaded",
 	"description": "Make it easier to see which advancements you have and what's missing.",
   "authors": ["@42atomys"],
@@ -31,7 +31,7 @@
 	],
   "accessWidenerPath": "advancementinforeloaded.accesswidener",
 	"depends": {
-		"minecraft": "~1.21",
+		"minecraft": ">=1.21 <1.22",
 		"fabricloader": ">=0.15.11",
 		"fabric-api": "*",
 		"java": ">=21",

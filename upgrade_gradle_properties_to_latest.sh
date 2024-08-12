@@ -7,6 +7,13 @@ if ! command -v xmllint &> /dev/null; then
   sudo apt-get -y install libxml2-utils
 fi
 
+# Install envsubst if not installed
+if ! command -v envsubst &> /dev/null; then
+  echo "> envsubst not found, installing..."
+  sudo apt-get update -y
+  sudo apt-get -y install gettext-base
+fi
+
 export OWO_CONFIG_VERSION="0.12.10+1.21"
 
 echo "> Fetching latest versions of the game, loader, yarn mappings, fabric api, and loom plugin..."
