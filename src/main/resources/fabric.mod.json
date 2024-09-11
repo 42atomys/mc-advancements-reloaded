@@ -29,7 +29,7 @@
 			"environment": "client"
 		}
 	],
-  "accessWidenerPath": "advancementinforeloaded.accesswidener",
+  "accessWidener": "advancementinforeloaded.accesswidener",
 	"depends": {
 		"minecraft": ">=1.21 <1.22",
 		"fabricloader": ">=0.15.11",
