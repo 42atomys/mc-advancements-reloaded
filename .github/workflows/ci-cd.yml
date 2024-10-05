@@ -42,6 +42,9 @@ jobs:
       - name: Check gradle validation
         uses: gradle/actions/wrapper-validation@v4
 
+      - name: Set Gradlew permissions
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
 
