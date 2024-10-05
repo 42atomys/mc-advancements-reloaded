@@ -32,7 +32,6 @@ I decided to revive and enhance the original [Advancements Reloaded](https://mod
 
 # Version and Compatibility
 
-<<<<<<< HEAD
 This mod is a continuation of the original [Advancements Reloaded](https://modrinth.com/mod/advancementinfo) mod, picking up from version 1.21 and beyond. It aims to keep the spirit of the original mod while adding significant improvements.
 
 # Known Issues
@@ -48,16 +47,6 @@ This mod is a continuation of the original [Advancements Reloaded](https://modri
 - [ ] Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
 - [x] ~~Achievement categories may display incorrectly on certain GUI scales.~~ **Implemented in 0.2.0 by configuration**
 - [x] ~~Support of Forge, NeoForge and Quilt.~~ **Implemented in 0.5.0**
-=======
-# Not Implemented Yet / Known Issues
-- [x] ~~Configuration options are not yet available.~~ **Implemented in 0.2.0**
-- [ ] Implement a search engine to locate criterias and advancements
-- [ ] Implementing an API to allow datapack creators to customize the UI directly from their datapacks.
-- [ ] Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
-- [x] ~~Achievement categories may display incorrectly on certain GUI scales.~~ **Implemented in 0.2.0 by configuration**
-- [ ] Potential incompatibility with other mods.
-- [ ] Possible bugs as this is an alpha version.
->>>>>>> 009ac44 (feat: implement configuration)
 
 # Support and Sponsorship
 

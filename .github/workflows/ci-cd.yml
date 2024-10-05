@@ -19,6 +19,7 @@ on:
 permissions:
   id-token: write
   attestations: write
+  contents: write
 
 jobs:
   build:
@@ -68,8 +69,6 @@ jobs:
         name: Attest Build
         with:
           subject-path: |
-            build/reports/
-            **/build/reports/
             build/libs
             **/build/libs/
 
@@ -79,13 +78,13 @@ jobs:
         if: ${{ github.event.inputs.release || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')) }}
         with:
           body_path: ${{ github.workspace }}/build/CHANGELOG.md
-          tag_name: v${{ env.mod_version }}
-          name: AdvancementsReloaded v${{ env.mod_version }}
+          tag_name: v${{ env.mod_version }}-${{ env.minecraft_version }}
+          name: v${{ env.mod_version }}-${{ env.minecraft_version }}
           target_commitish: ${{ github.sha }}
           files: |
-            **/build/libs/AdvancementsReloaded-*-fabric-*.jar
-            **/build/libs/AdvancementsReloaded-*-forge-*.jar
-            **/build/libs/AdvancementsReloaded-*-neoforge-*.jar
+            **/build/libs/advancements_reloaded-*-fabric-*.jar
+            **/build/libs/advancements_reloaded-*-forge-*.jar
+            **/build/libs/advancements_reloaded-*-neoforge-*.jar
 
       - name: Release Version to 3rd Parties
         uses: gradle/gradle-build-action@v2
