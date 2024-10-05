@@ -101,7 +101,7 @@ publishing {
 unifiedPublishing {
     project {
         displayName.set "Advancements Reloaded Fabric v${project.version} (${project.supported_minecraft_versions})"
-        version = project.version
+        version.set "${project.version}+fabric-${rootProject.minecraft_version}"
         changelog = releaseChangelog()
         releaseType.set project.releaseType
         List<String> mcVersions = project.supported_minecraft_versions_list.split(",")

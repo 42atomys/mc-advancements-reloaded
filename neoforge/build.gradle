@@ -97,7 +97,7 @@ publishing {
 unifiedPublishing {
     project {
         displayName.set("Advancements Reloaded NeoForge v${project.version} (${project.supported_minecraft_versions})")
-        version = project.version
+        version.set "${project.version}+neoforge-${rootProject.minecraft_version}"
         changelog = releaseChangelog()
         List<String> mcVersions = project.supported_minecraft_versions_list.split(",")
         gameVersions.set(mcVersions)
