@@ -62,13 +62,13 @@ public class AdvancementReloadedTab {
   private final Minecraft client;
   private final AdvancementReloadedScreen screen;
   private final TabPlacement type;
-  private final int index;
   private final AdvancementNode root;
   private final ReloadedDisplayInfo display;
   private final ItemStack icon;
   private final Component title;
   private final AdvancementReloadedWidget rootWidget;
   private final Map<AdvancementHolder, AdvancementReloadedWidget> widgets = Maps.newLinkedHashMap();
+  private int index;
   private double originX;
   private double originY;
   private int minPanX = Integer.MAX_VALUE;
@@ -135,6 +135,21 @@ public class AdvancementReloadedTab {
    */
   public int getIndex() {
     return this.index;
+  }
+
+  /**
+   * Sets the index of the tab.
+   * <p>
+   * The index is the position of the tab in the list of tabs, starting from 0.
+   * The index is used to identify the tab in the tab list, and is used by the
+   * client to determine which tab to display when the player switches between
+   * tabs.
+   * </p>
+   *
+   * @param index the new index of the tab
+   */
+  public void setIndex(final int index) {
+    this.index = index;
   }
 
   /**

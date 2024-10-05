@@ -45,7 +45,8 @@ public final class ModConfigurationFile {
     final Config appearance = Config.inMemory();
     appearance.set("display_sideabar", Configuration.displaySidebar);
     appearance.set("display_description", Configuration.displayDescription);
-    appearance.set("alphabetic_order", Configuration.alphabeticOrder);
+    appearance.set("criterias_alphabetic_order", Configuration.criteriasAlphabeticOrder);
+    appearance.set("tabs_alphabetic_order", Configuration.tabsAlphabeticOrder);
     appearance.set("background_style", Configuration.backgroundStyle.name());
 
     final Config advancedCustomization = Config.inMemory();
@@ -90,7 +91,8 @@ public final class ModConfigurationFile {
 
     Configuration.displaySidebar = appearance.getOrElse("display_sideabar", true);
     Configuration.displayDescription = appearance.getOrElse("display_description", true);
-    Configuration.alphabeticOrder = appearance.getOrElse("alphabetic_order", true);
+    Configuration.criteriasAlphabeticOrder = appearance.getOrElse("criterias_alphabetic_order", true);
+    Configuration.tabsAlphabeticOrder = appearance.getOrElse("tabs_alphabetic_order", true);
     Configuration.backgroundStyle = Configuration.BackgroundStyle
         .valueOf(appearance.getOrElse("background_style", "TRANSPARENT").toUpperCase());
 

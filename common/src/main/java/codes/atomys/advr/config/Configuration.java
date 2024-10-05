@@ -16,7 +16,8 @@ public final class Configuration {
   // appearance section
   public static boolean displaySidebar = true; // added in v0.3
   public static boolean displayDescription = true; // added in v0.2
-  public static boolean alphabeticOrder = true; // added in v0.3, true by default in v0.5
+  public static boolean criteriasAlphabeticOrder = true; // added in v0.3, true by default in v0.5
+  public static boolean tabsAlphabeticOrder = true; // added in v0.6
   public static BackgroundStyle backgroundStyle = BackgroundStyle.TRANSPARENT; // added in v0.4
 
   // Advanced customization
