@@ -353,7 +353,7 @@ public class AdvancementReloadedWidget {
     Iterable<String> remainingCriteriaIterable = progress.getRemainingCriteria();
     Iterable<String> completedCriteriaIterable = progress.getCompletedCriteria();
 
-    if (Configuration.alphabeticOrder) {
+    if (Configuration.criteriasAlphabeticOrder) {
       final List<String> unobtainedList = new ArrayList<>();
       final List<String> obtainedList = new ArrayList<>();
       remainingCriteriaIterable.forEach(unobtainedList::add);

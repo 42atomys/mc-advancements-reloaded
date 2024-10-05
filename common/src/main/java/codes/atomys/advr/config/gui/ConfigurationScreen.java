@@ -137,11 +137,24 @@ public final class ConfigurationScreen {
 
     appearance.addEntry(
         entryBuilder
-            .startBooleanToggle(Component.translatable("text.config.advancements_reloaded.option.alphabetic_order"),
-                Configuration.alphabeticOrder)
+            .startBooleanToggle(
+                Component.translatable("text.config.advancements_reloaded.option.criterias_alphabetic_order"),
+                Configuration.criteriasAlphabeticOrder)
             .setDefaultValue(true)
-            .setTooltip(Component.translatable("text.config.advancements_reloaded.option.alphabetic_order.tooltip"))
-            .setSaveConsumer(newValue -> Configuration.alphabeticOrder = newValue)
+            .setTooltip(
+                Component.translatable("text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip"))
+            .setSaveConsumer(newValue -> Configuration.criteriasAlphabeticOrder = newValue)
+            .build());
+
+    appearance.addEntry(
+        entryBuilder
+            .startBooleanToggle(
+                Component.translatable("text.config.advancements_reloaded.option.tabs_alphabetic_order"),
+                Configuration.tabsAlphabeticOrder)
+            .setDefaultValue(true)
+            .setTooltip(
+                Component.translatable("text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip"))
+            .setSaveConsumer(newValue -> Configuration.tabsAlphabeticOrder = newValue)
             .build());
 
     appearance.addEntry(

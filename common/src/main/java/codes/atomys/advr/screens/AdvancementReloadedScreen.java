@@ -10,6 +10,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -63,7 +64,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   @Nullable
   private final Screen parent;
   private final ClientAdvancements advancementHandler;
-  private final Map<AdvancementHolder, AdvancementReloadedTab> tabs = Maps
+  private Map<AdvancementHolder, AdvancementReloadedTab> tabs = Maps
       .<AdvancementHolder, AdvancementReloadedTab>newLinkedHashMap();
   @Nullable
   private Optional<AdvancementReloadedTab> selectedTab;
@@ -820,6 +821,31 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   /**
+   * Sorts the tabs alphabetically by their title. If the configuration
+   * value {@link Configuration#tabsAlphabeticOrder} is set to {@code true},
+   * the tabs are sorted based on the string representation of their title.
+   * Otherwise, the tabs are not sorted.
+   */
+  private void sortTabsAlphabetically() {
+    if (Configuration.tabsAlphabeticOrder) {
+      final List<AdvancementReloadedTab> sortedTabs = new ArrayList<>(this.tabs.values());
+      sortedTabs.sort(Comparator.comparing(
+          tab -> tab.getRoot().advancement().name().orElse(Component.literal(tab.getRoot().toString())).getString()));
+
+      this.tabs.clear();
+      for (int index = 0; index < sortedTabs.size(); index++) {
+        final AdvancementReloadedTab tab = sortedTabs.get(index);
+
+        // Set the index of the tab to its index in the sorted list
+        // This is used to identify the tab in the tab list and to determine
+        // the correct position on UI.
+        tab.setIndex(index);
+        this.tabs.put(tab.getRoot().holder(), tab);
+      }
+    }
+  }
+
+  /**
    * Adds a new root advancement to the list of tabs, if the given root's
    * advancement has a display information.
    *
@@ -830,6 +856,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         root);
     if (advancementTab != null) {
       this.tabs.put(root.holder(), advancementTab);
+      this.sortTabsAlphabetically();
     }
   }
 
@@ -1004,6 +1031,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         advancement);
     if (advancementTab != null) {
       this.tabs.put(advancement.holder(), advancementTab);
+      this.sortTabsAlphabetically();
     }
   }
 
