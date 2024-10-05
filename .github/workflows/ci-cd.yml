@@ -16,6 +16,10 @@ on:
         default: false
         type: boolean
 
+permissions:
+  id-token: write
+  attestations: write
+
 jobs:
   build:
     name: Build Advancements Reloaded
@@ -29,15 +33,14 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "21"
+          check-latest: true
+          cache: "gradle"
+          cache-dependency-path: |
+            **/*.gradle*
+            **/**/gradle-wrapper.properties
 
       - name: Check gradle validation
         uses: gradle/actions/wrapper-validation@v4
-
-      - name: Make Gradle Wrapper executable
-        run: chmod +x ./gradlew
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
 
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
@@ -53,6 +56,15 @@ jobs:
         with:
           name: AdvancementsReloaded-${{ env.mod_version }}-mc${{ env.minecraft_version }}
           path: |
+            build/reports/
+            **/build/reports/
+            build/libs
+            **/build/libs/
+
+      - uses: actions/attest-build-provenance@v1
+        name: Attest Build
+        with:
+          subject-path: |
             build/reports/
             **/build/reports/
             build/libs
