@@ -48,6 +48,7 @@ public final class ModConfigurationFile {
     appearance.set("criterias_alphabetic_order", Configuration.criteriasAlphabeticOrder);
     appearance.set("tabs_alphabetic_order", Configuration.tabsAlphabeticOrder);
     appearance.set("background_style", Configuration.backgroundStyle.name());
+    appearance.set("criterias_translation_mode", Configuration.criteriasTranslationMode.name());
 
     final Config advancedCustomization = Config.inMemory();
     advancedCustomization.set("header_height", Configuration.headerHeight);
@@ -95,6 +96,8 @@ public final class ModConfigurationFile {
     Configuration.tabsAlphabeticOrder = appearance.getOrElse("tabs_alphabetic_order", true);
     Configuration.backgroundStyle = Configuration.BackgroundStyle
         .valueOf(appearance.getOrElse("background_style", "TRANSPARENT").toUpperCase());
+    Configuration.criteriasTranslationMode = Configuration.TranslationMode
+        .valueOf(appearance.getOrElse("criterias_translation_mode", "ONLY_COMPATIBLE").toUpperCase());
 
     Configuration.headerHeight = advancedCustomization.getOrElse("header_height", 48);
     Configuration.footerHeight = advancedCustomization.getOrElse("footer_height", 32);

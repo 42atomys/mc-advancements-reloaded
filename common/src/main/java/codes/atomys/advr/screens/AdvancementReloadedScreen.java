@@ -549,13 +549,14 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       return;
 
     int paddingTop = Configuration.headerHeight + 6;
-    final int textWidth = Configuration.criteriasWidth - 12 - 6;
+    final int sidebarXOffset = width - Configuration.criteriasWidth + 8;
+    // 6 are the scrollbar width and 12 (6[left]-6[right]) are the right margin
+    final int maxTextWidth = Configuration.criteriasWidth - (this.needScrollbarOnCriterias() ? 6 : 0) - 12;
 
     final Component title = this.getSelectedWidget().getAdvancement().name().get();
     final Component description = this.getSelectedWidget().getAdvancement().display().get().getDescription();
 
-    context.fill(width - Configuration.criteriasWidth,
-        Configuration.headerHeight, width,
+    context.fill(width - Configuration.criteriasWidth, Configuration.headerHeight, width,
         height - Configuration.footerHeight, Mth.floor(0.5F * 255.0F) << 24);
 
     context.blit(criteriasSeparator, width - Configuration.criteriasWidth,
@@ -571,37 +572,32 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.contentHeight = 6; // 6 are the bottom margin
 
     // Drawing title
-    context.drawWordWrap(this.font, title, width - Configuration.criteriasWidth + 8,
-        paddingTop,
-        textWidth, CommonColors.WHITE);
-    paddingTop += (this.font.lineHeight) * this.font.split(title, textWidth).size() + 4;
-    this.contentHeight += (this.font.lineHeight) * this.font.split(title, textWidth).size() + 4;
+    context.drawWordWrap(this.font, title, sidebarXOffset, paddingTop, maxTextWidth, CommonColors.WHITE);
+    // 4 are the padding bottom added
+    paddingTop += (this.font.lineHeight) * this.font.split(title, maxTextWidth).size() + 4;
+    this.contentHeight += (this.font.lineHeight) * this.font.split(title, maxTextWidth).size() + 4;
 
     // Drawing description
     if (Configuration.displayDescription && description != null) {
-      context.drawWordWrap(this.font, description,
-          width - Configuration.criteriasWidth + 8,
-          paddingTop,
-          textWidth,
+      context.drawWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
           this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor().getColor());
-      paddingTop += (this.font.lineHeight) * this.font.split(description, textWidth).size() + 4;
-      this.contentHeight += (this.font.lineHeight) * this.font.split(description, textWidth).size() + 4;
+      // 4 are the padding bottom added
+      paddingTop += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
+      this.contentHeight += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
     }
 
-    context.hLine(width - Configuration.criteriasWidth + 8, width - 12, paddingTop,
-        CommonColors.LIGHT_GRAY);
+    context.hLine(sidebarXOffset, width - 12, paddingTop, CommonColors.LIGHT_GRAY);
     paddingTop += 5;
     this.contentHeight += 5;
 
     // Drawing criterias
     for (final ReloadedCriterionProgress step : this.getSelectedWidget().getSteps()) {
-      context.drawWordWrap(this.font, step.getTitle(),
-          width - Configuration.criteriasWidth + 8,
-          paddingTop, textWidth, step.getColor());
-      paddingTop += (this.font.lineHeight) * this.font.split(step.getTitle(), textWidth).size()
-          + 4;
-      this.contentHeight += (this.font.lineHeight) * this.font.split(step.getTitle(), textWidth).size()
-          + 4;
+      final Component stepTitle = step.getHumanCriterionName();
+      final int lineNeeded = this.font.split(stepTitle, maxTextWidth).size();
+      context.drawWordWrap(this.font, stepTitle, sidebarXOffset, paddingTop, maxTextWidth, step.getColor());
+      // 4 are the padding bottom added
+      paddingTop += (this.font.lineHeight) * lineNeeded + 4;
+      this.contentHeight += (this.font.lineHeight) * lineNeeded + 4;
     }
 
     postStack.popPose();
