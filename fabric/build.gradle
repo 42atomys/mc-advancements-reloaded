@@ -1,0 +1,141 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "8.1.1" // Use Shadow to make a JAR with dependencies
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric() // Tells Architectury this is a Fabric mod
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath // Tells Loom where our Access Widener is
+}
+
+repositories {
+    maven {	url "https://maven.terraformersmc.com/" }  // Repository for mod menu
+    maven {	url "https://maven.shedaniel.me/" }
+    mavenCentral()  // Repository for cloth-config
+}
+
+dependencies {
+    // Fabric API
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    // Tells Gradle to use cloth config
+    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}", {
+        exclude module: 'fabric-api'
+    }
+    include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
+
+    // Tells Gradle to use mod menu
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}", {
+        exclude module: 'fabric-api'
+    }
+
+    // Tells Gradle to use fabric resource loader in order to use language files
+    include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
+
+    // Tells Gradle to use night config
+    implementation 'com.electronwill.night-config:json:3.6.6'
+    shadowCommon 'com.electronwill.night-config:json:3.6.6'
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+}
+
+processResources {
+    // Replaces the version in mods.toml with the project version
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
+    relocate 'com.electronwill.nightconfig', 'codes.atomys.advr.libs.nightconfig'
+}
+
+remapJar {
+    injectAccessWidener = true
+    inputFile.set(shadowJar.archiveFile)
+    dependsOn(shadowJar)
+    archiveClassifier.set("fabric-${rootProject.minecraft_version}")
+
+    from rootProject.file("LICENSE.txt")
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+java {
+    withSourcesJar()
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName.set "Advancements Reloaded Fabric v${project.version} (${project.supported_minecraft_versions})"
+        version = project.version
+        changelog = releaseChangelog()
+        releaseType.set project.releaseType
+        List<String> mcVersions = project.supported_minecraft_versions_list.split(",")
+        gameVersions.set mcVersions
+        gameLoaders = ["fabric","quilt"]
+
+        mainPublication tasks.remapJar
+
+        relations {
+            depends {
+                curseforge.set "cloth-config"
+                modrinth.set "cloth-config"
+            }
+            optional {
+                curseforge.set "modmenu"
+                modrinth.set "modmenu"
+            }
+        }
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null && CURSE_API_KEY instanceof String) {
+            curseforge {
+                token.set CURSE_API_KEY
+                id = rootProject.curseforge_id
+                gameVersions.addAll("Java 21")
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null && MODRINTH_TOKEN instanceof String) {
+            modrinth {
+                token.set MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+            }
+        }
+    }
+}

@@ -1,0 +1,134 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "8.1.1" // Use Shadow to make a JAR with dependencies
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentNeoForge.extendsFrom common
+}
+
+architectury {
+    platformSetupLoomIde()
+    neoForge() // Tells Architectury this is a NeoForge mod
+}
+
+loom {
+    neoForge {
+        accessWidenerPath = project(":common").loom.accessWidenerPath // Access widener file
+    }
+    runs {
+        client {
+            property 'mixin.debug', 'true' // Tells neoforge to have debug on for Mixins
+        }
+    }
+}
+
+repositories {
+    maven { url "https://maven.shedaniel.me/" } // Repository for cloth-config
+    maven { url "https://maven.neoforged.net/releases/" } // NeoForge Maven Repository
+}
+
+dependencies {
+    modules { // https://github.com/google/guava/issues/6618 - Fix duplicate classes error
+        module("com.google.guava:listenablefuture") {
+            replacedBy("com.google.guava:guava", "listenablefuture is part of guava")
+        }
+    }
+    // Minecraft NeoForge API
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}", {
+        exclude module: 'guava'
+    }
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+}
+
+processResources {
+    // Replaces the version in neoforge.mods.toml with the project version
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    // Excludes these files from the JAR file
+    exclude "fabric.mod.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
+}
+
+remapJar {
+    inputFile.set(shadowJar.archiveFile)
+    dependsOn(shadowJar)
+    archiveClassifier.set("neoforge-${rootProject.minecraft_version}")
+
+    from rootProject.file("LICENSE.txt")
+    atAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+java {
+    withSourcesJar()
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName.set("Advancements Reloaded NeoForge v${project.version} (${project.supported_minecraft_versions})")
+        version = project.version
+        changelog = releaseChangelog()
+        List<String> mcVersions = project.supported_minecraft_versions_list.split(",")
+        gameVersions.set(mcVersions)
+        gameLoaders = ["neoforge"]
+
+        mainPublication tasks.remapJar
+
+        relations {
+            depends {
+                curseforge.set "cloth-config"
+                modrinth.set "cloth-config"
+            }
+        }
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null && CURSE_API_KEY instanceof String) {
+            curseforge {
+                token.set CURSE_API_KEY
+                id = rootProject.curseforge_id
+                gameVersions.addAll ("Java 21")
+                releaseType = "beta"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null && MODRINTH_TOKEN instanceof String) {
+            modrinth {
+                token.set MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+                releaseType = project.releaseType
+            }
+        }
+    }
+}

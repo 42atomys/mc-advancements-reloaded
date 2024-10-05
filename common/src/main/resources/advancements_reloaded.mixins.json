@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "codes.atomys.advr.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "MinecraftClientMixin",
+    "PauseScreenMixin"
+  ]
+}

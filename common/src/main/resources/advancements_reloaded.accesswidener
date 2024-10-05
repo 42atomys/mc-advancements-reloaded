@@ -1,0 +1,10 @@
+accessWidener   v1  named
+accessible class net/minecraft/client/multiplayer/ClientChunkCache$Storage
+accessible field net/minecraft/client/renderer/LevelRenderer lastViewDistance I
+accessible field net/minecraft/client/renderer/LevelRenderer level Lnet/minecraft/client/multiplayer/ClientLevel;
+accessible field net/minecraft/client/renderer/LevelRenderer viewArea Lnet/minecraft/client/renderer/ViewArea;
+accessible field net/minecraft/client/renderer/LevelRenderer renderedEntities I
+accessible field net/minecraft/client/gui/components/DebugScreenOverlay HEIGHTMAP_NAMES Ljava/util/Map;
+accessible class net/minecraft/client/gui/components/DebugScreenOverlay$AllocationRateCalculator
+accessible field net/minecraft/client/gui/components/DebugScreenOverlay renderFpsCharts Z
+accessible field net/minecraft/client/gui/components/DebugScreenOverlay renderProfilerChart Z

@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "*"
+license = "MIT"
+displayURL = "https://github.com/42atomys/mc-advancements-reloaded"
+issueTrackerURL="https://github.com/42atomys/mc-advancements-reloaded/issues"
+
+[[mods]]
+modId = "advancements_reloaded"
+version = "${version}"
+displayName = "Advancements Reloaded"
+updateJSONURL="https://api.modrinth.com/updates/advancements-reloaded/forge_updates.json"
+displayURL="https://modrinth.com/mod/advancements-reloaded"
+logoFile="icon.png"
+authors = "@42atomys"
+description = '''
+Make it easier to see which advancements you have and what's missing.
+'''
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
+
+[[mixins]]
+config = "advancements_reloaded.neoforge.mixins.json"
+
+[[mixins]]
+config = "advancements_reloaded.mixins.json"
+
+[[dependencies.advancements_reloaded]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.advancements_reloaded]]
+modId = "cloth_config"
+versionRange = "[15.0.0,)"
+mandatory = true

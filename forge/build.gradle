@@ -1,0 +1,132 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "8.1.1" // Use Shadow to make a JAR with dependencies
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge() // Tells Architectury this is a Forge mod
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+
+    forge {
+        convertAccessWideners = true
+        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+        mixinConfigs = [
+            "advancements_reloaded.mixins.json",
+            "advancements_reloaded.forge.mixins.json"
+        ]
+    }
+    runs {
+        client {
+            property 'mixin.debug', 'true' // Tells forge to have debug on for Mixins
+        }
+    }
+}
+
+repositories {
+    maven { url "https://maven.shedaniel.me/" } // Repository for cloth-config
+}
+
+dependencies {
+    // Minecraft Forge API
+    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+}
+
+processResources {
+    // Replaces the version in mods.toml with the project version
+    inputs.property "version", project.version
+
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}
+
+shadowJar {
+    // Excludes these files from the JAR file
+    exclude "fabric.mod.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
+}
+
+remapJar {
+    inputFile.set(shadowJar.archiveFile)
+    dependsOn(shadowJar)
+    archiveClassifier.set("forge-${rootProject.minecraft_version}")
+
+    from rootProject.file("LICENSE.txt")
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+java {
+    withSourcesJar()
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+unifiedPublishing {
+    project {
+        displayName.set("Advancements Reloaded MinecraftForge v${project.version} (${project.supported_minecraft_versions})")
+        version = project.version
+        changelog = releaseChangelog()
+        List<String> mcVersions = project.supported_minecraft_versions_list.split(",")
+        gameVersions.set(mcVersions)
+        gameLoaders = ["forge"]
+
+        mainPublication tasks.remapJar
+
+        relations {
+            depends {
+                curseforge.set "cloth-config"
+                modrinth.set "cloth-config"
+            }
+        }
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null && CURSE_API_KEY instanceof String) {
+            curseforge {
+                token.set CURSE_API_KEY
+                id = rootProject.curseforge_id
+                gameVersions.addAll ("Java 21")
+                releaseType = "beta"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null && MODRINTH_TOKEN instanceof String) {
+            modrinth {
+                token.set MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+                releaseType = project.releaseType
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "advancements_reloaded",
+  "version": "${version}",
+  "name": "Advancements Reloaded",
+  "description": "Make it easier to see which advancements you have and what's missing.",
+  "icon": "icon.png",
+  "authors": [
+    "@42atomys"
+  ],
+  "contact": {
+    "homepage": "https://github.com/42atomys/mc-advancements-reloaded",
+    "sources": "https://github.com/42atomys/mc-advancements-reloaded",
+    "issues": "https://github.com/42atomys/mc-advancements-reloaded/issues"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "codes.atomys.advr.AdvancementsReloadedFabric"
+    ],
+    "modmenu": [
+      "codes.atomys.advr.ModMenuIntegration"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": ">=1.21"
+  },
+  "recommends": {
+    "modmenu": ">=10.0.0"
+  },
+  "accessWidener" : "advancements_reloaded.accesswidener",
+  "mixins": ["advancements_reloaded.mixins.json", "advancements_reloaded.fabric.mixins.json"]
+}

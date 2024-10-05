@@ -1,0 +1,43 @@
+repositories {
+    maven { url "https://maven.shedaniel.me/" } // cloth-config repository
+    mavenCentral()
+}
+
+configurations {
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+}
+
+dependencies {
+    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
+    // Do NOT use other classes from fabric loader
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+    modImplementation "me.shedaniel.cloth:cloth-config:${project.cloth_version}", {
+        exclude module: 'fabric-api'
+    }
+
+    implementation 'com.electronwill.night-config:json:3.6.6'
+    shadowCommon 'com.electronwill.night-config:json:3.6.6'
+}
+
+processResources {
+    releaseChangelog()
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/advancements_reloaded.accesswidener")
+}
+
+architectury {
+    common(rootProject.platforms.split(","))
+}
+
+publishing {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}

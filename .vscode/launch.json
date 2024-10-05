@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Minecraft Client (:fabric)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/fabric/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.fabricmc.loader.impl.launch.knot.KnotClient -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "",
+      "env": {},
+      "projectName": "fabric"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server (:fabric)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/fabric/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.fabricmc.loader.impl.launch.knot.KnotServer -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\fabric\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "nogui",
+      "env": {},
+      "projectName": "fabric"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Client (:neoforge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/neoforge/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dmixin.debug\u003dtrue -p C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\cpw.mods\\securejarhandler\\3.0.8\\c0ef95cecd8699a0449053ac7d9c160748d902cd\\securejarhandler-3.0.8.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-commons\\9.5\\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\\asm-commons-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-util\\9.5\\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\\asm-util-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-analysis\\9.5\\490bacc77de7cbc0be1a30bb3471072d705be4a4\\asm-analysis-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-tree\\9.5\\fd33c8b6373abaa675be407082fdfda35021254a\\asm-tree-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm\\9.5\\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\\asm-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\net.neoforged\\JarJarFileSystems\\0.4.1\\78f59f89defcd032ed788b151ca6a0d40ace796a\\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar\u003dcpw.mods.securejarhandler --add-opens java.base/java.lang.invoke\u003dcpw.mods.securejarhandler --add-exports java.base/sun.security.util\u003dcpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns\u003djava.naming -Dfabric.dli.main\u003dcpw.mods.bootstraplauncher.BootstrapLauncher -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "",
+      "env": {
+        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\build\\classes\\java\\main"
+      },
+      "projectName": "neoforge"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server (:neoforge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/neoforge/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -p C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\cpw.mods\\securejarhandler\\3.0.8\\c0ef95cecd8699a0449053ac7d9c160748d902cd\\securejarhandler-3.0.8.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-commons\\9.5\\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\\asm-commons-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-util\\9.5\\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\\asm-util-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-analysis\\9.5\\490bacc77de7cbc0be1a30bb3471072d705be4a4\\asm-analysis-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm-tree\\9.5\\fd33c8b6373abaa675be407082fdfda35021254a\\asm-tree-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\org.ow2.asm\\asm\\9.5\\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\\asm-9.5.jar;C:\\Users\\gdalm\\caches\\modules-2\\files-2.1\\net.neoforged\\JarJarFileSystems\\0.4.1\\78f59f89defcd032ed788b151ca6a0d40ace796a\\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar\u003dcpw.mods.securejarhandler --add-opens java.base/java.lang.invoke\u003dcpw.mods.securejarhandler --add-exports java.base/sun.security.util\u003dcpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns\u003djava.naming -Dfabric.dli.main\u003dcpw.mods.bootstraplauncher.BootstrapLauncher -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "nogui",
+      "env": {
+        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\neoforge\\build\\classes\\java\\main"
+      },
+      "projectName": "neoforge"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Client (:forge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/forge/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dmixin.debug\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem -Dfabric.dli.main\u003dnet.minecraftforge.bootstrap.ForgeBootstrap -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "",
+      "env": {
+        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\classes\\java\\main",
+        "MCP_MAPPINGS": "loom.stub"
+      },
+      "projectName": "forge"
+    },
+    {
+      "type": "java",
+      "name": "Minecraft Server (:forge)",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/forge/run",
+      "console": "integratedTerminal",
+      "stopOnEntry": false,
+      "mainClass": "dev.architectury.transformer.TransformerRuntime",
+      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Djava.net.preferIPv6Addresses\u003dsystem -Dfabric.dli.main\u003dnet.minecraftforge.bootstrap.ForgeBootstrap -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
+      "args": "nogui",
+      "env": {
+        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\classes\\java\\main",
+        "MCP_MAPPINGS": "loom.stub"
+      },
+      "projectName": "forge"
+    }
+  ]
+}
