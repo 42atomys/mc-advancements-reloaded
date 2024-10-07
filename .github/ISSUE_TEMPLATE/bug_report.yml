@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-title: "[Bug]: "
+title: 'bug: '
 body:
   - type: markdown
     attributes:
@@ -41,7 +41,9 @@ body:
       description: What modloader are you using?
       options:
         - Minecraft Forge
+        - Neoforge
         - Fabric
+        - Quilt
     validations:
       required: true
   - type: input

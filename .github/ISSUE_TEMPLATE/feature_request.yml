@@ -1,6 +1,6 @@
 name: Feature Request
 description: Suggest an idea for Advancements Reloaded
-title: "feature request: "
+title: 'feature request: '
 body:
   - type: markdown
     attributes:
@@ -27,7 +27,9 @@ body:
       description: If applicable, what modloader are you using?
       options:
         - Minecraft Forge
+        - Neoforge
         - Fabric
+        - Quilt
     validations:
       required: false
   - type: input

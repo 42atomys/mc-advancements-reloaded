@@ -1,0 +1,88 @@
+name: Plan Management 📝
+on:
+  pull_request:
+    types: [opened, reopened]
+  issues:
+    types: [opened, reopened]
+  schedule:
+    - cron: "42 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  sponsors:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'issues' || github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_SPONSOR_CHECKING }}
+        with:
+          script: |
+            const { owner, repo } = context.repo
+            const { repositoryOwner } = await github.graphql(
+              `query($owner: String!, $sponsor: String!) {
+                repositoryOwner(login: $owner) {
+                  ... on User {
+                    isSponsoredBy(accountLogin: $sponsor)
+                  }
+                }
+              }`,
+              {
+                owner: owner,
+                sponsor: context.payload.issue?.user?.login || context.payload.pull_request?.user?.login,
+                headers: {
+                  authorization: `token ${process.env.GITHUB_TOKEN}`
+                }
+              }
+            )
+
+            console.log("request response", JSON.stringify(repositoryOwner, null, 2))
+            if (repositoryOwner.isSponsoredBy) {
+              github.issues.addLabels({
+                owner,
+                repo,
+                issue_number: context.payload.issue?.number || context.payload.pull_request?.number,
+                labels: ["sponsor 💖"]
+              })
+            }
+  stale:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/stale@v9
+        with:
+          exempt-all-milestones: true
+          exempt-assignees: "42atomys"
+
+          enable-statistics: true
+          operations-per-run: 100
+
+          days-before-issue-stale: 28
+          days-before-issue-close: 12
+          days-before-pr-stale: -1
+          days-before-pr-close: -1
+
+          stale-issue-label: "stale/stale 🦴"
+          stale-issue-message: "This issue is stale because it has been open for 28 days with no activity."
+
+          close-issue-label: "stale/dead 💀"
+          close-issue-message: "This issue was closed because it has been inactive for 12 days since being marked as stale."
+
+          stale-pr-label: "stale/stale 🦴"
+          stale-pr-message: "This pull request is stale because it has been open for 28 days with no activity."
+
+          close-pr-label: "stale/dead 💀"
+          close-pr-message: "This pull request was closed because it has been inactive for 12 days since being marked as stale."
+
+          exempt-issue-labels: "stale/lock 🔒"
+          exempt-pr-labels: "stale/lock 🔒"
+
+          labels-to-add-when-unstale: "stale/unstale 🍖"
+          labels-to-remove-when-unstale: "stale/stale 🦴,stale/dead 💀"
