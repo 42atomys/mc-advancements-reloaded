@@ -166,6 +166,17 @@ public final class ConfigurationScreen {
                 Component.translatable("text.config.advancements_reloaded.option.background_style.tooltip"))
             .setSaveConsumer(newValue -> Configuration.backgroundStyle = newValue)
             .build());
+
+    appearance.addEntry(
+        entryBuilder
+            .startEnumSelector(
+                Component.translatable("text.config.advancements_reloaded.option.criterias_translation_mode"),
+                Configuration.TranslationMode.class, Configuration.criteriasTranslationMode)
+            .setDefaultValue(Configuration.TranslationMode.ONLY_COMPATIBLE)
+            .setTooltip(
+                Component.translatable("text.config.advancements_reloaded.option.criterias_translation_mode.tooltip"))
+            .setSaveConsumer(newValue -> Configuration.criteriasTranslationMode = newValue)
+            .build());
   }
 
   private static void createAdvancedCustomizationEntries(final ConfigBuilder builder) {

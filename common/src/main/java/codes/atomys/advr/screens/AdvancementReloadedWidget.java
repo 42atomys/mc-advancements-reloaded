@@ -365,10 +365,10 @@ public class AdvancementReloadedWidget {
     }
 
     remainingCriteriaIterable.forEach((criterion) -> {
-      steps.add(new ReloadedCriterionProgress(this.advancement.advancement(), progress, criterion));
+      steps.add(new ReloadedCriterionProgress(this.advancement, progress, criterion));
     });
     completedCriteriaIterable.forEach((criterion) -> {
-      steps.add(new ReloadedCriterionProgress(this.advancement.advancement(), progress, criterion));
+      steps.add(new ReloadedCriterionProgress(this.advancement, progress, criterion));
     });
 
     this.steps = steps;
