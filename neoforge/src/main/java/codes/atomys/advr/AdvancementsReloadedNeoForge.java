@@ -53,7 +53,7 @@ public class AdvancementsReloadedNeoForge {
       Utils.modVersion(modVersion());
 
       // Setup config with JSON file type
-      ModConfigurationFile.load(ModConfigurationFile.FileType.JSON);
+      ModConfigurationFile.load(ModConfigurationFile.FileType.TOML);
 
       LOGGER.info("[AdvancementsReloaded] All done!");
     }
