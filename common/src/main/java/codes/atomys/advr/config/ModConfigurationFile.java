@@ -1,5 +1,6 @@
 package codes.atomys.advr.config;
 
+import codes.atomys.advr.utils.Utils;
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.file.FileConfig;
 import java.io.File;
@@ -76,6 +77,8 @@ public final class ModConfigurationFile {
         storedFileType == FileType.JSON ? "config/advancements_reloaded.json" : "config/advancements_reloaded.toml");
 
     if (!file.exists()) {
+      Utils.LOGGER.info("Configuration file not found, creating new one.");
+      saveRunnable.run();
       return;
     }
 
