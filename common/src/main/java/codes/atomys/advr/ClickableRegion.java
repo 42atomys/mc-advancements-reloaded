@@ -232,6 +232,10 @@ public final class ClickableRegion {
    */
   public static List<ClickableRegion> foundClickedRegions(final List<ClickableRegion> regions) {
     final List<ClickableRegion> foundRegions = new ArrayList<ClickableRegion>();
+    if (regions == null) {
+      return foundRegions;
+    }
+
     for (final ClickableRegion region : regions) {
       if (region.isClicked()) {
         foundRegions.add(region);
