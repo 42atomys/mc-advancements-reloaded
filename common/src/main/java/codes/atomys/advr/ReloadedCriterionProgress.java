@@ -4,6 +4,7 @@ import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
@@ -136,29 +137,71 @@ public class ReloadedCriterionProgress {
    * Gets the translation key for the criterion name. This is used for the
    * advancement sidebar. The key is formatted as
    * "advancements.{root-advancement-id}.{advancement-id}.criteria.{criterion-name>}"
+   * <p>
+   * This method will return an empty string if the translation key cannot be
+   * retrieved.
+   * </p>
    *
    * @return the translation key for the criterion name
    */
   public String getTranslationKey() {
-    final ResourceLocation advancementId = this.getResourceLocation();
-    final ResourceLocation rootAdvancementId = this.getAdvancementNode().root().holder().id();
     final String criterionName = this.criterion.getPath();
 
-    // Retrieve the achievement id without path
-    final String[] segments = advancementId.getPath().split("/");
-    final String realAchievementId = segments[segments.length - 1];
+    final List<String> parts = List.of(
+        "advancements",
+        this.getAdvancementCategory(),
+        this.getAdvancementIdentifier(),
+        "criteria",
+        criterionName);
 
-    // Retrieve the root achievement id without path
-    final String[] rootSegments = rootAdvancementId.getPath().split("/");
-    final String realRootAchievementId = rootSegments[rootSegments.length - 2];
+    return parts.stream()
+        .filter(part -> part != null && !part.isEmpty()) // Remove null or empty elements
+        .collect(Collectors.joining("."));
+  }
 
-    final String translationKey = "advancements."
-        + realRootAchievementId
-        + "."
-        + realAchievementId
-        + ".criteria." + criterionName;
+  /**
+   * Retrieves the identifier of the advancement for the current criterion.
+   * This is used to get the translation key for the criterion name in the
+   * sidebar.
+   *
+   * @return the identifier of the advancement
+   */
+  private String getAdvancementIdentifier() {
 
-    return translationKey;
+    final ResourceLocation locationId = this.getResourceLocation();
+    final String path = locationId.getPath();
+
+    final String[] pathSegments = path.split("/");
+    if (pathSegments.length == 0) {
+      Utils.LOGGER.warn("advancement cannot be retrieved from the path: " + path);
+      return "";
+    }
+
+    return pathSegments[pathSegments.length - 1];
+  }
+
+  /**
+   * Retrieves the category of the advancement for the current criterion.
+   * The category are the root advancement of the advancement if there is one.
+   * This is used to get the translation key for the criterion name in the
+   * sidebar.
+   *
+   * @return the category of the advancement
+   */
+  private String getAdvancementCategory() {
+    final ResourceLocation locationId = this.getAdvancementNode().root().holder().id();
+    final String path = locationId.getPath();
+
+    if (!path.contains("/")) {
+      return "";
+    }
+
+    final String[] pathSegments = path.split("/");
+    if (pathSegments.length >= 2) {
+      return pathSegments[pathSegments.length - 2];
+    }
+
+    return "";
   }
 
   private Component retrieveTranslationOnGame() {
