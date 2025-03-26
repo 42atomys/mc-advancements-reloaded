@@ -28,6 +28,7 @@ import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -537,7 +538,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
+          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground().map(ClientAsset::texturePath)
               .orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });
@@ -689,7 +690,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         - Configuration.footerHeight;
 
     // Drawing scrollbar background
-    RenderSystem.enableBlend();
     context.blitSprite(this.renderTypeGui, SCROLLER_BACKGROUND_TEXTURE, width - 6, Configuration.headerHeight,
         6, drawingHeight);
 
@@ -701,7 +701,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     // draw the scrollbar
     context.blitSprite(this.renderTypeGui, SCROLLER_TEXTURE, width - 6, scrollBarY, 6, scrollBarHeight);
-    RenderSystem.disableBlend();
 
   }
 
@@ -744,13 +743,12 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param y       the y coordinate of the window
    */
   public void renderWindow(final GuiGraphics context, final int x, int y) {
-    RenderSystem.enableBlend();
     context.pose().pushPose();
     context.pose().translate(0.0F, 0.0F, 100.0F);
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final ResourceLocation textureResourceLocation = display.getBackground()
+      final ResourceLocation textureResourceLocation = display.getBackground().map(ClientAsset::texturePath)
           .orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
       // Draw header
@@ -831,27 +829,20 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   private void drawSeparators(final GuiGraphics context, final float alpha) {
     // Enable blending
-    RenderSystem.enableBlend();
-    RenderSystem.defaultBlendFunc();
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
     // Bind and draw header texture
-    RenderSystem.setShaderTexture(0, Screen.INWORLD_HEADER_SEPARATOR);
     context.blit(this.renderTypeGui, Screen.INWORLD_HEADER_SEPARATOR, 0,
         Configuration.headerHeight - 1, 0.0F, 0.0F,
         width, 2, 32, 2);
 
     // Bind and draw footer texture
-    RenderSystem.setShaderTexture(0, Screen.INWORLD_FOOTER_SEPARATOR);
     context.blit(this.renderTypeGui, Screen.INWORLD_FOOTER_SEPARATOR, 0,
         height - Configuration.footerHeight - 1, 0.0F,
         0.0F, width, 2, 32, 2);
 
     // Reset shader color to avoid affecting subsequent draws
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-    // Disable blending if no longer needed
-    RenderSystem.disableBlend();
   }
 
   /**
@@ -869,9 +860,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     if (this.selectedTab.isPresent()) {
       context.pose().pushPose();
       context.pose().translate((float) (x), (float) (y), 400.0F);
-      RenderSystem.enableDepthTest();
       this.selectedTab.get().drawWidgetTooltip(context, mouseX - x, mouseY - y, x, y);
-      RenderSystem.disableDepthTest();
       context.pose().popPose();
     }
 

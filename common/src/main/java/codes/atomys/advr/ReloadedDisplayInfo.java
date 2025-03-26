@@ -3,8 +3,8 @@ package codes.atomys.advr;
 import java.util.Optional;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -26,7 +26,7 @@ public class ReloadedDisplayInfo extends DisplayInfo {
    * @param icon         The ItemStack representing the icon.
    * @param title        The Component representing the title.
    * @param description  The Component representing the description.
-   * @param background   An Optional containing the ResourceLocation of the
+   * @param background   An Optional containing the ClientAsset of the
    *                     background.
    * @param type         The type of the advancement.
    * @param showToast    A boolean indicating whether to show a toast
@@ -35,7 +35,7 @@ public class ReloadedDisplayInfo extends DisplayInfo {
    * @param hidden       A boolean indicating whether the advancement is hidden.
    */
   public ReloadedDisplayInfo(final ItemStack icon, final Component title, final Component description,
-      final Optional<ResourceLocation> background, final AdvancementType type, final boolean showToast,
+      final Optional<ClientAsset> background, final AdvancementType type, final boolean showToast,
       final boolean announceChat,
       final boolean hidden) {
     super(icon, title, description, background, type, showToast, announceChat, hidden);
