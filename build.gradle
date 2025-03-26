@@ -25,10 +25,7 @@ subprojects {
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}" // Minecraft dependency
         // mappings loom.officialMojangMappings() // Maps Minecraft so we can tell what classes are what - official mappings
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_minecraft_version}:${rootProject.parchmentmc_version}")
-        }
+        mappings loom.officialMojangMappings()
     }
 
     ext {
