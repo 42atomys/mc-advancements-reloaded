@@ -511,7 +511,7 @@ public class AdvancementReloadedTab {
    */
   public void addAdvancement(final AdvancementNode advancement) {
     final Optional<DisplayInfo> optional = advancement.advancement().display();
-    if (!optional.isEmpty()) {
+    if (optional.isPresent()) {
       final AdvancementReloadedWidget advancementWidget = new AdvancementReloadedWidget(this, this.client, advancement,
           ReloadedDisplayInfo.cast(optional.get()));
       this.addWidget(advancementWidget, advancement.holder());
@@ -537,21 +537,20 @@ public class AdvancementReloadedTab {
    */
   private void addWidget(final AdvancementReloadedWidget widget, final AdvancementHolder advancement) {
     this.widgets.put(advancement, widget);
-    final int i = widget.getX();
-    final int j = i + 28;
-    final int k = widget.getY();
-    final int l = k + 27;
-    this.minPanX = Math.min(this.minPanX, i);
-    this.maxPanX = Math.max(this.maxPanX, j);
-    this.minPanY = Math.min(this.minPanY, k);
-    this.maxPanY = Math.max(this.maxPanY, l);
-    final Iterator<AdvancementReloadedWidget> var7 = this.widgets.values().iterator();
+    final int widgetXPosition = widget.getX();
+    final int widgetXPositionOffset = widgetXPosition + 28;
+    final int widgetYPosition = widget.getY();
+    final int widgetYPositionOffset = widgetYPosition + 27;
+    this.minPanX = Math.min(this.minPanX, widgetXPosition);
+    this.maxPanX = Math.max(this.maxPanX, widgetXPositionOffset);
+    this.minPanY = Math.min(this.minPanY, widgetYPosition);
+    this.maxPanY = Math.max(this.maxPanY, widgetYPositionOffset);
+    final Iterator<AdvancementReloadedWidget> widgetIterator = this.widgets.values().iterator();
 
-    while (var7.hasNext()) {
-      final AdvancementReloadedWidget advancementWidget = var7.next();
+    while (widgetIterator.hasNext()) {
+      final AdvancementReloadedWidget advancementWidget = widgetIterator.next();
       advancementWidget.addToTree();
     }
-
   }
 
   /**

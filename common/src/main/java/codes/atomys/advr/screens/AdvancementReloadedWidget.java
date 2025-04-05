@@ -2,6 +2,7 @@ package codes.atomys.advr.screens;
 
 import codes.atomys.advr.ReloadedCriterionProgress;
 import codes.atomys.advr.config.Configuration;
+import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
@@ -213,9 +214,10 @@ public class AdvancementReloadedWidget {
       advancement = advancement.parent();
     } while (advancement != null && advancement.advancement().display().isEmpty());
 
-    if (advancement != null && !advancement.advancement().display().isEmpty()) {
+    if (advancement != null && advancement.advancement().display().isPresent()) {
       return this.tab.getWidget(advancement.holder());
     } else {
+      Utils.LOGGER.warn("advancement parent cannot be retrieved from the advancement: " + advancement);
       return null;
     }
   }
@@ -308,6 +310,7 @@ public class AdvancementReloadedWidget {
           y + this.y, 26, 26);
       context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y + 5);
     }
+
     for (final AdvancementReloadedWidget advancementWidget : this.children)
       advancementWidget.renderWidgets(context, x, y);
   }
