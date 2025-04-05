@@ -17,7 +17,11 @@
       "settings": {
         "java.jdt.ls.java.home": "/usr/lib/jvm/msopenjdk-current"
       },
-      "extensions": ["vscjava.vscode-java-pack", "redhat.vscode-yaml"]
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.vscode-yaml",
+        "shengchen.vscode-checkstyle"
+      ]
     }
   }
 

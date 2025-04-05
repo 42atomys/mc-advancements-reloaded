@@ -25,6 +25,7 @@ public class ReloadedCriterionProgress {
   private ResourceLocation criterion;
 
   private boolean obtained;
+  private List<String> alreadyWarnedTranslations = Lists.newArrayList();
 
   /**
    * Represents the progress of a specific criterion within an advancement.
@@ -234,9 +235,19 @@ public class ReloadedCriterionProgress {
       }
     }
 
+    // If no translation was found, log a warning and return the original
+    // criterion name.
+    if (this.alreadyWarnedTranslations.contains(criteria)) {
+      return Component.literal(criteria);
+    }
+
+    // Log a warning if the translation was not found on the first try.
     Utils.LOGGER.warn(
         "Unable to translate {} to a more meaningful name, adding as is, performance may be degraded. You can add your own translation for this criterion by adding the translation key: `{}`.",
         criteria, this.getTranslationKey());
+    this.alreadyWarnedTranslations.add(criteria);
+
+    // Return the original criterion name if no translation was found
     return Component.literal(criteria);
   }
 
