@@ -424,7 +424,8 @@ public class AdvancementReloadedTab {
 
     while (widgets.hasNext()) {
       final AdvancementReloadedWidget advancementWidget = widgets.next();
-      if (advancementWidget.isMouseOn(flooredOriginX, flooredOriginY, mouseX, mouseY))
+      if (advancementWidget.isMouseOn(flooredOriginX, flooredOriginY, mouseX, mouseY)
+          && advancementWidget.shouldRender(flooredOriginX, flooredOriginY, (int) mouseX, (int) mouseY))
         return advancementWidget;
     }
 
