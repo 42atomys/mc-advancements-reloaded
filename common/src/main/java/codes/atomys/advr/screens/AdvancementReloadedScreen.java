@@ -6,6 +6,7 @@ import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.config.gui.ConfigurationScreen;
 import codes.atomys.advr.utils.Memory;
+import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -27,8 +28,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -538,8 +537,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground().map(ClientAsset::texturePath)
-              .orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
+          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
+              .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
+              .id();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });
         context.fill(0, 0, width, height, -200, Mth.floor(0.7 * 255.0F) << 24);
@@ -748,8 +748,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final ResourceLocation textureResourceLocation = display.getBackground().map(ClientAsset::texturePath)
-          .orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
+      final ResourceLocation textureResourceLocation = display.getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
+          .id();
 
       // Draw header
       final int headerDrawHeight = Configuration.headerHeight / 16 + 1;
