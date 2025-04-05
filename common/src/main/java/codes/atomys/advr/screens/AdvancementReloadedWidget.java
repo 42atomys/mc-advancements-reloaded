@@ -3,7 +3,6 @@ package codes.atomys.advr.screens;
 import codes.atomys.advr.ReloadedCriterionProgress;
 import codes.atomys.advr.config.Configuration;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.systems.RenderSystem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -439,7 +438,6 @@ public class AdvancementReloadedWidget {
       advancementObtainedStatus3 = AdvancementWidgetType.UNOBTAINED;
     }
     final int k = this.width - j;
-    RenderSystem.enableBlend();
     final int l = originY + this.y;
     if (bl) {
       m = originX + this.x - this.width + 26 + 6;

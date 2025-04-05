@@ -1,5 +1,7 @@
 package codes.atomys.advr.utils;
 
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import org.slf4j.Logger;
@@ -18,6 +20,9 @@ public final class Utils {
   public static final Style SUCCESS_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(5635925));
   public static final Style ERROR_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(16733525));
   public static final Logger LOGGER = LoggerFactory.getLogger("AdvancementsReloaded");
+
+  public static final ClientAsset INTENTIONAL_MISSING_TEXTURE = new ClientAsset(
+      TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
   private static String modVersion;
 

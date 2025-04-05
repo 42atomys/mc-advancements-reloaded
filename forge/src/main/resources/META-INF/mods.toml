@@ -19,18 +19,18 @@ Make it easier to see which advancements you have and what's missing.
 [[dependencies.advancements_reloaded]]
 modId = "forge"
 mandatory = true
-versionRange = "[48,)"
+versionRange = "[55,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.advancements_reloaded]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21,)"
+versionRange = "[1.21.5]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.advancements_reloaded]]
 modId = "cloth_config"
-versionRange = "[15.0.0,)"
+versionRange = "[18.0.145,)"
 mandatory = true
