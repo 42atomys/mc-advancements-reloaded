@@ -539,7 +539,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         this.selectedTab.ifPresent(tab -> {
           final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
               .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
-              .id();
+              .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });
         context.fill(0, 0, width, height, -200, Mth.floor(0.7 * 255.0F) << 24);
@@ -749,7 +749,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
       final ResourceLocation textureResourceLocation = display.getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
-          .id();
+          .texturePath();
 
       // Draw header
       final int headerDrawHeight = Configuration.headerHeight / 16 + 1;
