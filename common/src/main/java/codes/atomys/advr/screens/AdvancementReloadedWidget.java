@@ -5,6 +5,7 @@ import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -249,6 +250,10 @@ public class AdvancementReloadedWidget {
    *         criteria
    */
   public List<ReloadedCriterionProgress> getSteps() {
+    if (this.steps == null) {
+      return Collections.emptyList();
+    }
+
     return this.steps;
   }
 
