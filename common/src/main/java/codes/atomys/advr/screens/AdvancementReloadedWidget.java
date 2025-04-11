@@ -249,6 +249,10 @@ public class AdvancementReloadedWidget {
    *         criteria
    */
   public List<ReloadedCriterionProgress> getSteps() {
+    if (this.steps == null) {
+      return new ArrayList<>();
+    }
+
     return this.steps;
   }
 
