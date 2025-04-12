@@ -349,13 +349,13 @@ public class AdvancementReloadedWidget {
         widgetType = ReloadedWidgetType.UNOBTAINED;
       }
 
-      final boolean shouldDimmed = !this.isSearchQueryMatched();
-      final ResourceLocation backgroundResource = widgetType.frameSprite(this.display.getType(), shouldDimmed);
+      final boolean isDimmed = !this.isSearchQueryMatched();
+      final ResourceLocation backgroundResource = widgetType.frameSprite(this.display.getType(), isDimmed);
 
       context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
 
       ItemRenderHelper.renderItemWithBrightness(context, this.display.getIcon(), x + this.x + 8, y + this.y + 5,
-          shouldDimmed ? 0.0F : 1.0F);
+          isDimmed ? 0.0F : 1.0F);
       // context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y +
       // 5);
     }
@@ -505,13 +505,13 @@ public class AdvancementReloadedWidget {
         context.blitSprite(this.renderTypeGui, TITLE_BOX_TEXTURE, m, l, this.width, n);
       }
 
-    final boolean mustDimmed = !this.isSearchQueryMatched();
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus.boxSprite(mustDimmed), 200, 26, 0, 0, m, l, j,
+    final boolean isDimmed = !this.isSearchQueryMatched();
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus.boxSprite(isDimmed), 200, 26, 0, 0, m, l, j,
         26);
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus2.boxSprite(mustDimmed), 200, 26, 200 - k, 0,
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus2.boxSprite(isDimmed), 200, 26, 200 - k, 0,
         m + j, l, k,
         26);
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.getType(), mustDimmed),
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.getType(), isDimmed),
         originX + this.x + 3,
         originY + this.y, 26, 26);
     if (bl) {
