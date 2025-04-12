@@ -29,5 +29,6 @@
   "text.config.advancements_reloaded.enum.background_style.achievement": "成就显示",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "按原样显示",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "仅与模组兼容",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "尽可能翻译"
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "尽可能翻译",
+  "text.advancements_reloaded.search_hint": "搜索..."
 }

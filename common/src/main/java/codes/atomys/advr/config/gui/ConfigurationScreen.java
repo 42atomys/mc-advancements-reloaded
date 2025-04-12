@@ -187,7 +187,7 @@ public final class ConfigurationScreen {
     advancedCustomization.addEntry(
         entryBuilder
             .startIntSlider(Component.translatable("text.config.advancements_reloaded.option.header_height"),
-                Configuration.headerHeight, 32, 128)
+                Configuration.headerHeight, 42, 128)
             .setDefaultValue(48)
             .setTooltip(Component.translatable("text.config.advancements_reloaded.option.header_height.tooltip"))
             .setSaveConsumer(newValue -> Configuration.headerHeight = newValue)
@@ -196,8 +196,8 @@ public final class ConfigurationScreen {
     advancedCustomization.addEntry(
         entryBuilder
             .startIntSlider(Component.translatable("text.config.advancements_reloaded.option.footer_height"),
-                Configuration.footerHeight, 32, 128)
-            .setDefaultValue(32)
+                Configuration.footerHeight, 42, 128)
+            .setDefaultValue(48)
             .setTooltip(Component.translatable("text.config.advancements_reloaded.option.footer_height.tooltip"))
             .setSaveConsumer(newValue -> Configuration.footerHeight = newValue)
             .build());

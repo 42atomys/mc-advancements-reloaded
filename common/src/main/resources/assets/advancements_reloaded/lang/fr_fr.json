@@ -29,5 +29,6 @@
   "text.config.advancements_reloaded.enum.background_style.achievement": "Affichage des Réalisations",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Afficher Tel Quel",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Seulement Compatible avec le Mod",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Essayer de Traduire Autant que Possible"
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Essayer de Traduire Autant que Possible",
+  "text.advancements_reloaded.search_hint": "Rechercher..."
 }

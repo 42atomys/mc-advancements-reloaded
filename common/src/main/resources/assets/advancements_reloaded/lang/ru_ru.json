@@ -29,5 +29,6 @@
   "text.config.advancements_reloaded.enum.background_style.achievement": "Отображение достижений",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Отображать как есть",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Только совместимые с модом",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Пытаться перевести по возможности"
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Пытаться перевести по возможности",
+  "text.advancements_reloaded.search_hint": "Поиск..."
 }

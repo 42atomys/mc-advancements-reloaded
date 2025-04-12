@@ -29,5 +29,6 @@
   "text.config.advancements_reloaded.enum.background_style.achievement": "Achievement Display",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Display As Is",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Only Compatible With Mod",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Try To Translate As Possible"
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Try To Translate As Possible",
+  "text.advancements_reloaded.search_hint": "Search..."
 }
