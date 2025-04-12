@@ -1,7 +1,9 @@
 package codes.atomys.advr.screens;
 
 import codes.atomys.advr.ReloadedCriterionProgress;
+import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.config.Configuration;
+import codes.atomys.advr.utils.ItemRenderHelper;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.advancements.AdvancementWidgetType;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -258,6 +259,43 @@ public class AdvancementReloadedWidget {
   }
 
   /**
+   * Checks if the given search string matches any part of the widget's title,
+   * description,
+   * or steps. The search is case-insensitive.
+   *
+   * @return {@code true} if the search string matches the title, any line in the
+   *         description,
+   *         or any step's human-readable criterion name; {@code false} otherwise.
+   */
+  public boolean isSearchQueryMatched() {
+    final String search = this.tab.getScreen().getSearchText();
+    if (search == null || search.isEmpty() || search.trim().isEmpty()) {
+      return true;
+    }
+
+    final String searchLower = search.toLowerCase();
+    // Pass by display getTitle getString to have the translated string
+    if (this.display.getTitle().getString().toLowerCase().contains(searchLower) ||
+        this.title.toString().toLowerCase().contains(searchLower)) {
+      return true;
+    }
+
+    for (final FormattedCharSequence line : this.description) {
+      if (line.toString().toLowerCase().contains(searchLower)) {
+        return true;
+      }
+    }
+
+    for (final ReloadedCriterionProgress step : this.steps) {
+      if (step.getHumanCriterionName().toString().toLowerCase().contains(searchLower)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * Renders lines connecting this widget to its parent, if any.
    *
    * @param context the GUI graphics context to render to
@@ -303,17 +341,21 @@ public class AdvancementReloadedWidget {
    */
   public void renderWidgets(final GuiGraphics context, final int x, final int y) {
     if (!this.display.isHidden() || (this.progress != null && this.progress.isDone())) {
-      final AdvancementWidgetType advancementObtainedStatus;
+      final ReloadedWidgetType widgetType;
       final float f = (this.progress == null) ? 0.0F : this.progress.getPercent();
       if (f >= 1.0F) {
-        advancementObtainedStatus = AdvancementWidgetType.OBTAINED;
+        widgetType = ReloadedWidgetType.OBTAINED;
       } else {
-        advancementObtainedStatus = AdvancementWidgetType.UNOBTAINED;
+        widgetType = ReloadedWidgetType.UNOBTAINED;
       }
-      context.blitSprite(this.renderTypeGui, advancementObtainedStatus.frameSprite(this.display.getType()),
-          x + this.x + 3,
-          y + this.y, 26, 26);
-      context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y + 5);
+
+      final boolean isDimmed = !this.isSearchQueryMatched();
+      final ResourceLocation backgroundResource = widgetType.frameSprite(this.display.getType(), isDimmed);
+
+      context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
+
+      ItemRenderHelper.renderItemWithBrightness(context, this.display.getIcon(), x + this.x + 8, y + this.y + 5,
+          isDimmed ? 0.0F : 1.0F);
     }
 
     for (final AdvancementReloadedWidget advancementWidget : this.children)
@@ -414,9 +456,9 @@ public class AdvancementReloadedWidget {
    */
   public void drawTooltip(final GuiGraphics context, final int originX, final int originY, final float alpha,
       final int x, final int y) {
-    final AdvancementWidgetType advancementObtainedStatus;
-    final AdvancementWidgetType advancementObtainedStatus2;
-    final AdvancementWidgetType advancementObtainedStatus3;
+    final ReloadedWidgetType advancementObtainedStatus;
+    final ReloadedWidgetType advancementObtainedStatus2;
+    final ReloadedWidgetType advancementObtainedStatus3;
     final int m;
     final boolean bl = (x + originX + this.x + this.width + 26 >= (this.tab.getScreen()).width);
     final Component text = (this.progress == null) ? null : this.progress.getProgressText();
@@ -427,23 +469,23 @@ public class AdvancementReloadedWidget {
     int j = Mth.floor(f * this.width);
     if (f >= 1.0F) {
       j = this.width / 2;
-      advancementObtainedStatus = AdvancementWidgetType.OBTAINED;
-      advancementObtainedStatus2 = AdvancementWidgetType.OBTAINED;
-      advancementObtainedStatus3 = AdvancementWidgetType.OBTAINED;
+      advancementObtainedStatus = ReloadedWidgetType.OBTAINED;
+      advancementObtainedStatus2 = ReloadedWidgetType.OBTAINED;
+      advancementObtainedStatus3 = ReloadedWidgetType.OBTAINED;
     } else if (j < 2) {
       j = this.width / 2;
-      advancementObtainedStatus = AdvancementWidgetType.UNOBTAINED;
-      advancementObtainedStatus2 = AdvancementWidgetType.UNOBTAINED;
-      advancementObtainedStatus3 = AdvancementWidgetType.UNOBTAINED;
+      advancementObtainedStatus = ReloadedWidgetType.UNOBTAINED;
+      advancementObtainedStatus2 = ReloadedWidgetType.UNOBTAINED;
+      advancementObtainedStatus3 = ReloadedWidgetType.UNOBTAINED;
     } else if (j > this.width - 2) {
       j = this.width / 2;
-      advancementObtainedStatus = AdvancementWidgetType.OBTAINED;
-      advancementObtainedStatus2 = AdvancementWidgetType.OBTAINED;
-      advancementObtainedStatus3 = AdvancementWidgetType.UNOBTAINED;
+      advancementObtainedStatus = ReloadedWidgetType.OBTAINED;
+      advancementObtainedStatus2 = ReloadedWidgetType.OBTAINED;
+      advancementObtainedStatus3 = ReloadedWidgetType.UNOBTAINED;
     } else {
-      advancementObtainedStatus = AdvancementWidgetType.OBTAINED;
-      advancementObtainedStatus2 = AdvancementWidgetType.UNOBTAINED;
-      advancementObtainedStatus3 = AdvancementWidgetType.UNOBTAINED;
+      advancementObtainedStatus = ReloadedWidgetType.OBTAINED;
+      advancementObtainedStatus2 = ReloadedWidgetType.UNOBTAINED;
+      advancementObtainedStatus3 = ReloadedWidgetType.UNOBTAINED;
     }
     final int k = this.width - j;
     final int l = originY + this.y;
@@ -460,10 +502,14 @@ public class AdvancementReloadedWidget {
       } else {
         context.blitSprite(this.renderTypeGui, TITLE_BOX_TEXTURE, m, l, this.width, n);
       }
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus.boxSprite(), 200, 26, 0, 0, m, l, j, 26);
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus2.boxSprite(), 200, 26, 200 - k, 0, m + j, l, k,
+
+    final boolean isDimmed = !this.isSearchQueryMatched();
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus.boxSprite(isDimmed), 200, 26, 0, 0, m, l, j,
         26);
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.getType()),
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus2.boxSprite(isDimmed), 200, 26, 200 - k, 0,
+        m + j, l, k,
+        26);
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.getType(), isDimmed),
         originX + this.x + 3,
         originY + this.y, 26, 26);
     if (bl) {

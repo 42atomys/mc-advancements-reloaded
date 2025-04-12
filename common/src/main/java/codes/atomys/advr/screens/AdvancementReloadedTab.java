@@ -1,8 +1,10 @@
 package codes.atomys.advr.screens;
 
 import codes.atomys.advr.ReloadedDisplayInfo;
+import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
+import codes.atomys.advr.utils.ItemRenderHelper;
 import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
+import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -56,11 +59,6 @@ import org.jetbrains.annotations.Nullable;
  * @see ReloadedDisplayInfo
  */
 public class AdvancementReloadedTab {
-  private static final ResourceLocation SELECTED_IDENTIFIER = ResourceLocation
-      .withDefaultNamespace("advancements/task_frame_obtained");
-  private static final ResourceLocation UNSELECTED_IDENTIFIER = ResourceLocation
-      .withDefaultNamespace("advancements/task_frame_unobtained");
-
   private final Minecraft client;
   private final AdvancementReloadedScreen screen;
   private final AdvancementNode root;
@@ -239,14 +237,14 @@ public class AdvancementReloadedTab {
    * @param selected whether the tab is selected
    */
   public void drawBackground(final GuiGraphics context, final boolean selected) {
-    final ResourceLocation texture = selected ? SELECTED_IDENTIFIER : UNSELECTED_IDENTIFIER;
+    final ReloadedWidgetType type = selected ? ReloadedWidgetType.OBTAINED : ReloadedWidgetType.UNOBTAINED;
 
     context.pose().pushPose();
     context.pose().translate(0.0D, 0.0D, 220.0D);
-    context.blitSprite(this.renderTypeGui, texture, this.tab_x, this.tab_y, this.tabPlacement.getWidth(),
+    context.blitSprite(this.renderTypeGui, type.frameSprite(AdvancementType.TASK, !this.isAnyWidgetMatchSearch()),
+        this.tab_x, this.tab_y, this.tabPlacement.getWidth(),
         this.tabPlacement.getHeight());
     context.pose().popPose();
-
   }
 
   /**
@@ -262,8 +260,11 @@ public class AdvancementReloadedTab {
   public void drawIcon(final GuiGraphics context) {
     context.pose().pushPose();
     context.pose().translate(0.0D, 0.0D, 221.0D);
-    context.renderFakeItem(this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
-        this.tab_y + this.tabPlacement.getLeftMargin());
+
+    ItemRenderHelper.renderItemWithBrightness(context, this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
+        this.tab_y + this.tabPlacement.getLeftMargin(),
+        !this.isAnyWidgetMatchSearch() ? 0.0F : 1.0F);
+
     context.pose().popPose();
   }
 
@@ -299,6 +300,21 @@ public class AdvancementReloadedTab {
     // 2 are the separator lines
     return this.screen.height - Configuration.headerHeight
         - Configuration.footerHeight - 2;
+  }
+
+  /**
+   * Checks if any widget in the collection matches the given search query.
+   *
+   * @return {@code true} if at least one widget matches the search query,
+   *         {@code false} otherwise.
+   */
+  public boolean isAnyWidgetMatchSearch() {
+    for (final AdvancementReloadedWidget widget : this.widgets.values()) {
+      if (widget.isSearchQueryMatched()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

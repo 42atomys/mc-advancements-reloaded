@@ -29,5 +29,6 @@
   "text.config.advancements_reloaded.enum.background_style.achievement": "Відображення досягнень",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Оригінал",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Сумісний лише з модом",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Переклад"
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Переклад",
+  "text.advancements_reloaded.search_hint": "Пошук..."
 }

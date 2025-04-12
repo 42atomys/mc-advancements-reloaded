@@ -17,11 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.screens.Screen;
@@ -69,6 +71,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   private static final Component SAD_LABEL_TEXT = Component.translatable("advancements.sad_label");
   private static final Component EMPTY_TEXT = Component.translatable("advancements.empty");
+  private static final Component SEARCH_HINT_TEXT = Component.translatable("text.advancements_reloaded.search_hint")
+      .withStyle(ChatFormatting.DARK_GRAY);
   @Nullable
   private final Screen parent;
   private final ClientAdvancements advancementHandler;
@@ -82,6 +86,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private int contentHeight = 0;
   private final Function<ResourceLocation, RenderType> renderTypeGui = (resourceLocation) -> RenderType
       .guiTextured(resourceLocation);
+  private EditBox searchBox;
+  private String searchText = "";
+  private boolean isSearching = false;
 
   /**
    * Constructs a new AdvancementReloadedScreen with the specified
@@ -131,6 +138,24 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   private void initComponents() {
+    this.initSettingsButton();
+    this.initSearchBox();
+  }
+
+  private void initSearchBox() {
+    this.searchBox = new EditBox(this.font, (this.width - 196) / 2, this.height - 16 - 5, 196, 16, SEARCH_HINT_TEXT);
+    this.searchBox.setHint(SEARCH_HINT_TEXT);
+    this.searchBox.setCanLoseFocus(true);
+    this.searchBox.setVisible(true);
+    this.searchBox.setTextColor(ChatFormatting.WHITE.getColor());
+    this.searchBox.setBordered(true);
+    this.searchBox.setMaxLength(32);
+    this.searchBox.setValue(this.searchText);
+    this.searchBox.setResponder(this::onSearchTextChanged);
+    this.addRenderableWidget(this.searchBox);
+  }
+
+  private void initSettingsButton() {
     final SpriteIconButton settingsIconButton = this.addRenderableWidget(
         SpriteIconButton.builder(
             Component.translatable("options.settings"),
@@ -421,7 +446,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Handles key press events.
    * <p>
    * If the key is the advancements key binding, it closes the screen and
-   * releases the mouse.
+   * releases the mouse, unless the search box is focused.
    * </p>
    * <p>
    * If the key is the escape key and there is a visible sidebar, it resets the
@@ -437,17 +462,34 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
+    // If search box is focused, don't exit the screen when the advancements key is
+    // pressed
+    if (this.searchBox.isFocused() && this.minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
+      return true; // Consume the key press, don't exit the screen
+    }
+
     if (this.minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
       this.minecraft.setScreen(null);
       this.minecraft.mouseHandler.grabMouse();
       return true;
-    } else if (InputConstants.KEY_ESCAPE == keyCode && this.hasVisibleSidebar()) {
-      this.setSelectedWidget(null);
-      this.init();
-      return true;
-    } else {
-      return super.keyPressed(keyCode, scanCode, modifiers);
+    } else if (InputConstants.KEY_ESCAPE == keyCode) {
+      if (this.searchBox.isFocused()) {
+        // Remove focus from search box before processing Escape
+        this.searchBox.setFocused(false);
+        return true;
+      } else if (this.isSearching) {
+        // Clear search text when Escape is pressed during search
+        this.searchText = "";
+        this.searchBox.setValue("");
+        this.isSearching = false;
+        return true;
+      } else if (this.hasVisibleSidebar()) {
+        this.setSelectedWidget(null);
+        this.init();
+        return true;
+      }
     }
+    return super.keyPressed(keyCode, scanCode, modifiers);
   }
 
   /**
@@ -794,7 +836,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     context.pose().popPose();
 
-    if (this.tabs.size() > 1) {
+    if (this.tabs.size() > 0) {
       for (final AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab.getTabPlacement() == TabPlacement.ABOVE) {
           y = Configuration.headerHeight + 1;
@@ -1131,5 +1173,36 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public void onAdvancementsCleared() {
     this.tabs.clear();
     this.selectedTab = null;
+  }
+
+  /**
+   * Called when the search text changes.
+   * Updates the search text field and triggers a search across all advancements.
+   *
+   * @param text the new search text
+   */
+  private void onSearchTextChanged(final String text) {
+    this.searchText = text;
+    this.isSearching = !text.isEmpty();
+    // Refresh the screen to show search results
+    this.initClickableRegions();
+  }
+
+  /**
+   * Checks if the screen is currently in search mode.
+   *
+   * @return true if searching, false otherwise
+   */
+  public boolean isSearching() {
+    return this.isSearching;
+  }
+
+  /**
+   * Returns the current search text.
+   *
+   * @return the current search text
+   */
+  public String getSearchText() {
+    return this.searchText;
   }
 }

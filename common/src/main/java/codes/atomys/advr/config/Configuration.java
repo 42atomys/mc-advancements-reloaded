@@ -23,7 +23,7 @@ public final class Configuration {
 
   // Advanced customization
   public static int headerHeight = 48; // added in v0.2
-  public static int footerHeight = 32; // added in v0.2
+  public static int footerHeight = 48; // added in v0.2 updated in v0.9
   public static int criteriasWidth = 142; // added in v0.2
   public static int aboveWidgetLimit = 14; // added in v0.2
   public static int belowWidgetLimit = 14; // added in v0.2
