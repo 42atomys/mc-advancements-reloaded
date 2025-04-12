@@ -356,8 +356,6 @@ public class AdvancementReloadedWidget {
 
       ItemRenderHelper.renderItemWithBrightness(context, this.display.getIcon(), x + this.x + 8, y + this.y + 5,
           isDimmed ? 0.0F : 1.0F);
-      // context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y +
-      // 5);
     }
 
     for (final AdvancementReloadedWidget advancementWidget : this.children)
