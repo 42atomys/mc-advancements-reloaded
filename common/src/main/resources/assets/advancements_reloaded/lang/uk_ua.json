@@ -28,7 +28,7 @@
   "text.config.advancements_reloaded.enum.background_style.black": "Чорне",
   "text.config.advancements_reloaded.enum.background_style.achievement": "Показ досягнення",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Усталено",
-  "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Сумісний лише",
+  "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Лише сумісність",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Переклад",
   "text.advancements_reloaded.search_hint": "Пошук…"
 }
