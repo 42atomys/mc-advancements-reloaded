@@ -31,6 +31,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -145,7 +146,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.searchBox.setHint(SEARCH_HINT_TEXT);
     this.searchBox.setCanLoseFocus(true);
     this.searchBox.setVisible(true);
-    this.searchBox.setTextColor(ChatFormatting.WHITE.getColor());
+    this.searchBox.setTextColor(ARGB.opaque(ChatFormatting.WHITE.getColor()));
     this.searchBox.setBordered(true);
     this.searchBox.setMaxLength(32);
     this.searchBox.setValue(this.searchText);
