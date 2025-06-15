@@ -687,7 +687,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     // Drawing description
     if (Configuration.displayDescription && description != null) {
       context.drawWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
-          this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor().getColor());
+          ARGB.opaque(this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor().getColor()));
       // 4 are the padding bottom added
       paddingTop += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
       this.contentHeight += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
