@@ -8,15 +8,13 @@ import codes.atomys.advr.config.gui.ConfigurationScreen;
 import codes.atomys.advr.utils.Memory;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
@@ -29,13 +27,14 @@ import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix3x2fStack;
 
 /**
  * The AdvancementReloadedScreen class represents a custom screen for displaying
@@ -84,8 +83,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private List<ClickableRegion> clickableRegions;
   private int scrollOffset = 0;
   private int contentHeight = 0;
-  private final Function<ResourceLocation, RenderType> renderTypeGui = (resourceLocation) -> RenderType
-      .guiTextured(resourceLocation);
+  private final RenderPipeline renderTypeGui = RenderPipelines.GUI_TEXTURED;
   private EditBox searchBox;
   private String searchText = "";
   private boolean isSearching = false;
@@ -469,7 +467,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     }
 
     if (this.minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
-      this.minecraft.setScreen(null);
+      this.minecraft.setScreen(this.parent);
       this.minecraft.mouseHandler.grabMouse();
       return true;
     } else if (InputConstants.KEY_ESCAPE == keyCode) {
@@ -518,11 +516,15 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public void render(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
     final int headerOffset = Configuration.headerHeight + 1; // 1 are the separator pixels
 
-    this.renderBackground(context, mouseX, mouseY, delta);
+    context.nextStratum();
     this.renderAdvancementTree(context, mouseX, mouseY, 0, headerOffset);
-    this.renderWindow(context, 0, headerOffset);
-    this.renderWidgetTooltip(context, mouseX, mouseY, 0, headerOffset);
+    context.nextStratum();
     this.renderAdvancementCriterias(context, 0, headerOffset);
+    context.nextStratum();
+    this.renderWindow(context, 0, headerOffset);
+    context.nextStratum();
+    this.renderWidgetTooltip(context, mouseX, mouseY, 0, headerOffset);
+    context.nextStratum();
     this.renderRenderable(context, mouseX, mouseY, delta);
   }
 
@@ -540,10 +542,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   public void renderRenderable(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
     for (final Renderable renderable : this.renderables) {
-      context.pose().pushPose();
-      context.pose().translate(0.0D, 0.0D, 220.0D);
       renderable.render(context, mouseX, mouseY, delta);
-      context.pose().popPose();
     }
   }
 
@@ -572,7 +571,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public void renderBackground(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
     switch (Configuration.backgroundStyle) {
       case Configuration.BackgroundStyle.TRANSPARENT:
-        this.renderBlurredBackground();
+        super.renderBackground(context, mouseX, mouseY, delta);
         break;
       case Configuration.BackgroundStyle.BLACK:
         context.fill(0, 0, width, height, CommonColors.BLACK);
@@ -584,7 +583,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
               .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });
-        context.fill(0, 0, width, height, -200, Mth.floor(0.7 * 255.0F) << 24);
+        context.fill(0, 0, width, height, Mth.floor(0.7 * 255.0F) << 24);
         break;
     }
   }
@@ -672,9 +671,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
             - 2,
         2, 32);
 
-    final PoseStack postStack = context.pose();
-    postStack.pushPose();
-    postStack.translate(0, -this.scrollOffset, 20D);
+    final Matrix3x2fStack postStack = context.pose();
+    postStack.pushMatrix();
+    postStack.translate(0, -this.scrollOffset);
 
     this.contentHeight = 6; // 6 are the bottom margin
 
@@ -707,7 +706,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       this.contentHeight += (this.font.lineHeight) * lineNeeded + 4;
     }
 
-    postStack.popPose();
+    postStack.popMatrix();
 
     this.drawAdvancementCriteriaScrollbar(context, x, y);
   }
@@ -785,8 +784,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param y       the y coordinate of the window
    */
   public void renderWindow(final GuiGraphics context, final int x, int y) {
-    context.pose().pushPose();
-    context.pose().translate(0.0F, 0.0F, 100.0F);
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
@@ -834,8 +831,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
           (Configuration.headerHeight - 20) / 2 - this.font.lineHeight / 2, 0xffffff);
     }
 
-    context.pose().popPose();
-
     if (this.tabs.size() > 0) {
       for (final AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab.getTabPlacement() == TabPlacement.ABOVE) {
@@ -871,7 +866,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   private void drawSeparators(final GuiGraphics context, final float alpha) {
     // Enable blending
-    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
+    // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
     // Bind and draw header texture
     context.blit(this.renderTypeGui, Screen.INWORLD_HEADER_SEPARATOR, 0,
@@ -884,7 +879,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         0.0F, width, 2, 32, 2);
 
     // Reset shader color to avoid affecting subsequent draws
-    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
   }
 
   /**
@@ -900,16 +895,16 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private void renderWidgetTooltip(final GuiGraphics context, final int mouseX, final int mouseY, final int x,
       final int y) {
     if (this.selectedTab.isPresent()) {
-      context.pose().pushPose();
-      context.pose().translate((float) (x), (float) (y), 400.0F);
+      context.pose().pushMatrix();
+      context.pose().translate((float) (x), (float) (y));
       this.selectedTab.get().drawWidgetTooltip(context, mouseX - x, mouseY - y, x, y);
-      context.pose().popPose();
+      context.pose().popMatrix();
     }
 
     if (this.tabs.size() > 1) {
       for (final AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab.isClickOnTab(x, y, (double) mouseX, (double) mouseY)) {
-          context.renderTooltip(this.font, advancementTab.getTitle(), mouseX, mouseY);
+          context.setTooltipForNextFrame(this.font, advancementTab.getTitle(), mouseX, mouseY);
         }
       }
     }

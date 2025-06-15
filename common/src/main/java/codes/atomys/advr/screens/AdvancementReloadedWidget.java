@@ -6,11 +6,11 @@ import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.utils.ItemRenderHelper;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
@@ -18,7 +18,7 @@ import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
@@ -70,8 +70,7 @@ public class AdvancementReloadedWidget {
   private List<ReloadedCriterionProgress> steps;
   private final int x;
   private final int y;
-  private final Function<ResourceLocation, RenderType> renderTypeGui = (resourceLocation) -> RenderType
-      .guiTextured(resourceLocation);
+  private final RenderPipeline renderTypeGui = RenderPipelines.GUI_TEXTURED;
 
   /**
    * The constructor for the AdvancementReloadedWidget class.
