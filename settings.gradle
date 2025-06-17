@@ -11,6 +11,6 @@ pluginManagement {
 
 include("common") // Common directory
 include("fabric") // Fabric directory
-// include("neoforge") // NeoForge directory
+include("neoforge") // NeoForge directory
 // include("forge") // Forge directory
 rootProject.name = 'advancements_reloaded'
