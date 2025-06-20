@@ -5,7 +5,6 @@ import codes.atomys.advr.utils.Utils;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -35,7 +34,7 @@ public class AdvancementsReloadedForge {
     if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
       LOGGER.warn("[AdvancementsReloaded] Not supported on dedicated server!");
     } else {
-      DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> ClientSetup.setup(context));
+      ClientSetup.setup(context);
     }
   }
 
