@@ -29,7 +29,7 @@
     "cloth-config": ">=19.0.147"
   },
   "recommends": {
-    "modmenu": ">=14.0.0"
+    "modmenu": ">=15.0.0"
   },
   "accessWidener" : "advancements_reloaded.accesswidener",
   "mixins": ["advancements_reloaded.mixins.json", "advancements_reloaded.fabric.mixins.json"]
