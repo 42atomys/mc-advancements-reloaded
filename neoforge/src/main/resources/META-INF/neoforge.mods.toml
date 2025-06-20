@@ -34,5 +34,5 @@ side = "BOTH"
 
 [[dependencies.advancements_reloaded]]
 modId = "cloth_config"
-versionRange = "[18.0.145,)"
+versionRange = "[19.0.147,)"
 mandatory = true
