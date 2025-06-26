@@ -28,7 +28,7 @@ config = "advancements_reloaded.mixins.json"
 [[dependencies.advancements_reloaded]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21.6]"
+versionRange = "[1.21.6,1.21.8)"
 ordering = "NONE"
 side = "BOTH"
 
