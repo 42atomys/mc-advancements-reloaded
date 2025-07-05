@@ -4,21 +4,19 @@ import codes.atomys.advr.ReloadedDisplayInfo;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
-import codes.atomys.advr.utils.ItemRenderHelper;
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -79,8 +77,7 @@ public class AdvancementReloadedTab {
   private boolean initialized;
   private int tab_x;
   private int tab_y;
-  private final Function<ResourceLocation, RenderType> renderTypeGui = (resourceLocation) -> RenderType
-      .guiTextured(resourceLocation);
+  private final RenderPipeline renderTypeGui = RenderPipelines.GUI_TEXTURED;
 
   /**
    * Creates a new instance of the {@link AdvancementReloadedTab} class.
@@ -237,14 +234,27 @@ public class AdvancementReloadedTab {
    * @param selected whether the tab is selected
    */
   public void drawBackground(final GuiGraphics context, final boolean selected) {
+    this.drawBackground(context, selected, 1.0F);
+  }
+
+  /**
+   * Draws the background of the tab with a specified alpha value.
+   * <p>
+   * This method is similar to {@link #drawBackground(GuiGraphics, boolean)},
+   * but it allows for a custom alpha value to be applied to the background,
+   * which can be used for fading effects or other visual enhancements.
+   * </p>
+   *
+   * @param context  the graphics context to draw on
+   * @param selected whether the tab is selected
+   * @param alpha    the alpha value to apply to the background
+   */
+  public void drawBackground(final GuiGraphics context, final boolean selected, final float alpha) {
     final ReloadedWidgetType type = selected ? ReloadedWidgetType.OBTAINED : ReloadedWidgetType.UNOBTAINED;
 
-    context.pose().pushPose();
-    context.pose().translate(0.0D, 0.0D, 220.0D);
     context.blitSprite(this.renderTypeGui, type.frameSprite(AdvancementType.TASK, !this.isAnyWidgetMatchSearch()),
         this.tab_x, this.tab_y, this.tabPlacement.getWidth(),
-        this.tabPlacement.getHeight());
-    context.pose().popPose();
+        this.tabPlacement.getHeight(), alpha);
   }
 
   /**
@@ -258,14 +268,8 @@ public class AdvancementReloadedTab {
    * @param context the graphics context to draw on
    */
   public void drawIcon(final GuiGraphics context) {
-    context.pose().pushPose();
-    context.pose().translate(0.0D, 0.0D, 221.0D);
-
-    ItemRenderHelper.renderItemWithBrightness(context, this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
-        this.tab_y + this.tabPlacement.getLeftMargin(),
-        !this.isAnyWidgetMatchSearch() ? 0.0F : 1.0F);
-
-    context.pose().popPose();
+    context.renderFakeItem(this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
+        this.tab_y + this.tabPlacement.getLeftMargin());
   }
 
   /**
@@ -339,15 +343,15 @@ public class AdvancementReloadedTab {
     }
 
     context.enableScissor(x, y, x + this.getWidth(), y + this.getHeight());
-    context.pose().pushPose();
-    context.pose().translate((float) x, (float) y, 0.0F);
+    context.pose().pushMatrix();
+    context.pose().translate((float) x, (float) y);
     final int i = Mth.floor(this.originX);
     final int j = Mth.floor(this.originY);
 
     this.rootWidget.renderLines(context, i, j, true);
     this.rootWidget.renderLines(context, i, j, false);
     this.rootWidget.renderWidgets(context, i, j);
-    context.pose().popPose();
+    context.pose().popMatrix();
     context.disableScissor();
   }
 
@@ -372,9 +376,7 @@ public class AdvancementReloadedTab {
    */
   public void drawWidgetTooltip(final GuiGraphics context, final int mouseX, final int mouseY, final int x,
       final int y) {
-    context.fill(0, 0, this.getWidth(), this.getHeight(), -200, Mth.floor(this.alpha * 255.0F) << 24);
-    context.pose().pushPose();
-    context.pose().translate(0.0F, 0.0F, 300.0F);
+    context.fill(0, 0, this.getWidth(), this.getHeight(), Mth.floor(this.alpha * 255.0F) << 24);
     boolean rendered = false;
     final int i = Mth.floor(this.originX);
     final int j = Mth.floor(this.originY);
@@ -391,7 +393,6 @@ public class AdvancementReloadedTab {
       }
     }
 
-    context.pose().popPose();
     if (rendered) {
       this.alpha = Mth.clamp(this.alpha + 0.02F, 0.0F, 0.3F);
     } else {

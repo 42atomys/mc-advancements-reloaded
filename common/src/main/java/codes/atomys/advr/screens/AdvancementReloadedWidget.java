@@ -3,14 +3,13 @@ package codes.atomys.advr.screens;
 import codes.atomys.advr.ReloadedCriterionProgress;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.config.Configuration;
-import codes.atomys.advr.utils.ItemRenderHelper;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.pipeline.RenderPipeline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
@@ -18,7 +17,7 @@ import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
@@ -70,8 +69,7 @@ public class AdvancementReloadedWidget {
   private List<ReloadedCriterionProgress> steps;
   private final int x;
   private final int y;
-  private final Function<ResourceLocation, RenderType> renderTypeGui = (resourceLocation) -> RenderType
-      .guiTextured(resourceLocation);
+  private final RenderPipeline renderTypeGui = RenderPipelines.GUI_TEXTURED;
 
   /**
    * The constructor for the AdvancementReloadedWidget class.
@@ -342,8 +340,8 @@ public class AdvancementReloadedWidget {
   public void renderWidgets(final GuiGraphics context, final int x, final int y) {
     if (!this.display.isHidden() || (this.progress != null && this.progress.isDone())) {
       final ReloadedWidgetType widgetType;
-      final float f = (this.progress == null) ? 0.0F : this.progress.getPercent();
-      if (f >= 1.0F) {
+      final float currentProgress = (this.progress == null) ? 0.0F : this.progress.getPercent();
+      if (currentProgress >= 1.0F) {
         widgetType = ReloadedWidgetType.OBTAINED;
       } else {
         widgetType = ReloadedWidgetType.UNOBTAINED;
@@ -354,8 +352,13 @@ public class AdvancementReloadedWidget {
 
       context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
 
-      ItemRenderHelper.renderItemWithBrightness(context, this.display.getIcon(), x + this.x + 8, y + this.y + 5,
-          isDimmed ? 0.0F : 1.0F);
+      context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y + 5);
+
+      if (isDimmed) {
+        // Force the dimmed sprite to be rendered with a lower alpha
+        final ResourceLocation dimmedResource = widgetType.frameSprite(this.display.getType(), true);
+        context.blitSprite(this.renderTypeGui, dimmedResource, x + this.x + 3, y + this.y, 26, 26, 0.6f);
+      }
     }
 
     for (final AdvancementReloadedWidget advancementWidget : this.children)
