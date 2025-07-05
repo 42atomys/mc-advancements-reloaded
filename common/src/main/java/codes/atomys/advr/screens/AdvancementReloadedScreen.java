@@ -843,6 +843,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         advancementTab.setPos(x + 4, y);
         advancementTab.drawBackground(context, advancementTab == this.selectedTab.orElse(null));
         advancementTab.drawIcon(context);
+        if (!advancementTab.isAnyWidgetMatchSearch()) {
+          advancementTab.drawBackground(context, advancementTab == this.selectedTab.orElse(null), 0.6f);
+        }
       }
     }
 

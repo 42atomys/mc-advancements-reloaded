@@ -4,7 +4,6 @@ import codes.atomys.advr.ReloadedDisplayInfo;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
-import codes.atomys.advr.utils.ItemRenderHelper;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import java.util.Iterator;
@@ -235,11 +234,27 @@ public class AdvancementReloadedTab {
    * @param selected whether the tab is selected
    */
   public void drawBackground(final GuiGraphics context, final boolean selected) {
+    this.drawBackground(context, selected, 1.0F);
+  }
+
+  /**
+   * Draws the background of the tab with a specified alpha value.
+   * <p>
+   * This method is similar to {@link #drawBackground(GuiGraphics, boolean)},
+   * but it allows for a custom alpha value to be applied to the background,
+   * which can be used for fading effects or other visual enhancements.
+   * </p>
+   *
+   * @param context  the graphics context to draw on
+   * @param selected whether the tab is selected
+   * @param alpha    the alpha value to apply to the background
+   */
+  public void drawBackground(final GuiGraphics context, final boolean selected, final float alpha) {
     final ReloadedWidgetType type = selected ? ReloadedWidgetType.OBTAINED : ReloadedWidgetType.UNOBTAINED;
 
     context.blitSprite(this.renderTypeGui, type.frameSprite(AdvancementType.TASK, !this.isAnyWidgetMatchSearch()),
         this.tab_x, this.tab_y, this.tabPlacement.getWidth(),
-        this.tabPlacement.getHeight());
+        this.tabPlacement.getHeight(), alpha);
   }
 
   /**
@@ -253,9 +268,8 @@ public class AdvancementReloadedTab {
    * @param context the graphics context to draw on
    */
   public void drawIcon(final GuiGraphics context) {
-    ItemRenderHelper.renderItemWithBrightness(context, this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
-        this.tab_y + this.tabPlacement.getLeftMargin(),
-        !this.isAnyWidgetMatchSearch() ? 0.0F : 1.0F);
+    context.renderFakeItem(this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
+        this.tab_y + this.tabPlacement.getLeftMargin());
   }
 
   /**
