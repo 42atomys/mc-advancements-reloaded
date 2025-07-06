@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] 顯示條件描述文字\n[false] 隱藏描述文字，切換附加資訊顯示。",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "條件按字母排序",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] 依字母排序\n[false] 依原始定義順序。",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "標籤按字母排序",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] 按字母排序標籤\n[false] 隨機（類似原版）。",
+  "text.config.advancements_reloaded.option.tabs_order": "標籤排序模式",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "選擇進度畫面中標籤的排序模式。",
   "text.config.advancements_reloaded.option.background_style": "進度畫面背景風格",
   "text.config.advancements_reloaded.option.background_style.tooltip": "選擇背景樣式。",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "條件翻譯模式",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "原樣顯示",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "僅與模組相容",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "盡可能翻譯",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "原版順序（隨機）",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "字母順序",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "設定順序",
   "text.advancements_reloaded.search_hint": "搜尋..."
 }

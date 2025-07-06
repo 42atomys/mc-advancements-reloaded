@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Muestra el texto de descripción dentro del área de criterios\n[false] Oculta el texto de descripción en el área de criterios. Usa esto para alternar la visibilidad de información adicional en el área de criterios.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Orden Alfabético de Criterios",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Muestra los criterios en orden alfabético\n[false] Muestra los criterios en el orden en que fueron definidos en el avance.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Orden Alfabético de Pestañas",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Muestra las pestañas en orden alfabético\n[false] Muestra las pestañas de forma similar a la versión original (aleatorio).",
+  "text.config.advancements_reloaded.option.tabs_order": "Modo de Orden de Pestañas",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Elige el modo de orden para las pestañas en la pantalla de avances.",
   "text.config.advancements_reloaded.option.background_style": "Estilo de Fondo en la Pantalla de Avances",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Elige el estilo del fondo en la pantalla de avances.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Modo de Traducción de Criterios",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Mostrar Tal Cual",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Solo Compatible con Mod",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Intentar Traducir en lo Posible",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Orden Vanilla (Aleatorio)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Orden Alfabético",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Orden Configurado",
   "text.advancements_reloaded.search_hint": "Buscar..."
 }

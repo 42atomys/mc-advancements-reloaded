@@ -6,10 +6,8 @@
   "text.config.advancements_reloaded.option.display_sidebar.tooltip": "[true] Affiche la barre latérale des critères dans l'écran d'avancement\n[false] Masque la barre latérale des critères dans l'écran d'avancement. Utilisez ceci pour basculer la visibilité de la barre latérale des critères.",
   "text.config.advancements_reloaded.option.display_description": "Afficher la Description dans la Zone des Critères",
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Affiche le texte de description dans la zone des critères\n[false] Masque le texte de description dans la zone des critères. Utilisez ceci pour basculer la visibilité des informations supplémentaires dans la zone des critères.",
-  "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Ordre Alphabétique des Critères",
-  "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Affiche les critères par ordre alphabétique\n[false] Affiche les critères dans l'ordre où ils sont définis dans l'avancement.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Ordre Alphabétique des Onglets",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Affiche les onglets par ordre alphabétique\n[false] Affiche les onglets de manière aléatoire comme dans la version originale.",
+  "text.config.advancements_reloaded.option.tabs_order": "Mode d'Ordre des Onglets",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Choisissez le mode d'ordre pour les onglets dans l'écran d'avancement.",
   "text.config.advancements_reloaded.option.background_style": "Style de Fond dans l'Écran d'Avancement",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Choisissez le style de fond de l'écran d'avancement.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Mode de Traduction des Critères",
@@ -30,5 +28,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Afficher Tel Quel",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Seulement Compatible avec le Mod",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Essayer de Traduire Autant que Possible",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Ordre Vanilla (Aléatoire)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Ordre Alphabétique",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Ordre Configuré",
   "text.advancements_reloaded.search_hint": "Rechercher..."
 }

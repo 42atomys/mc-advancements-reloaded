@@ -47,6 +47,32 @@ This mod is a continuation of the original [Advancements Reloaded](https://modri
 - [x] ~~Configuration options are not yet available.~~ **Implemented in 0.2.0**
 - [x] ~~Achievement categories may display incorrectly on certain GUI scales.~~ **Implemented in 0.2.0 by configuration**
 - [x] ~~Support of Forge, NeoForge and Quilt.~~ **Implemented in 0.5.0**
+- [x] ~~Modpack customization.~~ **Implemented in 0.10.0**
+
+
+# For Modpack Creators
+The mod now provides flexible tab ordering options to improve advancement navigation:
+
+You can customize the tab order by editing the configuration file:
+
+```json
+{
+  "appearance": {
+    "tabs_order": "CONFIGURED_ORDER"
+  },
+  "advanced_customization": {
+    "custom_tabs_order": [
+      "minecraft:story/root",
+      "blazeandcave:mining/root",
+      "minecraft:nether/root", 
+      "minecraft:end/root",
+    ]
+  }
+}
+```
+
+The `custom_tabs_order` array should contain the resource location IDs of advancement tabs root in your preferred order. Tabs not listed will appear after the configured ones in alphabetical order. **Keep in mind to always add `/root` at the end, the tab are always refered to the root achievement**
+
 
 # Support and Sponsorship
 

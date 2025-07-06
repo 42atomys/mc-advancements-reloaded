@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Zeigt die Beschreibung im Kriterienbereich an\n[false] Verbirgt die Beschreibung. Schaltet zusätzliche Informationen ein/aus.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Alphabetische Reihenfolge der Kriterien",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Kriterien alphabetisch anzeigen\n[false] Kriterien in definierter Reihenfolge anzeigen.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Alphabetische Reihenfolge der Tabs",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Tabs alphabetisch anzeigen\n[false] Tabs wie in Vanilla (zufällig) anzeigen.",
+  "text.config.advancements_reloaded.option.tabs_order": "Tab-Sortierungsmodus",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Wähle den Sortierungsmodus für die Tabs im Fortschrittsbildschirm.",
   "text.config.advancements_reloaded.option.background_style": "Hintergrundstil im Fortschrittsbildschirm",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Wähle den Hintergrundstil für den Fortschrittsbildschirm.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Übersetzungsmodus der Kriterien",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Unverändert anzeigen",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Nur mod-kompatibel",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Wenn möglich übersetzen",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Vanilla-Reihenfolge (Zufällig)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Alphabetische Reihenfolge",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Konfigurierte Reihenfolge",
   "text.advancements_reloaded.search_hint": "Suche..."
 }

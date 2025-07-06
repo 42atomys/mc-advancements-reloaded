@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Отображать текст описания в области критериев\n[false] Скрывать текст описания в области критериев. Используйте это для переключения видимости дополнительной информации в области критериев.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Алфавитный порядок критериев",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Отображать критерии в алфавитном порядке\n[false] Отображать критерии в порядке, определенном в достижении.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Алфавитный порядок вкладок",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Отображать вкладки в алфавитном порядке\n[false] Отображать вкладки как в ванильной версии (случайно).",
+  "text.config.advancements_reloaded.option.tabs_order": "Режим порядка вкладок",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Выберите режим порядка для вкладок на экране достижений.",
   "text.config.advancements_reloaded.option.background_style": "Стиль фона на экране достижений",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Выберите стиль фона на экране достижений.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Режим перевода критериев",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Отображать как есть",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Только совместимые с модом",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Пытаться перевести по возможности",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Порядок Vanilla (случайный)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Алфавитный порядок",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Настроенный порядок",
   "text.advancements_reloaded.search_hint": "Поиск..."
 }

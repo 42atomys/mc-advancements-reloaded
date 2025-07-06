@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "Якщо «Так», опис буде показано в області критеріїв.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Критерії у алфавітному порядку",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "Якщо «Так», критерії буде показано в алфавітному порядку.\nЯкщо «Ні», критерії буде показано в порядку, в якому вони розміщені в файлі досягнення.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Вітки у алфавітному порядку",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "Якщо «Так», вітки досягнень буде розташовано в алфавітному порядку.\nЯкщо «Ні», вітки досягнень буде показано у випадковому порядку.",
+  "text.config.advancements_reloaded.option.tabs_order": "Режим порядку віток",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Виберіть режим порядку для віток на екрані досягнень.",
   "text.config.advancements_reloaded.option.background_style": "Стиль тла на екрані досягнень",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Виберіть стиль тла.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Переклад критеріїв",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Усталено",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Лише сумісність",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Переклад",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Порядок Vanilla (випадковий)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Алфавітний порядок",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Налаштований порядок",
   "text.advancements_reloaded.search_hint": "Пошук…"
 }

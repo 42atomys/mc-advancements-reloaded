@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Toon de beschrijving in het criteria gebied\n[false] Verberg de beschrijving. Gebruik dit om extra informatie te tonen of te verbergen.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Alfabetische Volgorde van Criteria",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Toon criteria alfabetisch\n[false] Toon criteria in de volgorde zoals gedefinieerd.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Alfabetische Volgorde van Tabs",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Toon tabs alfabetisch\n[false] Toon tabs willekeurig zoals standaard.",
+  "text.config.advancements_reloaded.option.tabs_order": "Tab Volgorde Modus",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Kies de volgorde modus voor de tabs in het prestatiescherm.",
   "text.config.advancements_reloaded.option.background_style": "Achtergrondstijl in Prestatie Scherm",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Kies de achtergrondstijl van het prestatiescherm.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Criteria Vertaalmodus",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Toon zoals het is",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Alleen Compatibel met Mod",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Probeer te Vertalen indien Mogelijk",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Vanilla Volgorde (Willekeurig)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Alfabetische Volgorde",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Geconfigureerde Volgorde",
   "text.advancements_reloaded.search_hint": "Zoeken..."
 }

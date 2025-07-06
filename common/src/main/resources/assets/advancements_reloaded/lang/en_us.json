@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Display the description text within the criteria area\n[false] Hide the description text in the criteria area. Use this to toggle the visibility of additional information in the criteria area.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Crtierias Alphabetic Order",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Display the criteria in alphabetical order\n[false] Display the criteria in the order they were are defined in the advancement.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Tabs Alphabetic Order",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Display the tabs in alphabetical order\n[false] Display the tabs in vanilla like (random).",
+  "text.config.advancements_reloaded.option.tabs_order": "Tabs Order Mode",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Choose the order mode for the tabs in the advancement screen.",
   "text.config.advancements_reloaded.option.background_style": "Background Style in Advancement Screen",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Choose the style of the background in the advancement screen.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Criterias Translation Mode",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Display As Is",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Only Compatible With Mod",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Try To Translate As Possible",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Vanilla Order (Random)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Alphabetic Order",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Configuration Overrided",
   "text.advancements_reloaded.search_hint": "Search..."
 }
