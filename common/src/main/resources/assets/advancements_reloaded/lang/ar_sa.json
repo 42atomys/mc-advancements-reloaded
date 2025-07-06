@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] عرض نص الوصف داخل منطقة المعايير\n[false] إخفاء نص الوصف في منطقة المعايير. استخدم هذا لتبديل رؤية المعلومات الإضافية في منطقة المعايير.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "ترتيب المعايير أبجديًا",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] عرض المعايير بترتيب أبجدي\n[false] عرض المعايير بالترتيب الذي تم تعريفها به في التقدم.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "ترتيب التبويبات أبجديًا",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] عرض التبويبات بترتيب أبجدي\n[false] عرض التبويبات كما في الفانيليا (عشوائي).",
+  "text.config.advancements_reloaded.option.tabs_order": "وضع ترتيب التبويبات",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "اختر وضع ترتيب التبويبات في شاشة التقدم.",
   "text.config.advancements_reloaded.option.background_style": "نمط الخلفية في شاشة التقدم",
   "text.config.advancements_reloaded.option.background_style.tooltip": "اختر نمط الخلفية في شاشة التقدم.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "وضع ترجمة المعايير",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "عرض كما هو",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "متوافق فقط مع المود",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "حاول الترجمة قدر الإمكان",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "الترتيب الأصلي (عشوائي)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "الترتيب الأبجدي",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "ترتيب مخصص",
   "text.advancements_reloaded.search_hint": "بحث..."
 }

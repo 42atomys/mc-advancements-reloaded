@@ -163,6 +163,17 @@ public class AdvancementReloadedTab {
   }
 
   /**
+   * Gets the display name of a tab for sorting purposes.
+   *
+   * @return the display name of the tab
+   */
+  public String getDisplayName() {
+    return this.getRoot().advancement().name()
+        .orElse(Component.literal(this.getRoot().toString()))
+        .getString();
+  }
+
+  /**
    * Gets the display information of the tab.
    * <p>
    * The returned object contains the title, description, icon, and other

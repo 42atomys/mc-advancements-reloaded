@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] 説明文を表示\n[false] 説明文を非表示。補足情報の表示を切替。",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "基準のアルファベット順",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] アルファベット順に表示\n[false] 定義順に表示。",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "タブのアルファベット順",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] アルファベット順に表示\n[false] バニラ風（ランダム）表示。",
+  "text.config.advancements_reloaded.option.tabs_order": "タブの順序モード",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "進捗画面のタブの順序モードを選択してください。",
   "text.config.advancements_reloaded.option.background_style": "進捗画面の背景スタイル",
   "text.config.advancements_reloaded.option.background_style.tooltip": "進捗画面の背景スタイルを選択。",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "基準の翻訳モード",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "そのまま表示",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Modと互換性のあるもののみ",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "可能な限り翻訳",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "バニラ順序（ランダム）",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "アルファベット順",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "設定順序",
   "text.advancements_reloaded.search_hint": "検索..."
 }

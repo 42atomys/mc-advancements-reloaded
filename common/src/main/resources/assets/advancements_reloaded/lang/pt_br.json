@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Exibe o texto de descrição na área de critérios\n[false] Oculta o texto de descrição na área de critérios. Use isso para alternar a visibilidade das informações adicionais na área de critérios.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Ordem Alfabética dos Critérios",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Exibe os critérios em ordem alfabética\n[false] Exibe os critérios na ordem em que foram definidos no avanço.",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "Ordem Alfabética das Abas",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] Exibe as abas em ordem alfabética\n[false] Exibe as abas de forma semelhante ao padrão (aleatório).",
+  "text.config.advancements_reloaded.option.tabs_order": "Modo de Ordem das Abas",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "Escolha o modo de ordem para as abas na tela de avanços.",
   "text.config.advancements_reloaded.option.background_style": "Estilo de Fundo na Tela de Avanços",
   "text.config.advancements_reloaded.option.background_style.tooltip": "Escolha o estilo do fundo na tela de avanços.",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "Modo de Tradução dos Critérios",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Exibir Como Está",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Apenas Compatível com o Mod",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Tentar Traduzir o Máximo Possível",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Ordem Vanilla (Aleatória)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Ordem Alfabética",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Ordem Configurada",
   "text.advancements_reloaded.search_hint": "Pesquisar..."
 }

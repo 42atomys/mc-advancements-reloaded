@@ -915,28 +915,83 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   /**
-   * Sorts the tabs alphabetically by their title. If the configuration
-   * value {@link Configuration#tabsAlphabeticOrder} is set to {@code true},
-   * the tabs are sorted based on the string representation of their title.
-   * Otherwise, the tabs are not sorted.
+   * Sorts the tabs according to the configured order preference.
+   * The tabs can be sorted alphabetically, by custom configuration order, or not
+   * sorted at all.
    */
-  private void sortTabsAlphabetically() {
-    if (Configuration.tabsAlphabeticOrder) {
-      final List<AdvancementReloadedTab> sortedTabs = new ArrayList<>(this.tabs.values());
-      sortedTabs.sort(Comparator.comparing(
-          tab -> tab.getRoot().advancement().name().orElse(Component.literal(tab.getRoot().toString())).getString()));
+  private void sortTabs() {
+    final List<AdvancementReloadedTab> sortedTabs = new ArrayList<>(this.tabs.values());
 
-      this.tabs.clear();
-      for (int index = 0; index < sortedTabs.size(); index++) {
-        final AdvancementReloadedTab tab = sortedTabs.get(index);
+    switch (Configuration.tabsOrder) {
+      case NONE:
+        // Do nothing - tabs remain in their original order
+        break;
+      case ALPHABETIC:
+        sortedTabs.sort(Comparator.comparing(AdvancementReloadedTab::getDisplayName));
+        break;
+      case CONFIGURED_ORDER:
+        sortedTabs.sort(this::compareTabsByConfiguredOrder);
+        break;
+    }
 
-        // Set the index of the tab to its index in the sorted list
-        // This is used to identify the tab in the tab list and to determine
-        // the correct position on UI.
-        tab.setIndex(index);
-        tab.setTabPlacement(Configuration.aboveWidgetLimit > index ? TabPlacement.ABOVE : TabPlacement.BELOW);
-        this.tabs.put(tab.getRoot().holder(), tab);
-      }
+    this.applyTabOrder(sortedTabs);
+  }
+
+  /**
+   * Compares two tabs based on the configured custom order, falling back to
+   * alphabetical order.
+   *
+   * @param tab1 the first tab to compare
+   * @param tab2 the second tab to compare
+   * @return a negative integer, zero, or a positive integer as the first tab is
+   *         less than, equal to, or greater than the second tab in the configured
+   *         order.
+   */
+  private int compareTabsByConfiguredOrder(final AdvancementReloadedTab tab1, final AdvancementReloadedTab tab2) {
+    // Get the advancement resource location strings for comparison
+    final String tab1Id = tab1.getRoot().holder().id().toString();
+    final String tab2Id = tab2.getRoot().holder().id().toString();
+
+    // Get positions in the configured order list (-1 if not found)
+    final int tab1Position = Configuration.customTabsOrder.indexOf(tab1Id);
+    final int tab2Position = Configuration.customTabsOrder.indexOf(tab2Id);
+
+    // If both tabs are in the configured order, sort by their position
+    if (tab1Position != -1 && tab2Position != -1) {
+      return Integer.compare(tab1Position, tab2Position);
+    }
+
+    // If only tab1 is in configured order, it comes first
+    if (tab1Position != -1) {
+      return -1;
+    }
+
+    // If only tab2 is in configured order, it comes first
+    if (tab2Position != -1) {
+      return 1;
+    }
+
+    // If neither is in configured order, sort alphabetically
+    return tab1.getDisplayName().compareTo(tab2.getDisplayName());
+  }
+
+  /**
+   * Applies the given tab order by clearing the current tabs and re-adding them
+   * with proper indices.
+   *
+   * @param sortedTabs the list of tabs to apply the order to
+   */
+  private void applyTabOrder(final List<AdvancementReloadedTab> sortedTabs) {
+    this.tabs.clear();
+    for (int index = 0; index < sortedTabs.size(); index++) {
+      final AdvancementReloadedTab tab = sortedTabs.get(index);
+
+      // Set the index of the tab to its index in the sorted list
+      // This is used to identify the tab in the tab list and to determine
+      // the correct position on UI.
+      tab.setIndex(index);
+      tab.setTabPlacement(Configuration.aboveWidgetLimit > index ? TabPlacement.ABOVE : TabPlacement.BELOW);
+      this.tabs.put(tab.getRoot().holder(), tab);
     }
   }
 
@@ -951,7 +1006,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         root);
     if (advancementTab != null) {
       this.tabs.put(root.holder(), advancementTab);
-      this.sortTabsAlphabetically();
+      this.sortTabs();
     }
   }
 
@@ -1126,7 +1181,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         advancement);
     if (advancementTab != null) {
       this.tabs.put(advancement.holder(), advancementTab);
-      this.sortTabsAlphabetically();
+      this.sortTabs();
     }
   }
 

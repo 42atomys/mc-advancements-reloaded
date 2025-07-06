@@ -148,13 +148,12 @@ public final class ConfigurationScreen {
 
     appearance.addEntry(
         entryBuilder
-            .startBooleanToggle(
-                Component.translatable("text.config.advancements_reloaded.option.tabs_alphabetic_order"),
-                Configuration.tabsAlphabeticOrder)
-            .setDefaultValue(true)
-            .setTooltip(
-                Component.translatable("text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip"))
-            .setSaveConsumer(newValue -> Configuration.tabsAlphabeticOrder = newValue)
+            .startEnumSelector(
+                Component.translatable("text.config.advancements_reloaded.option.tabs_order"),
+                Configuration.TabOrder.class, Configuration.tabsOrder)
+            .setDefaultValue(Configuration.TabOrder.ALPHABETIC)
+            .setTooltip(Component.translatable("text.config.advancements_reloaded.option.tabs_order.tooltip"))
+            .setSaveConsumer(newValue -> Configuration.tabsOrder = newValue)
             .build());
 
     appearance.addEntry(

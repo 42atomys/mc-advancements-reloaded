@@ -8,8 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] विवरण दिखाएं\n[false] विवरण छिपाएं। अतिरिक्त जानकारी की दृश्यता बदलने के लिए उपयोग करें।",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "मापदंड वर्णानुक्रम में",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] मापदंड वर्णानुक्रम में दिखाएं\n[false] परिभाषित क्रम में दिखाएं।",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order": "टैब वर्णानुक्रम में",
-  "text.config.advancements_reloaded.option.tabs_alphabetic_order.tooltip": "[true] टैब वर्णानुक्रम में\n[false] रैंडम (मूल जैसा)।",
+  "text.config.advancements_reloaded.option.tabs_order": "टैब क्रम मोड",
+  "text.config.advancements_reloaded.option.tabs_order.tooltip": "उपलब्धि स्क्रीन में टैब के लिए क्रम मोड चुनें।",
   "text.config.advancements_reloaded.option.background_style": "पृष्ठभूमि शैली",
   "text.config.advancements_reloaded.option.background_style.tooltip": "उपलब्धि स्क्रीन की पृष्ठभूमि शैली चुनें।",
   "text.config.advancements_reloaded.option.criterias_translation_mode": "मापदंड अनुवाद मोड",
@@ -30,5 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "जैसा है दिखाएं",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "केवल मॉड संगत",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "जहाँ संभव हो अनुवाद करें",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "वेनिला क्रम (यादृच्छिक)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "वर्णानुक्रम",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "कॉन्फ़िगर्ड क्रम",
   "text.advancements_reloaded.search_hint": "खोजें..."
 }
