@@ -522,9 +522,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     context.nextStratum();
     this.renderAdvancementCriterias(context, 0, headerOffset);
     context.nextStratum();
-    this.renderWindow(context, 0, headerOffset);
-    context.nextStratum();
     this.renderWidgetTooltip(context, mouseX, mouseY, 0, headerOffset);
+    context.nextStratum();
+    this.renderWindow(context, 0, headerOffset);
     context.nextStratum();
     this.renderRenderable(context, mouseX, mouseY, delta);
   }
