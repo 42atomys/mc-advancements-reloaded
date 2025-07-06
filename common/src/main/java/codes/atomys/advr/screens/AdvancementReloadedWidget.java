@@ -3,6 +3,7 @@ package codes.atomys.advr.screens;
 import codes.atomys.advr.ReloadedCriterionProgress;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.config.Configuration;
+import codes.atomys.advr.utils.TextUtils;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
@@ -273,19 +274,20 @@ public class AdvancementReloadedWidget {
 
     final String searchLower = search.toLowerCase();
     // Pass by display getTitle getString to have the translated string
-    if (this.display.getTitle().getString().toLowerCase().contains(searchLower) ||
-        this.title.toString().toLowerCase().contains(searchLower)) {
+    if (TextUtils.toString(this.display.getTitle()).toLowerCase()
+        .contains(searchLower)) {
       return true;
     }
 
     for (final FormattedCharSequence line : this.description) {
-      if (line.toString().toLowerCase().contains(searchLower)) {
+      if (TextUtils.toString(line).toLowerCase().contains(searchLower)) {
         return true;
       }
     }
 
     for (final ReloadedCriterionProgress step : this.steps) {
-      if (step.getHumanCriterionName().toString().toLowerCase().contains(searchLower)) {
+      if (TextUtils.toString(step.getHumanCriterionName()).toLowerCase()
+          .contains(searchLower)) {
         return true;
       }
     }
