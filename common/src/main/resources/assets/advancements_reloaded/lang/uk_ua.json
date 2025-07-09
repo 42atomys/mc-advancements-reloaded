@@ -30,8 +30,8 @@
   "text.config.advancements_reloaded.enum.criterias_translation_mode.none": "Усталено",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.only_compatible": "Лише сумісність",
   "text.config.advancements_reloaded.enum.criterias_translation_mode.try_to_translate": "Переклад",
-  "text.config.advancements_reloaded.enum.tabs_order.none": "Порядок Vanilla (випадковий)",
-  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Алфавітний порядок",
-  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Налаштований порядок",
+  "text.config.advancements_reloaded.enum.tabs_order.none": "Усталений (випадковий)",
+  "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Алфавітний",
+  "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Налаштований",
   "text.advancements_reloaded.search_hint": "Пошук…"
 }
