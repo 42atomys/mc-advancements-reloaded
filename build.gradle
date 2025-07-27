@@ -27,7 +27,7 @@ subprojects {
         // mappings loom.officialMojangMappings() // Maps Minecraft so we can tell what classes are what - official mappings
         mappings loom.layered() {
             officialMojangMappings()
-            // TODO: update this when ParchmentMC for 1.21.6 is out
+            // TODO: update this when ParchmentMC for 1.21.8 is out
             // parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_minecraft_version}:${rootProject.parchmentmc_version}")
         }
     }
