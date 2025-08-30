@@ -1231,13 +1231,18 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   /**
    * Called when the search text changes.
-   * Updates the search text field and triggers a search across all advancements.
+   * Updates the search text field and triggers a search across all advancements,
+   * as well as updating each tab, on if it contains a widget match.
    *
    * @param text the new search text
    */
   private void onSearchTextChanged(final String text) {
     this.searchText = text;
     this.isSearching = !text.isEmpty();
+    // Update which tabs have a widget match
+    for (final AdvancementReloadedTab tab : this.tabs.values()) {
+      tab.updateDoesWidgetMatchSearch();
+    }
     // Refresh the screen to show search results
     this.initClickableRegions();
   }
