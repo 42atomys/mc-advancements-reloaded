@@ -65,6 +65,7 @@ public class AdvancementReloadedTab {
   private final Component title;
   private final AdvancementReloadedWidget rootWidget;
   private final Map<AdvancementHolder, AdvancementReloadedWidget> widgets = Maps.newLinkedHashMap();
+  private boolean doesAnyWidgetMatchSearch = true;
   private TabPlacement tabPlacement;
   private int index;
   private double originX;
@@ -319,17 +320,27 @@ public class AdvancementReloadedTab {
 
   /**
    * Checks if any widget in the collection matches the given search query.
+   * This value is cached for performance reasons and should only be
+   * updated when the search query changes.
    *
    * @return {@code true} if at least one widget matches the search query,
    *         {@code false} otherwise.
    */
   public boolean isAnyWidgetMatchSearch() {
+    return this.doesAnyWidgetMatchSearch;
+  }
+
+  /**
+   * Updates if any widget in the collection matches the given search query.
+   */
+  public void updateDoesWidgetMatchSearch() {
     for (final AdvancementReloadedWidget widget : this.widgets.values()) {
       if (widget.isSearchQueryMatched()) {
-        return true;
+        this.doesAnyWidgetMatchSearch = true;
+        return;
       }
     }
-    return false;
+    this.doesAnyWidgetMatchSearch = false;
   }
 
   /**
