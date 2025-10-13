@@ -21,7 +21,7 @@ public final class Utils {
   public static final Style ERROR_STYLE = Style.EMPTY.withColor(TextColor.fromRgb(16733525));
   public static final Logger LOGGER = LoggerFactory.getLogger("AdvancementsReloaded");
 
-  public static final ClientAsset INTENTIONAL_MISSING_TEXTURE = new ClientAsset(
+  public static final ClientAsset.ResourceTexture INTENTIONAL_MISSING_TEXTURE = new ClientAsset.ResourceTexture(
       TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
   private static String modVersion;
