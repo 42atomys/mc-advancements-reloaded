@@ -30,6 +30,8 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -249,7 +251,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * advancement criteria to the position of the mouse cursor.
    * </p>
    *
-   * @param event the mouse button event containing mouse coordinates and button information
+   * @param event         the mouse button event containing mouse coordinates and
+   *                      button information
    * @param isDoubleClick whether the event is a double click
    * @return true if the event was handled, false otherwise
    */
@@ -330,7 +333,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Resets the clicked state of all clickable regions when the left mouse button
    * is released.
    *
-   * @param event the mouse button event containing mouse coordinates and button information
+   * @param event the mouse button event containing mouse coordinates and button
+   *              information
    *
    * @return true to propagate the event, false to cancel it
    */
@@ -358,7 +362,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * <p>
    * The {@code event} parameter contains the mouse button information and is used
    * to determine which button is being dragged. If the left mouse button is being
-   * dragged, the method moves the selected tab. If the right mouse button is being
+   * dragged, the method moves the selected tab. If the right mouse button is
+   * being
    * dragged, the method moves the scrollbar.
    * </p>
    * <p>
@@ -370,7 +375,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * the given Y-coordinate.
    * </p>
    *
-   * @param event the mouse button event containing mouse coordinates and button information
+   * @param event  the mouse button event containing mouse coordinates and button
+   *               information
    * @param deltaX the amount to move the region in the X-direction
    * @param deltaY the amount to move the region in the Y-direction
    *
@@ -573,7 +579,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
+          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
+              .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
               .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });
@@ -781,8 +788,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final ResourceLocation textureResourceLocation = display.getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
-          .texturePath();
+      final ResourceLocation textureResourceLocation = display.getBackground()
+          .map(ClientAsset.ResourceTexture::texturePath).orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
       // Draw header
       final int headerDrawHeight = Configuration.headerHeight / 16 + 1;
@@ -792,7 +799,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
           if (n == headerDrawHeight - 1) {
             textureHeight = Configuration.headerHeight % 16;
           }
-
           context.blit(this.renderTypeGui, textureResourceLocation, 16 * m, 16 * n, 0.0F, 0.0F, 16, textureHeight,
               16, 16);
         }
