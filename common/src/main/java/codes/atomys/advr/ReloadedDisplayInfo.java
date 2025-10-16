@@ -26,8 +26,8 @@ public class ReloadedDisplayInfo extends DisplayInfo {
    * @param icon         The ItemStack representing the icon.
    * @param title        The Component representing the title.
    * @param description  The Component representing the description.
-   * @param background   An Optional containing the ClientAsset.ResourceTexture of the
-   *                     background.
+   * @param background   An Optional containing the ClientAsset.ResourceTexture of
+   *                     the background.
    * @param type         The type of the advancement.
    * @param showToast    A boolean indicating whether to show a toast
    *                     notification.

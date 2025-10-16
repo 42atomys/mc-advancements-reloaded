@@ -31,6 +31,9 @@
   "recommends": {
     "modmenu": ">=15.0.0"
   },
-  "accessWidener" : "advancements_reloaded.accesswidener",
-  "mixins": ["advancements_reloaded.mixins.json", "advancements_reloaded.fabric.mixins.json"]
+  "accessWidener": "advancements_reloaded.accesswidener",
+  "mixins": [
+    "advancements_reloaded.mixins.json",
+    "advancements_reloaded.fabric.mixins.json"
+  ]
 }

@@ -573,8 +573,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
-              .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
+          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
               .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
         });

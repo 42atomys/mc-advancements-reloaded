@@ -4,7 +4,6 @@ import codes.atomys.advr.config.ModConfigurationFile;
 import codes.atomys.advr.utils.Utils;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
@@ -42,8 +41,6 @@ public class AdvancementsReloadedForge {
     private static void setup(final FMLJavaModLoadingContext context) {
       setupModules();
 
-      // Register server and game events that we are interested in.
-      MinecraftForge.EVENT_BUS.register(AdvancementsReloadedForge.class);
       // Make sure the mod being absent on the other network side does not cause the
       // client to display the server
       // as incompatible.
