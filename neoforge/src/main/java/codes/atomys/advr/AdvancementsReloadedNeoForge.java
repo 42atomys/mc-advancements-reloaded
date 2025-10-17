@@ -29,7 +29,7 @@ public class AdvancementsReloadedNeoForge {
   public AdvancementsReloadedNeoForge(final IEventBus eventBus) {
     LOGGER.info("[AdvancementsReloaded] Starting...");
 
-    if (FMLEnvironment.dist == Dist.DEDICATED_SERVER) {
+    if (FMLEnvironment.getDist() == Dist.DEDICATED_SERVER) {
       LOGGER.warn("[AdvancementsReloaded] Not supported on dedicated server!");
     } else {
       ClientSetup.setup(eventBus);

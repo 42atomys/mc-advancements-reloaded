@@ -46,6 +46,7 @@ dependencies {
 
     // Tells Gradle to use fabric resource loader in order to use language files
     include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
+    include(modImplementation(fabricApi.module("fabric-resource-loader-v1", project.fabric_api_version)))
 
     // Tells Gradle to use night config
     implementation 'com.electronwill.night-config:json:3.6.6'

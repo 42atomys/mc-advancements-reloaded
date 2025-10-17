@@ -25,9 +25,13 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.SpriteIconButton;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -247,15 +251,15 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * advancement criteria to the position of the mouse cursor.
    * </p>
    *
-   * @param mouseX the x-coordinate of the mouse cursor in the screen
-   * @param mouseY the y-coordinate of the mouse cursor in the screen
-   * @param button the mouse button that was pressed
+   * @param event         the mouse button event containing mouse coordinates and
+   *                      button information
+   * @param isDoubleClick whether the event is a double click
    * @return true if the event was handled, false otherwise
    */
   @Override
-  public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
-    if (button == 0) {
-      ClickableRegion.foundRegions(this.clickableRegions, mouseX, mouseY).forEach(region -> {
+  public boolean mouseClicked(final MouseButtonEvent event, final boolean isDoubleClick) {
+    if (event.button() == 0) {
+      ClickableRegion.foundRegions(this.clickableRegions, event.x(), event.y()).forEach(region -> {
         region.setClicked(true);
       });
 
@@ -264,13 +268,13 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
       for (final AdvancementReloadedTab advancementTab : this.tabs.values()) {
         if (advancementTab == this.selectedTab.orElse(null)) {
-          final AdvancementReloadedWidget clickedWidget = advancementTab.clickOnWidget(i, j, mouseX, mouseY);
+          final AdvancementReloadedWidget clickedWidget = advancementTab.clickOnWidget(i, j, event.x(), event.y());
           if (clickedWidget != null) {
             this.setSelectedWidget(clickedWidget);
           }
         }
 
-        if (advancementTab.isClickOnTab(i, j, mouseX, mouseY)) {
+        if (advancementTab.isClickOnTab(i, j, event.x(), event.y())) {
           this.advancementHandler.setSelectedTab(advancementTab.getRoot().holder(), true);
           break;
         }
@@ -281,12 +285,12 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
             .findRegion(this.clickableRegions,
                 region -> region.getName().equals("advancement_criterias_scrollbar") && region.isClicked())
             .ifPresent(region -> {
-              this.moveScrollbarTo(mouseY);
+              this.moveScrollbarTo(event.y());
             });
       }
     }
 
-    return super.mouseClicked(mouseX, mouseY, button);
+    return super.mouseClicked(event, false);
   }
 
   /**
@@ -329,22 +333,20 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Resets the clicked state of all clickable regions when the left mouse button
    * is released.
    *
-   * @param mouseX the mouse X-coordinate
-   * @param mouseY the mouse Y-coordinate
-   * @param button the mouse button that was released (0 for left, 1 for right,
-   *               2 for middle)
+   * @param event the mouse button event containing mouse coordinates and button
+   *              information
    *
    * @return true to propagate the event, false to cancel it
    */
   @Override
-  public boolean mouseReleased(final double mouseX, final double mouseY, final int button) {
-    if (button == 0) {
+  public boolean mouseReleased(final MouseButtonEvent event) {
+    if (event.button() == 0) {
       ClickableRegion.foundClickedRegions(this.clickableRegions).forEach(region -> {
         region.setClicked(false);
       });
     }
 
-    return super.mouseReleased(mouseX, mouseY, button);
+    return super.mouseReleased(event);
   }
 
   /**
@@ -358,10 +360,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * clicked region by the given amount.
    * </p>
    * <p>
-   * The {@code button} parameter is used to determine which button is being
-   * dragged. If the left mouse button is being dragged, the method moves the
-   * selected tab. If the right mouse button is being dragged, the method moves
-   * the scrollbar.
+   * The {@code event} parameter contains the mouse button information and is used
+   * to determine which button is being dragged. If the left mouse button is being
+   * dragged, the method moves the selected tab. If the right mouse button is
+   * being
+   * dragged, the method moves the scrollbar.
    * </p>
    * <p>
    * If the clicked region is the advancement criteria container, the method
@@ -372,16 +375,15 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * the given Y-coordinate.
    * </p>
    *
-   * @param mouseX the mouse X-coordinate
-   * @param mouseY the mouse Y-coordinate
-   * @param button the mouse button that is being dragged
+   * @param event  the mouse button event containing mouse coordinates and button
+   *               information
    * @param deltaX the amount to move the region in the X-direction
    * @param deltaY the amount to move the region in the Y-direction
    *
    * @return true to propagate the event, false to cancel it
    */
   @Override
-  public boolean mouseDragged(final double mouseX, final double mouseY, final int button, final double deltaX,
+  public boolean mouseDragged(final MouseButtonEvent event, final double deltaX,
       final double deltaY) {
     ClickableRegion.foundClickedRegions(this.clickableRegions).forEach(region -> {
       switch (region.getName()) {
@@ -394,7 +396,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
           this.setScrollOffset(this.scrollOffset - (int) deltaY);
           break;
         case "advancement_criterias_scrollbar":
-          this.moveScrollbarTo(mouseY);
+          this.moveScrollbarTo(event.y());
           break;
         default:
           break;
@@ -453,25 +455,23 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * {@link #init()} method.
    * </p>
    *
-   * @param keyCode   the key code of the key that was pressed
-   * @param scanCode  the scan code of the key that was pressed
-   * @param modifiers the modifiers of the key that was pressed
+   * @param event the key event containing key code, scan code, and modifiers
    *
    * @return true if the event was handled, false otherwise
    */
   @Override
-  public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
+  public boolean keyPressed(final KeyEvent event) {
     // If search box is focused, don't exit the screen when the advancements key is
     // pressed
-    if (this.searchBox.isFocused() && this.minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
+    if (this.searchBox.isFocused() && this.minecraft.options.keyAdvancements.matches(event)) {
       return true; // Consume the key press, don't exit the screen
     }
 
-    if (this.minecraft.options.keyAdvancements.matches(keyCode, scanCode)) {
+    if (this.minecraft.options.keyAdvancements.matches(event)) {
       this.minecraft.setScreen(this.parent);
       this.minecraft.mouseHandler.grabMouse();
       return true;
-    } else if (InputConstants.KEY_ESCAPE == keyCode) {
+    } else if (InputConstants.KEY_ESCAPE == event.key()) {
       if (this.searchBox.isFocused()) {
         // Remove focus from search box before processing Escape
         this.searchBox.setFocused(false);
@@ -488,7 +488,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         return true;
       }
     }
-    return super.keyPressed(keyCode, scanCode, modifiers);
+    return super.keyPressed(event);
   }
 
   /**
@@ -788,8 +788,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final ResourceLocation textureResourceLocation = display.getBackground().orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
-          .texturePath();
+      final ResourceLocation textureResourceLocation = display.getBackground()
+          .map(ClientAsset.ResourceTexture::texturePath).orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
       // Draw header
       final int headerDrawHeight = Configuration.headerHeight / 16 + 1;
@@ -799,7 +799,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
           if (n == headerDrawHeight - 1) {
             textureHeight = Configuration.headerHeight % 16;
           }
-
           context.blit(this.renderTypeGui, textureResourceLocation, 16 * m, 16 * n, 0.0F, 0.0F, 16, textureHeight,
               16, 16);
         }
