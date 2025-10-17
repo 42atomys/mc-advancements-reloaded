@@ -26,6 +26,6 @@ side = "CLIENT"
 [[dependencies.advancements_reloaded]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21.9, 1.21.10)"
+versionRange = "[1.21.9, 1.21.10,)"
 ordering = "NONE"
 side = "BOTH"
