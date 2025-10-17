@@ -6,6 +6,10 @@
   "text.config.advancements_reloaded.option.display_sidebar.tooltip": "[true] Affiche la barre latérale des critères dans l'écran d'avancement\n[false] Masque la barre latérale des critères dans l'écran d'avancement. Utilisez ceci pour basculer la visibilité de la barre latérale des critères.",
   "text.config.advancements_reloaded.option.display_description": "Afficher la Description dans la Zone des Critères",
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Affiche le texte de description dans la zone des critères\n[false] Masque le texte de description dans la zone des critères. Utilisez ceci pour basculer la visibilité des informations supplémentaires dans la zone des critères.",
+  "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Ordre Alphabétique des Critères",
+  "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Afficher les critères par ordre alphabétique\n[false] Afficher les critères dans l'ordre défini dans l'avancement.",
+  "text.config.advancements_reloaded.option.advancements_order": "Mode d'Ordre des Avancements",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Choisissez le mode d'ordre pour les lignes/branches d'avancements dans les onglets.\n\nCela fournit une disposition visuelle cohérente entre les rechargements, particulièrement utile pour les arbres d'avancements personnalisés.",
   "text.config.advancements_reloaded.option.tabs_order": "Mode d'Ordre des Onglets",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Choisissez le mode d'ordre pour les onglets dans l'écran d'avancement.",
   "text.config.advancements_reloaded.option.background_style": "Style de Fond dans l'Écran d'Avancement",
@@ -31,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Ordre Vanilla (Aléatoire)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Ordre Alphabétique",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Ordre Configuré",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Ordre Vanilla (Aléatoire)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Ordre Alphabétique",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Ordre Configuré",
   "text.advancements_reloaded.search_hint": "Rechercher..."
 }

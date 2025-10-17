@@ -19,6 +19,7 @@ public final class Configuration {
   public static boolean displaySidebar = true; // added in v0.3
   public static boolean displayDescription = true; // added in v0.2
   public static boolean criteriasAlphabeticOrder = true; // added in v0.3, true by default in v0.5
+  public static AdvancementOrder advancementsOrder = AdvancementOrder.ALPHABETIC; // added in v0.11, ALPHABETIC by default
   public static TabOrder tabsOrder = TabOrder.ALPHABETIC; // added in v0.6, ALPHABETIC by default
   public static BackgroundStyle backgroundStyle = BackgroundStyle.TRANSPARENT; // added in v0.4
   public static TranslationMode criteriasTranslationMode = TranslationMode.ONLY_COMPATIBLE; // added in v0.6
@@ -30,6 +31,7 @@ public final class Configuration {
   public static int aboveWidgetLimit = 14; // added in v0.2
   public static int belowWidgetLimit = 14; // added in v0.2
   public static List<String> customTabsOrder = List.of(); // added in v0.10
+  public static List<String> customAdvancementsOrder = List.of(); // added in v0.11
 
   /**
    * Enum representing different styles for background configuration.
@@ -91,6 +93,31 @@ public final class Configuration {
     ALPHABETIC,
     // Tabs are ordered based on a custom order defined in the configuration file,
     // added in v0.10
+    CONFIGURED_ORDER,
+  }
+
+  /**
+   * Enum representing the order in which advancement rows/branches can be displayed.
+   *
+   * <p>
+   * NONE: Advancements are not ordered (vanilla placement based on disk read order)
+   * </p>
+   * <p>
+   * ALPHABETIC: Advancements are ordered alphabetically by title, added in v0.11 (default)
+   * </p>
+   * <p>
+   * CONFIGURED_ORDER: Advancements are ordered based on a custom order defined in the
+   * configuration file,
+   * added in v0.11
+   * </p>
+   */
+  public enum AdvancementOrder {
+    // Advancements are not ordered (vanilla placement based on disk read order)
+    NONE,
+    // Advancements are ordered alphabetically by title, added in v0.11 (default)
+    ALPHABETIC,
+    // Advancements are ordered based on a custom order defined in the configuration file,
+    // added in v0.11
     CONFIGURED_ORDER,
   }
 }

@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Exibe o texto de descrição na área de critérios\n[false] Oculta o texto de descrição na área de critérios. Use isso para alternar a visibilidade das informações adicionais na área de critérios.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Ordem Alfabética dos Critérios",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Exibe os critérios em ordem alfabética\n[false] Exibe os critérios na ordem em que foram definidos no avanço.",
+  "text.config.advancements_reloaded.option.advancements_order": "Modo de Ordem dos Avanços",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Escolha o modo de ordem para linhas/ramificações de avanços dentro das abas.\n\nIsso fornece um layout visual consistente entre recarregamentos, especialmente útil para árvores de avanços personalizadas.",
   "text.config.advancements_reloaded.option.tabs_order": "Modo de Ordem das Abas",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Escolha o modo de ordem para as abas na tela de avanços.",
   "text.config.advancements_reloaded.option.background_style": "Estilo de Fundo na Tela de Avanços",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Ordem Vanilla (Aleatória)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Ordem Alfabética",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Ordem Configurada",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Ordem Vanilla (Aleatória)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Ordem Alfabética",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Configuração Personalizada",
   "text.advancements_reloaded.search_hint": "Pesquisar..."
 }
