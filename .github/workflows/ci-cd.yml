@@ -82,7 +82,6 @@ jobs:
           target_commitish: ${{ github.sha }}
           files: |
             **/build/libs/advancements_reloaded-*-fabric-*.jar
-            **/build/libs/advancements_reloaded-*-forge-*.jar
             **/build/libs/advancements_reloaded-*-neoforge-*.jar
 
       - name: Release Version to 3rd Parties

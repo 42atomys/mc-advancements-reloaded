@@ -26,7 +26,6 @@ body:
       label: Modloader Type
       description: If applicable, what modloader are you using?
       options:
-        - Minecraft Forge
         - Neoforge
         - Fabric
         - Quilt

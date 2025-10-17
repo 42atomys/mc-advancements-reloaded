@@ -37,11 +37,10 @@ This mod is a continuation of the original [Advancements Reloaded](https://modri
 # Known Issues
 
 - The mod may not work correctly with other mods that modify the advancements screen.
-- The setting menu cause crashes on Forge (works on NeoForge) due to not released ClothConfig on Forge yet.
 
 # Not Implemented Yet
 
-- [ ] Implement a search engine to locate criterias and advancements
+- [x] ~~Implement a search engine to locate criterias and advancements~~ **Implemented in 0.9.0**
 - [ ] Implementing an API to allow datapack creators to customize the UI directly from their datapacks.
 - [ ] Advanced tracking of different triggers (e.g., _mining 10 blocks_ will show **4/10** instead of just the trigger name `mine_stone`).
 - [x] ~~Configuration options are not yet available.~~ **Implemented in 0.2.0**
@@ -93,7 +92,7 @@ If you enjoy using this mod and would like to support its development, please co
 
 3. Refactor and improve any problematic code as necessary.
 
-4. Test the mod in the new Minecraft version for each loader (Fabric, Forge, NeoForge, Quilt).
+4. Test the mod in the new Minecraft version for each loader (Fabric, NeoForge, Quilt).
 
 # Special thanks
 

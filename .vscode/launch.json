@@ -59,36 +59,6 @@
       "projectName": "neoforge"
     },
     {
-      "type": "java",
-      "name": "Minecraft Client (:forge)",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/forge/run",
-      "console": "integratedTerminal",
-      "stopOnEntry": false,
-      "mainClass": "dev.architectury.transformer.TransformerRuntime",
-      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dmixin.debug\u003dtrue -Djava.net.preferIPv6Addresses\u003dsystem -Dfabric.dli.main\u003dnet.minecraftforge.bootstrap.ForgeBootstrap -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
-      "args": "",
-      "env": {
-        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\classes\\java\\main",
-        "MCP_MAPPINGS": "loom.stub"
-      },
-      "projectName": "forge"
-    },
-    {
-      "type": "java",
-      "name": "Minecraft Server (:forge)",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/forge/run",
-      "console": "integratedTerminal",
-      "stopOnEntry": false,
-      "mainClass": "dev.architectury.transformer.TransformerRuntime",
-      "vmArgs": "-Dfabric.dli.config\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Djava.net.preferIPv6Addresses\u003dsystem -Dfabric.dli.main\u003dnet.minecraftforge.bootstrap.ForgeBootstrap -Darchitectury.main.class\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.main_class -Darchitectury.runtime.transformer\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.transforms -Darchitectury.properties\u003dE:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\.gradle\\architectury\\.properties -Djdk.attach.allowAttachSelf\u003dtrue -javaagent:E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\.gradle\\architectury\\architectury-transformer-agent.jar",
-      "args": "nogui",
-      "env": {
-        "MOD_CLASSES": "main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\resources\\main;main%%E:\\Users\\Atom\\GitHub\\mc-advancements-reloaded\\forge\\build\\classes\\java\\main",
-        "MCP_MAPPINGS": "loom.stub"
-      },
-      "projectName": "forge"
 =======
       "name": "Minecraft Client",
       "request": "launch",
