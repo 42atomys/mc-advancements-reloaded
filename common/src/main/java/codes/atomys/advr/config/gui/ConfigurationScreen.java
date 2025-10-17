@@ -149,6 +149,17 @@ public final class ConfigurationScreen {
     appearance.addEntry(
         entryBuilder
             .startEnumSelector(
+                Component.translatable("text.config.advancements_reloaded.option.advancements_order"),
+                Configuration.AdvancementOrder.class, Configuration.advancementsOrder)
+            .setDefaultValue(Configuration.AdvancementOrder.ALPHABETIC)
+            .setTooltip(
+                Component.translatable("text.config.advancements_reloaded.option.advancements_order.tooltip"))
+            .setSaveConsumer(newValue -> Configuration.advancementsOrder = newValue)
+            .build());
+
+    appearance.addEntry(
+        entryBuilder
+            .startEnumSelector(
                 Component.translatable("text.config.advancements_reloaded.option.tabs_order"),
                 Configuration.TabOrder.class, Configuration.tabsOrder)
             .setDefaultValue(Configuration.TabOrder.ALPHABETIC)

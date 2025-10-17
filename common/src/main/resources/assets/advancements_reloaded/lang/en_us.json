@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Display the description text within the criteria area\n[false] Hide the description text in the criteria area. Use this to toggle the visibility of additional information in the criteria area.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Crtierias Alphabetic Order",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Display the criteria in alphabetical order\n[false] Display the criteria in the order they were are defined in the advancement.",
+  "text.config.advancements_reloaded.option.advancements_order": "Advancements Order Mode",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Choose the order mode for advancement rows/branches within tabs.\n\nThis provides consistent visual layout across reloads, especially useful for custom advancement trees.",
   "text.config.advancements_reloaded.option.tabs_order": "Tabs Order Mode",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Choose the order mode for the tabs in the advancement screen.",
   "text.config.advancements_reloaded.option.background_style": "Background Style in Advancement Screen",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Vanilla Order (Random)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Alphabetic Order",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Configuration Overrided",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Vanilla Order (Random)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Alphabetic Order",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Configuration Overrided",
   "text.advancements_reloaded.search_hint": "Search..."
 }

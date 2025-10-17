@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] विवरण दिखाएं\n[false] विवरण छिपाएं। अतिरिक्त जानकारी की दृश्यता बदलने के लिए उपयोग करें।",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "मापदंड वर्णानुक्रम में",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] मापदंड वर्णानुक्रम में दिखाएं\n[false] परिभाषित क्रम में दिखाएं।",
+  "text.config.advancements_reloaded.option.advancements_order": "उपलब्धि क्रम मोड",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "टैब के भीतर उपलब्धि पंक्तियों/शाखाओं के लिए क्रम मोड चुनें।\n\nयह पुनः लोड के दौरान सुसंगत दृश्य लेआउट प्रदान करता है, विशेष रूप से कस्टम उपलब्धि वृक्षों के लिए उपयोगी।",
   "text.config.advancements_reloaded.option.tabs_order": "टैब क्रम मोड",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "उपलब्धि स्क्रीन में टैब के लिए क्रम मोड चुनें।",
   "text.config.advancements_reloaded.option.background_style": "पृष्ठभूमि शैली",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "वेनिला क्रम (यादृच्छिक)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "वर्णानुक्रम",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "कॉन्फ़िगर्ड क्रम",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "वेनिला क्रम (यादृच्छिक)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "वर्णानुक्रम",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "कॉन्फ़िगरेशन ओवरराइड",
   "text.advancements_reloaded.search_hint": "खोजें..."
 }

@@ -13,7 +13,13 @@
 
 # Overview
 
-This mod significantly enhances the advancements info UI, expanding it to use most of your screen, especially when your GUI scale is high. No longer will you be confined to viewing your advancements in a tiny part of your screen.
+This mod significantly enhances the Minecraft advancements UI with a modern, expanded interface that makes full use of your screen. Features include:
+
+- **Expanded UI** - Utilizes most of your screen, especially on high GUI scales
+- **Deterministic Ordering** - No more random tab and advancement ordering
+- **Powerful Search** - Quickly find advancements and criteria across all tabs
+- **Highly Configurable** - Customize colors, layout, and ordering to your preference
+- **Modpack Friendly** - Full control over tab and advancement ordering for modpack creators
 
 ![Example of the UI with BACAP](docs/readme/bacap_example.png)
 
@@ -50,9 +56,12 @@ This mod is a continuation of the original [Advancements Reloaded](https://modri
 
 
 # For Modpack Creators
-The mod now provides flexible tab ordering options to improve advancement navigation:
 
-You can customize the tab order by editing the configuration file:
+The mod provides flexible ordering options for both tabs and advancement rows.
+
+## Tab Ordering
+
+Customize tab order by editing `config/advancements_reloaded.json`:
 
 ```json
 {
@@ -63,14 +72,61 @@ You can customize the tab order by editing the configuration file:
     "custom_tabs_order": [
       "minecraft:story/root",
       "blazeandcave:mining/root",
-      "minecraft:nether/root", 
-      "minecraft:end/root",
+      "minecraft:nether/root",
+      "minecraft:end/root"
     ]
   }
 }
 ```
 
-The `custom_tabs_order` array should contain the resource location IDs of advancement tabs root in your preferred order. Tabs not listed will appear after the configured ones in alphabetical order. **Keep in mind to always add `/root` at the end, the tab are always refered to the root achievement**
+**Note:** Tab IDs always end with `/root`. Unlisted tabs appear alphabetically after.
+
+## Advancement Row Ordering
+
+Control the order of advancement rows/branches within tabs:
+
+**Three ordering modes:**
+- `NONE`: Vanilla order (random)
+- `ALPHABETIC`: Sorted by title (default)
+- `CONFIGURED_ORDER`: Custom order
+
+**Simple Example - Order main branches:**
+
+```json
+{
+  "appearance": {
+    "advancements_order": "CONFIGURED_ORDER"
+  },
+  "advanced_customization": {
+    "custom_advancements_order": [
+      "minecraft:story/mine_stone",
+      "minecraft:story/upgrade_tools",
+      "minecraft:story/smelt_iron"
+    ]
+  }
+}
+```
+
+**Advanced Example - Order branches AND their children:**
+
+```json
+{
+  "advanced_customization": {
+    "custom_advancements_order": [
+      "modpack:quest/main",
+      "modpack:quest/side",
+      "modpack:quest/main/chapter_1",
+      "modpack:quest/main/chapter_2"
+    ]
+  }
+}
+```
+
+**Result:** Listed advancements appear first in your order, unlisted ones are sorted alphabetically after.
+
+**Finding Advancement IDs:**
+- File: `data/modpack/advancement/quest/main.json`
+- ID: `modpack:quest/main`
 
 
 # Support and Sponsorship

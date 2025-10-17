@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Отображать текст описания в области критериев\n[false] Скрывать текст описания в области критериев. Используйте это для переключения видимости дополнительной информации в области критериев.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Алфавитный порядок критериев",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Отображать критерии в алфавитном порядке\n[false] Отображать критерии в порядке, определенном в достижении.",
+  "text.config.advancements_reloaded.option.advancements_order": "Режим порядка достижений",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Выберите режим порядка для строк/веток достижений внутри вкладок.\n\nЭто обеспечивает согласованный визуальный макет при перезагрузках, особенно полезно для пользовательских деревьев достижений.",
   "text.config.advancements_reloaded.option.tabs_order": "Режим порядка вкладок",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Выберите режим порядка для вкладок на экране достижений.",
   "text.config.advancements_reloaded.option.background_style": "Стиль фона на экране достижений",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Порядок Vanilla (случайный)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Алфавитный порядок",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Настроенный порядок",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Порядок Vanilla (случайный)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Алфавитный порядок",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Настроенный порядок",
   "text.advancements_reloaded.search_hint": "Поиск..."
 }

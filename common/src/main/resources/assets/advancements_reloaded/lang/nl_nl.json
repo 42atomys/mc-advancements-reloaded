@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Toon de beschrijving in het criteria gebied\n[false] Verberg de beschrijving. Gebruik dit om extra informatie te tonen of te verbergen.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Alfabetische Volgorde van Criteria",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Toon criteria alfabetisch\n[false] Toon criteria in de volgorde zoals gedefinieerd.",
+  "text.config.advancements_reloaded.option.advancements_order": "Prestatie Volgorde Modus",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Kies de volgorde modus voor prestatie rijen/takken binnen tabs.\n\nDit zorgt voor een consistente visuele indeling bij het herladen, vooral nuttig voor aangepaste prestatie bomen.",
   "text.config.advancements_reloaded.option.tabs_order": "Tab Volgorde Modus",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Kies de volgorde modus voor de tabs in het prestatiescherm.",
   "text.config.advancements_reloaded.option.background_style": "Achtergrondstijl in Prestatie Scherm",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Vanilla Volgorde (Willekeurig)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Alfabetische Volgorde",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Geconfigureerde Volgorde",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Vanilla Volgorde (Willekeurig)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Alfabetische Volgorde",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Geconfigureerde Volgorde",
   "text.advancements_reloaded.search_hint": "Zoeken..."
 }

@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] 説明文を表示\n[false] 説明文を非表示。補足情報の表示を切替。",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "基準のアルファベット順",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] アルファベット順に表示\n[false] 定義順に表示。",
+  "text.config.advancements_reloaded.option.advancements_order": "進捗の順序モード",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "タブ内の進捗の行/分岐の順序モードを選択します。\n\n再読み込み時に一貫した表示レイアウトを提供し、カスタム進捗ツリーに特に便利です。",
   "text.config.advancements_reloaded.option.tabs_order": "タブの順序モード",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "進捗画面のタブの順序モードを選択してください。",
   "text.config.advancements_reloaded.option.background_style": "進捗画面の背景スタイル",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "バニラ順序（ランダム）",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "アルファベット順",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "設定順序",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "バニラ順序（ランダム）",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "アルファベット順",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "設定順序",
   "text.advancements_reloaded.search_hint": "検索..."
 }

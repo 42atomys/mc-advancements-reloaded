@@ -48,6 +48,7 @@ public final class ModConfigurationFile {
     appearance.set("display_sideabar", Configuration.displaySidebar);
     appearance.set("display_description", Configuration.displayDescription);
     appearance.set("criterias_alphabetic_order", Configuration.criteriasAlphabeticOrder);
+    appearance.set("advancements_order", Configuration.advancementsOrder.name());
     appearance.set("tabs_order", Configuration.tabsOrder.name());
     appearance.set("background_style", Configuration.backgroundStyle.name());
     appearance.set("criterias_translation_mode", Configuration.criteriasTranslationMode.name());
@@ -59,6 +60,7 @@ public final class ModConfigurationFile {
     advancedCustomization.set("above_widget_limit", Configuration.aboveWidgetLimit);
     advancedCustomization.set("below_widget_limit", Configuration.belowWidgetLimit);
     advancedCustomization.set("custom_tabs_order", Configuration.customTabsOrder);
+    advancedCustomization.set("custom_advancements_order", Configuration.customAdvancementsOrder);
 
     config.set("appearance", appearance);
     config.set("advanced_customization", advancedCustomization);
@@ -98,6 +100,8 @@ public final class ModConfigurationFile {
     Configuration.displaySidebar = appearance.getOrElse("display_sideabar", true);
     Configuration.displayDescription = appearance.getOrElse("display_description", true);
     Configuration.criteriasAlphabeticOrder = appearance.getOrElse("criterias_alphabetic_order", true);
+    Configuration.advancementsOrder = Configuration.AdvancementOrder
+        .valueOf(appearance.getOrElse("advancements_order", "ALPHABETIC").toUpperCase());
     Configuration.tabsOrder = Configuration.TabOrder
         .valueOf(appearance.getOrElse("tabs_order", "ALPHABETIC").toUpperCase());
     Configuration.backgroundStyle = Configuration.BackgroundStyle
@@ -111,6 +115,8 @@ public final class ModConfigurationFile {
     Configuration.aboveWidgetLimit = advancedCustomization.getOrElse("above_widget_limit", 14);
     Configuration.belowWidgetLimit = advancedCustomization.getOrElse("below_widget_limit", 14);
     Configuration.customTabsOrder = advancedCustomization.getOrElse("custom_tabs_order", () -> new ArrayList<>());
+    Configuration.customAdvancementsOrder = advancedCustomization.getOrElse("custom_advancements_order",
+        () -> new ArrayList<>());
 
     config.close();
 

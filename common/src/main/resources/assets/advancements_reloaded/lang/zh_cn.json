@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] 在条件区域内显示描述文本\n[false] 在条件区域内隐藏描述文本。使用此选项来切换条件区域中附加信息的可见性。",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "条件按字母顺序排列",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] 按字母顺序显示条件\n[false] 按成就中定义的顺序显示条件。",
+  "text.config.advancements_reloaded.option.advancements_order": "进度排序模式",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "选择标签页内进度行/分支的排序模式。\n\n这提供了重新加载时一致的视觉布局，对自定义进度树特别有用。",
   "text.config.advancements_reloaded.option.tabs_order": "标签排序模式",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "选择成就界面中标签的排序模式。",
   "text.config.advancements_reloaded.option.background_style": "成就界面背景样式",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "原版顺序（随机）",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "字母顺序",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "配置顺序",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "原版顺序（随机）",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "字母顺序",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "配置覆盖",
   "text.advancements_reloaded.search_hint": "搜索..."
 }

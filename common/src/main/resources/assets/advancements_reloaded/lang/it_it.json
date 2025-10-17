@@ -8,6 +8,8 @@
   "text.config.advancements_reloaded.option.display_description.tooltip": "[true] Mostra la descrizione nell'area dei criteri\n[false] Nasconde la descrizione. Usare per cambiare la visibilità delle info aggiuntive.",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order": "Ordine Alfabetico dei Criteri",
   "text.config.advancements_reloaded.option.criterias_alphabetic_order.tooltip": "[true] Mostra i criteri in ordine alfabetico\n[false] Mostra i criteri nell'ordine definito.",
+  "text.config.advancements_reloaded.option.advancements_order": "Modalità Ordine Obiettivi",
+  "text.config.advancements_reloaded.option.advancements_order.tooltip": "Scegli la modalità di ordinamento per righe/rami di obiettivi all'interno delle schede.\n\nQuesto fornisce un layout visivo coerente tra i ricaricamenti, particolarmente utile per alberi di obiettivi personalizzati.",
   "text.config.advancements_reloaded.option.tabs_order": "Modalità Ordine Schede",
   "text.config.advancements_reloaded.option.tabs_order.tooltip": "Scegli la modalità di ordinamento per le schede nella schermata obiettivi.",
   "text.config.advancements_reloaded.option.background_style": "Stile Sfondo Schermata Obiettivi",
@@ -33,5 +35,8 @@
   "text.config.advancements_reloaded.enum.tabs_order.none": "Ordine Vanilla (Casuale)",
   "text.config.advancements_reloaded.enum.tabs_order.alphabetic": "Ordine Alfabetico",
   "text.config.advancements_reloaded.enum.tabs_order.configured_order": "Ordine Configurato",
+  "text.config.advancements_reloaded.enum.advancements_order.none": "Ordine Vanilla (Casuale)",
+  "text.config.advancements_reloaded.enum.advancements_order.alphabetic": "Ordine Alfabetico",
+  "text.config.advancements_reloaded.enum.advancements_order.configured_order": "Configurazione Personalizzata",
   "text.advancements_reloaded.search_hint": "Cerca..."
 }
