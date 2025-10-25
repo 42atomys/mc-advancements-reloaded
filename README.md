@@ -43,7 +43,8 @@ This mod is a continuation of the original [Advancements Reloaded](https://modri
 # Known Issues
 
 - The mod may not work correctly with other mods that modify the advancements screen.
-
+- The `CONFIGURED_ORDER` configuration for tabs and achievements doesn't work in a server-client setup. This implementation requires a server-side mod to function.
+- 
 # Not Implemented Yet
 
 - [x] ~~Implement a search engine to locate criterias and advancements~~ **Implemented in 0.9.0**
