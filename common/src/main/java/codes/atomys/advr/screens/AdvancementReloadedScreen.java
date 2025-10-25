@@ -82,7 +82,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   private final ClientAdvancements advancementHandler;
   private Map<AdvancementHolder, AdvancementReloadedTab> tabs = Maps
       .<AdvancementHolder, AdvancementReloadedTab>newLinkedHashMap();
-  @Nullable
   private Optional<AdvancementReloadedTab> selectedTab;
   private AdvancementReloadedWidget selectedWidget;
   private List<ClickableRegion> clickableRegions;
@@ -126,7 +125,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   @Override
   protected void init() {
     this.tabs.clear();
-    this.selectedTab = null;
+    this.selectedTab = Optional.empty();
     this.selectedWidget = Memory.getWidget();
     this.advancementHandler.setListener(this);
     if (this.selectedTab.isEmpty() && !this.tabs.isEmpty()) {
@@ -1082,12 +1081,20 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Sets the currently selected tab to the given tab.
    * If the given tab is empty, no tab is selected.
    * The clickable regions for the widgets are recalculated.
+   * Also updates Memory to keep track of the selected tab for reload persistence.
    *
    * @param tab the tab to select, or an empty optional to select none
    */
   public void setSelectedTab(final Optional<AdvancementReloadedTab> tab) {
     this.selectedTab = tab;
     this.initClickableRegions();
+
+    // Update Memory with the selected tab ID for reload persistence
+    // This is cleared when the tab is successfully restored after a reload
+    tab.ifPresentOrElse(
+        t -> Memory.setTabId(t.getRoot().holder().id().toString()),
+        () -> Memory.setTabId(null)
+    );
   }
 
   /**
@@ -1137,7 +1144,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   public void onClear() {
     this.tabs.clear();
-    this.selectedTab = null;
+    this.selectedTab = Optional.empty();
   }
 
   /**
@@ -1171,6 +1178,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   /**
    * Adds a new root advancement to the list of tabs, if the given root's
    * advancement has a display information.
+   * If a tab ID is stored in memory (from a previous reload), and this tab matches,
+   * the tab selection is restored.
    *
    * @param advancement the root advancement node to add
    */
@@ -1181,6 +1190,15 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     if (advancementTab != null) {
       this.tabs.put(advancement.holder(), advancementTab);
       this.sortTabs();
+
+      // Check if this tab should be restored from memory (after a reload)
+      final String storedTabId = Memory.getTabId();
+      if (storedTabId != null && advancement.holder().id().toString().equals(storedTabId)) {
+        // Restore the selected tab
+        this.advancementHandler.setSelectedTab(advancement.holder(), true);
+        // Clear the stored tab ID since we've successfully restored it
+        Memory.clearTabId();
+      }
     }
   }
 
@@ -1221,11 +1239,18 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   /**
    * Called when all advancements have been cleared from the advancement manager.
    * Resets the screen state to its initial state.
+   * Preserves the selected tab ID in memory so it can be restored after reload.
    */
   @Override
   public void onAdvancementsCleared() {
+    // Save the currently selected tab ID to memory before clearing
+    // This allows us to restore the selection after a reload
+    this.selectedTab.ifPresent(tab -> {
+      Memory.setTabId(tab.getRoot().holder().id().toString());
+    });
+
     this.tabs.clear();
-    this.selectedTab = null;
+    this.selectedTab = Optional.empty();
   }
 
   /**
