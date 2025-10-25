@@ -1,5 +1,6 @@
 package codes.atomys.advr.config.gui;
 
+import codes.atomys.advr.AdvancementTreeRecalculator;
 import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.config.ModConfigurationFile;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
@@ -99,12 +100,27 @@ public final class ConfigurationScreen {
    * @return a ConfigBuilder with various configuration settings.
    */
   public static ConfigBuilder configBuilder(final Screen parent) {
+    // Store the original ordering settings to detect changes
+    final Configuration.AdvancementOrder originalAdvancementsOrder = Configuration.advancementsOrder;
+    final java.util.List<String> originalCustomAdvancementsOrder =
+        new java.util.ArrayList<>(Configuration.customAdvancementsOrder);
 
     final ConfigBuilder builder = ConfigBuilder.create()
         .setParentScreen(parent)
         .setTransparentBackground(true)
         .setTitle(Component.translatable("text.config.advancements_reloaded.title"))
-        .setSavingRunnable(ModConfigurationFile.saveRunnable);
+        .setSavingRunnable(() -> {
+          // Save configuration to file
+          ModConfigurationFile.saveRunnable.run();
+
+          // Recalculate tree positions if advancement ordering changed
+          final boolean orderModeChanged = originalAdvancementsOrder != Configuration.advancementsOrder;
+          final boolean customOrderChanged = !originalCustomAdvancementsOrder.equals(Configuration.customAdvancementsOrder);
+
+          if (orderModeChanged || (customOrderChanged && Configuration.advancementsOrder == Configuration.AdvancementOrder.CONFIGURED_ORDER)) {
+            AdvancementTreeRecalculator.recalculateAll();
+          }
+        });
 
     createApparanceEntries(builder);
     createAdvancedCustomizationEntries(builder);
