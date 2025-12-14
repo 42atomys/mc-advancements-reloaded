@@ -24,12 +24,12 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.17.2",
-    "minecraft": ">=1.21.9 <=1.21.10",
-    "cloth-config": ">=20.0.148"
+    "fabricloader": ">=0.18.2",
+    "minecraft": ">=1.21.11 <=1.21.12",
+    "cloth-config": ">=21.11.151"
   },
   "recommends": {
-    "modmenu": ">=15.0.0"
+    "modmenu": ">=17.0.0-alpha.1"
   },
   "accessWidener": "advancements_reloaded.accesswidener",
   "mixins": [

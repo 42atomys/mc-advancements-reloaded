@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat
 
 plugins {
     id "architectury-plugin" version "3.4.162" // Uses Architectury plugin https://github.com/architectury/architectury-plugin
-    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false // Uses Architectury Loom
+    id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false // Uses Architectury Loom
     // (fork of Fabric Loom) https://github.com/architectury/architectury-loom - does not apply to root project
     id "net.kyori.indra" version "3.1.3" // Uses Indra plugin
     id "net.kyori.indra.git" version "3.1.3" // Uses Indra Git plugin
@@ -27,7 +27,8 @@ subprojects {
         // mappings loom.officialMojangMappings() // Maps Minecraft so we can tell what classes are what - official mappings
         mappings loom.layered() {
             officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_minecraft_version}:${rootProject.parchmentmc_version}@zip")
+            // ParchmentMC for 1.21.11 isn't out yet.
+            // parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_minecraft_version}:${rootProject.parchmentmc_version}@zip")
         }
     }
 
@@ -65,7 +66,7 @@ allprojects {
     apply plugin: "net.kyori.indra.git" // Applies Indra Git to all projects
     apply plugin: "net.kyori.indra.checkstyle" // Applies Indra Checkstyle to all projects
 
-    archivesBaseName = rootProject.archives_base_name // sets the archive name from gradle.properties
+    project.base.archivesName = rootProject.archives_base_name // sets the archive name from gradle.properties
     version = rootProject.mod_version // sets the version from gradle.properties
     group = rootProject.maven_group // sets the maven group from gradle.properties
     indra {
