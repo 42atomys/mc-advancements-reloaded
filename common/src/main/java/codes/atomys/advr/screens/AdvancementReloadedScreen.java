@@ -34,7 +34,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.CommonColors;
 import net.minecraft.util.Mth;
@@ -64,13 +64,13 @@ import org.joml.Matrix3x2fStack;
  */
 public class AdvancementReloadedScreen extends Screen implements ClientAdvancements.Listener {
 
-  private static final ResourceLocation criteriasSeparator = ResourceLocation
+  private static final Identifier criteriasSeparator = Identifier
       .parse("advancements_reloaded:textures/gui/inworld_right_separator.png");
   // As a GUI Textured rendered type, the full path arent needed, the path start
   // at `textures/gui/sprites/{{texture}}`
-  private static final ResourceLocation GEAR_GUI_SPRITE_TEXURE = ResourceLocation.parse("advancements_reloaded:gear");
-  private static final ResourceLocation SCROLLER_TEXTURE = ResourceLocation.withDefaultNamespace("widget/scroller");
-  private static final ResourceLocation SCROLLER_BACKGROUND_TEXTURE = ResourceLocation
+  private static final Identifier GEAR_GUI_SPRITE_TEXURE = Identifier.parse("advancements_reloaded:gear");
+  private static final Identifier SCROLLER_TEXTURE = Identifier.withDefaultNamespace("widget/scroller");
+  private static final Identifier SCROLLER_BACKGROUND_TEXTURE = Identifier
       .withDefaultNamespace("widget/scroller_background");
 
   private static final Component SAD_LABEL_TEXT = Component.translatable("advancements.sad_label");
@@ -578,7 +578,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final ResourceLocation textureResourceLocation = tab.getDisplay().getBackground()
+          final Identifier textureResourceLocation = tab.getDisplay().getBackground()
               .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
               .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
@@ -787,7 +787,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final ResourceLocation textureResourceLocation = display.getBackground()
+      final Identifier textureResourceLocation = display.getBackground()
           .map(ClientAsset.ResourceTexture::texturePath).orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
 
       // Draw header

@@ -25,7 +25,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
  * @see DisplayInfo
  */
 public class AdvancementReloadedWidget {
-  private static final ResourceLocation TITLE_BOX_TEXTURE = ResourceLocation
+  private static final Identifier TITLE_BOX_TEXTURE = Identifier
       .withDefaultNamespace("advancements/title_box");
 
   // CHECKSTYLE:OFF
@@ -350,7 +350,7 @@ public class AdvancementReloadedWidget {
       }
 
       final boolean isDimmed = !this.isSearchQueryMatched();
-      final ResourceLocation backgroundResource = widgetType.frameSprite(this.display.getType(), isDimmed);
+      final Identifier backgroundResource = widgetType.frameSprite(this.display.getType(), isDimmed);
 
       context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
 
@@ -358,7 +358,7 @@ public class AdvancementReloadedWidget {
 
       if (isDimmed) {
         // Force the dimmed sprite to be rendered with a lower alpha
-        final ResourceLocation dimmedResource = widgetType.frameSprite(this.display.getType(), true);
+        final Identifier dimmedResource = widgetType.frameSprite(this.display.getType(), true);
         context.blitSprite(this.renderTypeGui, dimmedResource, x + this.x + 3, y + this.y, 26, 26, 0.6f);
       }
     }

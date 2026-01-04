@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "8.1.1" // Use Shadow to make a JAR with dependencies
+    id 'com.gradleup.shadow' version "9.3.0" // Use Shadow to make a JAR with dependencies
 }
 
 configurations {
@@ -45,8 +45,10 @@ dependencies {
     }
 
     // Tells Gradle to use fabric resource loader in order to use language files
-    include(modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)))
-    include(modImplementation(fabricApi.module("fabric-resource-loader-v1", project.fabric_api_version)))
+    // Note: Do NOT use include() here - bundling these modules breaks Quilt compatibility
+    // because they have internal dependencies that conflict with QFAPI
+    modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version))
+    modImplementation(fabricApi.module("fabric-resource-loader-v1", project.fabric_api_version))
 
     // Tells Gradle to use night config
     implementation 'com.electronwill.night-config:json:3.6.6'
