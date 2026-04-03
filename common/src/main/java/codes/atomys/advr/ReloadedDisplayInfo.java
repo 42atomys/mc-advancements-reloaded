@@ -5,7 +5,7 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 /**
  * The ReloadedDisplayInfo class extends DisplayInfo and provides additional
@@ -34,7 +34,7 @@ public class ReloadedDisplayInfo extends DisplayInfo {
    * @param announceChat A boolean indicating whether to announce in chat.
    * @param hidden       A boolean indicating whether the advancement is hidden.
    */
-  public ReloadedDisplayInfo(final ItemStack icon, final Component title, final Component description,
+  public ReloadedDisplayInfo(final ItemStackTemplate icon, final Component title, final Component description,
       final Optional<ClientAsset.ResourceTexture> background, final AdvancementType type, final boolean showToast,
       final boolean announceChat,
       final boolean hidden) {

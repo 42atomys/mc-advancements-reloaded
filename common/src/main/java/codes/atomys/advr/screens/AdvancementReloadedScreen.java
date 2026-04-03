@@ -20,7 +20,7 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.SpriteIconButton;
@@ -494,7 +494,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Renders the screen.
    * <p>
    * This method renders the background, calls the superclass's
-   * {@link Screen#render(GuiGraphics, int, int, float)} method, and then renders
+   * {@link Screen#extractRenderState(GuiGraphicsExtractor, int, int, float)} method, and then renders
    * the advancement tree, window, widget tooltip, and advancement criteria.
    * </p>
    * <p>
@@ -513,7 +513,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param delta   the time elapsed since the last frame
    */
   @Override
-  public void render(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
+  public void extractRenderState(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final float delta) {
     final int headerOffset = Configuration.headerHeight + 1; // 1 are the separator pixels
 
     context.nextStratum();
@@ -540,9 +540,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param mouseY  the y-coordinate of the mouse
    * @param delta   the time elapsed since the last frame
    */
-  public void renderRenderable(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
+  public void renderRenderable(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final float delta) {
     for (final Renderable renderable : this.renderables) {
-      renderable.render(context, mouseX, mouseY, delta);
+      renderable.extractRenderState(context, mouseX, mouseY, delta);
     }
   }
 
@@ -568,10 +568,10 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param delta   the time elapsed since the last frame
    */
   @Override
-  public void renderBackground(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
+  public void extractBackground(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final float delta) {
     switch (Configuration.backgroundStyle) {
       case Configuration.BackgroundStyle.TRANSPARENT:
-        super.renderBackground(context, mouseX, mouseY, delta);
+        super.extractBackground(context, mouseX, mouseY, delta);
         break;
       case Configuration.BackgroundStyle.BLACK:
         context.fill(0, 0, width, height, CommonColors.BLACK);
@@ -617,12 +617,12 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param x       the X-coordinate of the tab
    * @param y       the Y-coordinate of the tab
    */
-  private void renderAdvancementTree(final GuiGraphics context, final int mouseX, final int mouseY, final int x,
+  private void renderAdvancementTree(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final int x,
       final int y) {
     if (this.selectedTab.isEmpty()) {
-      context.drawCenteredString(this.font, EMPTY_TEXT, width / 2,
+      context.centeredText(this.font, EMPTY_TEXT, width / 2,
           (height / 2) - this.font.lineHeight * 2, CommonColors.WHITE);
-      context.drawCenteredString(this.font, SAD_LABEL_TEXT, width / 2,
+      context.centeredText(this.font, SAD_LABEL_TEXT, width / 2,
           (height / 2) + this.font.lineHeight * 2, CommonColors.WHITE);
     } else {
       this.selectedTab.get().render(context, x, y);
@@ -633,7 +633,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * Draws the advancement criteria for the currently selected widget.
    *
    * <p>
-   * This method is called by {@link #render(GuiGraphics, int, int, float)} and
+   * This method is called by {@link #extractRenderState(GuiGraphicsExtractor, int, int, float)} and
    * is responsible for rendering the advancement criteria for the currently
    * selected widget. It first checks if the sidebar is visible and if the
    * criteria width is greater than 0. If not, it returns immediately.
@@ -650,7 +650,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param x       the x position of the screen
    * @param y       the y position of the screen
    */
-  public void renderAdvancementCriterias(final GuiGraphics context, final int x, final int y) {
+  public void renderAdvancementCriterias(final GuiGraphicsExtractor context, final int x, final int y) {
     if (!this.hasVisibleSidebar() || Configuration.criteriasWidth == 0)
       return;
 
@@ -678,21 +678,21 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.contentHeight = 6; // 6 are the bottom margin
 
     // Drawing title
-    context.drawWordWrap(this.font, title, sidebarXOffset, paddingTop, maxTextWidth, CommonColors.WHITE);
+    context.textWithWordWrap(this.font, title, sidebarXOffset, paddingTop, maxTextWidth, CommonColors.WHITE);
     // 4 are the padding bottom added
     paddingTop += (this.font.lineHeight) * this.font.split(title, maxTextWidth).size() + 4;
     this.contentHeight += (this.font.lineHeight) * this.font.split(title, maxTextWidth).size() + 4;
 
     // Drawing description
     if (Configuration.displayDescription && description != null) {
-      context.drawWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
+      context.textWithWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
           ARGB.opaque(this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor().getColor()));
       // 4 are the padding bottom added
       paddingTop += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
       this.contentHeight += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
     }
 
-    context.hLine(sidebarXOffset, width - 12, paddingTop, CommonColors.LIGHT_GRAY);
+    context.horizontalLine(sidebarXOffset, width - 12, paddingTop, CommonColors.LIGHT_GRAY);
     paddingTop += 5;
     this.contentHeight += 5;
 
@@ -700,7 +700,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     for (final ReloadedCriterionProgress step : this.getSelectedWidget().getSteps()) {
       final Component stepTitle = step.getHumanCriterionName();
       final int lineNeeded = this.font.split(stepTitle, maxTextWidth).size();
-      context.drawWordWrap(this.font, stepTitle, sidebarXOffset, paddingTop, maxTextWidth, step.getColor());
+      context.textWithWordWrap(this.font, stepTitle, sidebarXOffset, paddingTop, maxTextWidth, step.getColor());
       // 4 are the padding bottom added
       paddingTop += (this.font.lineHeight) * lineNeeded + 4;
       this.contentHeight += (this.font.lineHeight) * lineNeeded + 4;
@@ -721,7 +721,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param x       the x position of the sidebar
    * @param y       the y position of the sidebar
    */
-  private void drawAdvancementCriteriaScrollbar(final GuiGraphics context, final int x, final int y) {
+  private void drawAdvancementCriteriaScrollbar(final GuiGraphicsExtractor context, final int x, final int y) {
     // Drawing scrollbar if needed
     if (!this.needScrollbarOnCriterias()) {
       return;
@@ -779,11 +779,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * The given x and y coordinates are used to position the window.
    * </p>
    *
-   * @param context the GuiGraphics context to draw with
+   * @param context the GuiGraphicsExtractor context to draw with
    * @param x       the x coordinate of the window
    * @param y       the y coordinate of the window
    */
-  public void renderWindow(final GuiGraphics context, final int x, int y) {
+  public void renderWindow(final GuiGraphicsExtractor context, final int x, int y) {
 
     if (this.selectedTab.isPresent()) {
       final DisplayInfo display = this.selectedTab.get().getDisplay();
@@ -826,7 +826,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       this.drawSeparators(context, 0.7F);
 
       // Draw title on header
-      context.drawCenteredString(this.font, display.getTitle(), width / 2,
+      context.centeredText(this.font, display.getTitle(), width / 2,
           (Configuration.headerHeight - 20) / 2 - this.font.lineHeight / 2, 0xffffff);
     }
 
@@ -866,7 +866,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param context the graphics context to draw on
    * @param alpha   the transparency of the separators (0.0-1.0)
    */
-  private void drawSeparators(final GuiGraphics context, final float alpha) {
+  private void drawSeparators(final GuiGraphicsExtractor context, final float alpha) {
     // Enable blending
     // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, alpha);
 
@@ -894,7 +894,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * @param x       the x-coordinate of the widget or tab
    * @param y       the y-coordinate of the widget or tab
    */
-  private void renderWidgetTooltip(final GuiGraphics context, final int mouseX, final int mouseY, final int x,
+  private void renderWidgetTooltip(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final int x,
       final int y) {
     if (this.selectedTab.isPresent()) {
       context.pose().pushMatrix();

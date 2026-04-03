@@ -1,8 +1,9 @@
 import java.text.SimpleDateFormat
 
 plugins {
-    id "architectury-plugin" version "3.4.162" // Uses Architectury plugin https://github.com/architectury/architectury-plugin
-    id "dev.architectury.loom" version "1.13-SNAPSHOT" apply false // Uses Architectury Loom
+    id "architectury-plugin" version "3.5-SNAPSHOT" // Uses Architectury plugin https://github.com/architectury/architectury-plugin
+    id "dev.architectury.loom" version "1.14-SNAPSHOT" apply false // Uses Architectury Loom
+    id "dev.architectury.loom-no-remap" version "1.14-SNAPSHOT" apply false // No-remap variant for unobfuscated MC 26.x+
     // (fork of Fabric Loom) https://github.com/architectury/architectury-loom - does not apply to root project
     id "net.kyori.indra" version "3.1.3" // Uses Indra plugin
     id "net.kyori.indra.git" version "3.1.3" // Uses Indra Git plugin
@@ -15,21 +16,11 @@ architectury {
 }
 
 subprojects {
-    apply plugin: "dev.architectury.loom" // Applies Architectury Loom to subprojects
+    apply plugin: "dev.architectury.loom-no-remap" // Applies Architectury Loom (no-remap for unobfuscated MC 26.x+)
     apply plugin: "me.shedaniel.unified-publishing" // Applies Unified Publishing to subprojects
-
-    loom {
-        silentMojangMappingsLicense() // Silences the annoying as hell Mojang License text
-    }
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}" // Minecraft dependency
-        // mappings loom.officialMojangMappings() // Maps Minecraft so we can tell what classes are what - official mappings
-        mappings loom.layered() {
-            officialMojangMappings()
-            // ParchmentMC for 1.21.11 isn't out yet.
-            // parchment("org.parchmentmc.data:parchment-${rootProject.parchmentmc_minecraft_version}:${rootProject.parchmentmc_version}@zip")
-        }
     }
 
     ext {
@@ -73,8 +64,8 @@ allprojects {
         mitLicense()
         checkstyle("9.3")
         javaVersions {
-            target(21) // 1.20.5 now uses Java 21
-            testWith(21)
+            target(25) // 1.20.5 now uses Java 25
+            testWith(25)
         }
     }
 
@@ -95,7 +86,7 @@ allprojects {
 
     tasks.withType(JavaCompile).tap {
         configureEach {
-            options.release = 21
+            options.release = 25
         }
     }
 
