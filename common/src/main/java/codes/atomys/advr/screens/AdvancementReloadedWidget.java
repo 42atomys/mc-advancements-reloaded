@@ -17,7 +17,7 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -303,7 +303,7 @@ public class AdvancementReloadedWidget {
    * @param y       the y-coordinate of the widget
    * @param border  whether to render a border around the connecting lines
    */
-  public void renderLines(final GuiGraphics context, final int x, final int y, final boolean border) {
+  public void renderLines(final GuiGraphicsExtractor context, final int x, final int y, final boolean border) {
     if (this.parent != null) {
       final int i = x + this.parent.x + 13;
       final int j = x + this.parent.x + 26 + 4;
@@ -312,18 +312,18 @@ public class AdvancementReloadedWidget {
       final int m = y + this.y + 13;
       final int n = border ? -16777216 : -1;
       if (border) {
-        context.hLine(j, i, k - 1, n);
-        context.hLine(j + 1, i, k, n);
-        context.hLine(j, i, k + 1, n);
-        context.hLine(l, j - 1, m - 1, n);
-        context.hLine(l, j - 1, m, n);
-        context.hLine(l, j - 1, m + 1, n);
-        context.vLine(j - 1, m, k, n);
-        context.vLine(j + 1, m, k, n);
+        context.horizontalLine(j, i, k - 1, n);
+        context.horizontalLine(j + 1, i, k, n);
+        context.horizontalLine(j, i, k + 1, n);
+        context.horizontalLine(l, j - 1, m - 1, n);
+        context.horizontalLine(l, j - 1, m, n);
+        context.horizontalLine(l, j - 1, m + 1, n);
+        context.verticalLine(j - 1, m, k, n);
+        context.verticalLine(j + 1, m, k, n);
       } else {
-        context.hLine(j, i, k, n);
-        context.hLine(l, j, m, n);
-        context.vLine(j, m, k, n);
+        context.horizontalLine(j, i, k, n);
+        context.horizontalLine(l, j, m, n);
+        context.verticalLine(j, m, k, n);
       }
     }
     for (final AdvancementReloadedWidget advancementWidget : this.children)
@@ -339,7 +339,7 @@ public class AdvancementReloadedWidget {
    * @param x       the x-coordinate of the widget
    * @param y       the y-coordinate of the widget
    */
-  public void renderWidgets(final GuiGraphics context, final int x, final int y) {
+  public void renderWidgets(final GuiGraphicsExtractor context, final int x, final int y) {
     if (!this.display.isHidden() || (this.progress != null && this.progress.isDone())) {
       final ReloadedWidgetType widgetType;
       final float currentProgress = (this.progress == null) ? 0.0F : this.progress.getPercent();
@@ -354,7 +354,7 @@ public class AdvancementReloadedWidget {
 
       context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
 
-      context.renderFakeItem(this.display.getIcon(), x + this.x + 8, y + this.y + 5);
+      context.fakeItem(this.display.getIcon().create(), x + this.x + 8, y + this.y + 5);
 
       if (isDimmed) {
         // Force the dimmed sprite to be rendered with a lower alpha
@@ -459,7 +459,7 @@ public class AdvancementReloadedWidget {
    * @param x       the x-coordinate of the mouse
    * @param y       the y-coordinate of the mouse
    */
-  public void drawTooltip(final GuiGraphics context, final int originX, final int originY, final float alpha,
+  public void drawTooltip(final GuiGraphicsExtractor context, final int originX, final int originY, final float alpha,
       final int x, final int y) {
     final ReloadedWidgetType advancementObtainedStatus;
     final ReloadedWidgetType advancementObtainedStatus2;
@@ -518,29 +518,29 @@ public class AdvancementReloadedWidget {
         originX + this.x + 3,
         originY + this.y, 26, 26);
     if (bl) {
-      context.drawString(this.client.font, this.title, m + 5, originY + this.y + 9, -1);
+      context.text(this.client.font, this.title, m + 5, originY + this.y + 9, -1);
       if (text != null)
-        context.drawString(this.client.font, text, originX + this.x - i, originY + this.y + 9, -1);
+        context.text(this.client.font, text, originX + this.x - i, originY + this.y + 9, -1);
     } else {
-      context.drawString(this.client.font, this.title, originX + this.x + 32, originY + this.y + 9, -1);
+      context.text(this.client.font, this.title, originX + this.x + 32, originY + this.y + 9, -1);
       if (text != null)
-        context.drawString(this.client.font, text, originX + this.x + this.width - i - 5,
+        context.text(this.client.font, text, originX + this.x + this.width - i - 5,
             originY + this.y + 9, -1);
     }
     if (bl2) {
       for (int o = 0; o < this.description.size(); o++) {
         Objects.requireNonNull(this.client.font);
-        context.drawString(this.client.font, this.description.get(o), m + 5, l + 26 - n + 7 + o * 9, -5592406,
+        context.text(this.client.font, this.description.get(o), m + 5, l + 26 - n + 7 + o * 9, -5592406,
             false);
       }
     } else {
       for (int o = 0; o < this.description.size(); o++) {
         Objects.requireNonNull(this.client.font);
-        context.drawString(this.client.font, this.description.get(o), m + 5, originY + this.y + 9 + 17 + o * 9,
+        context.text(this.client.font, this.description.get(o), m + 5, originY + this.y + 9 + 17 + o * 9,
             -5592406, false);
       }
     }
-    context.renderFakeItem(this.display.getIcon(), originX + this.x + 8, originY + this.y + 5);
+    context.fakeItem(this.display.getIcon().create(), originX + this.x + 8, originY + this.y + 5);
   }
 
   /**

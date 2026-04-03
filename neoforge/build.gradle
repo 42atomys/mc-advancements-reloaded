@@ -42,8 +42,8 @@ dependencies {
         exclude module: 'guava'
     }
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+    common(project(path: ":common")) { transitive false }
+    shadowCommon(project(path: ":common")) { transitive = false }
 }
 
 processResources {
@@ -60,16 +60,9 @@ shadowJar {
     exclude "fabric.mod.json"
 
     configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-}
-
-remapJar {
-    inputFile.set(shadowJar.archiveFile)
-    dependsOn(shadowJar)
     archiveClassifier.set("neoforge-${rootProject.minecraft_version}")
 
     from rootProject.file("LICENSE.txt")
-    atAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
 }
 
 jar {
@@ -103,7 +96,7 @@ unifiedPublishing {
         gameVersions.set(mcVersions)
         gameLoaders = ["neoforge"]
 
-        mainPublication tasks.remapJar
+        mainPublication tasks.shadowJar
 
         relations {
             depends {

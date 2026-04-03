@@ -14,11 +14,11 @@ import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link #create(Minecraft, AdvancementReloadedScreen, int, AdvancementNode)}
  * method, which initializes the tab with the given parameters. The tab's
  * position can be set using the {@link #setPos(int, int)} method, and it can be
- * rendered using the {@link #render(GuiGraphics, int, int)} method.
+ * rendered using the {@link #render(GuiGraphicsExtractor, int, int)} method.
  * </p>
  * <p>
  * The tab contains a map of widgets, each representing an advancement. These
@@ -61,7 +61,7 @@ public class AdvancementReloadedTab {
   private final AdvancementReloadedScreen screen;
   private final AdvancementNode root;
   private final ReloadedDisplayInfo display;
-  private final ItemStack icon;
+  private final ItemStackTemplate icon;
   private final Component title;
   private final AdvancementReloadedWidget rootWidget;
   private final Map<AdvancementHolder, AdvancementReloadedWidget> widgets = Maps.newLinkedHashMap();
@@ -245,14 +245,14 @@ public class AdvancementReloadedTab {
    * @param context  the graphics context to draw on
    * @param selected whether the tab is selected
    */
-  public void drawBackground(final GuiGraphics context, final boolean selected) {
+  public void drawBackground(final GuiGraphicsExtractor context, final boolean selected) {
     this.drawBackground(context, selected, 1.0F);
   }
 
   /**
    * Draws the background of the tab with a specified alpha value.
    * <p>
-   * This method is similar to {@link #drawBackground(GuiGraphics, boolean)},
+   * This method is similar to {@link #drawBackground(GuiGraphicsExtractor, boolean)},
    * but it allows for a custom alpha value to be applied to the background,
    * which can be used for fading effects or other visual enhancements.
    * </p>
@@ -261,7 +261,7 @@ public class AdvancementReloadedTab {
    * @param selected whether the tab is selected
    * @param alpha    the alpha value to apply to the background
    */
-  public void drawBackground(final GuiGraphics context, final boolean selected, final float alpha) {
+  public void drawBackground(final GuiGraphicsExtractor context, final boolean selected, final float alpha) {
     final ReloadedWidgetType type = selected ? ReloadedWidgetType.OBTAINED : ReloadedWidgetType.UNOBTAINED;
 
     context.blitSprite(this.renderTypeGui, type.frameSprite(AdvancementType.TASK, !this.isAnyWidgetMatchSearch()),
@@ -279,8 +279,8 @@ public class AdvancementReloadedTab {
    *
    * @param context the graphics context to draw on
    */
-  public void drawIcon(final GuiGraphics context) {
-    context.renderFakeItem(this.icon, this.tab_x + this.tabPlacement.getTopMargin(),
+  public void drawIcon(final GuiGraphicsExtractor context) {
+    context.fakeItem(this.icon.create(), this.tab_x + this.tabPlacement.getTopMargin(),
         this.tab_y + this.tabPlacement.getLeftMargin());
   }
 
@@ -356,7 +356,7 @@ public class AdvancementReloadedTab {
    * @param x       the x position of the screen
    * @param y       the y position of the screen
    */
-  public void render(final GuiGraphics context, final int x, final int y) {
+  public void render(final GuiGraphicsExtractor context, final int x, final int y) {
     if (!this.initialized) {
       this.originX = (double) ((this.getWidth() / 2) - (this.maxPanX + this.minPanX) / 2);
       this.originY = (double) ((this.screen.height / 2 - Configuration.headerHeight - 1)
@@ -396,7 +396,7 @@ public class AdvancementReloadedTab {
    * @param x       the x position of the screen
    * @param y       the y position of the screen
    */
-  public void drawWidgetTooltip(final GuiGraphics context, final int mouseX, final int mouseY, final int x,
+  public void drawWidgetTooltip(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final int x,
       final int y) {
     context.fill(0, 0, this.getWidth(), this.getHeight(), Mth.floor(this.alpha * 255.0F) << 24);
     boolean rendered = false;

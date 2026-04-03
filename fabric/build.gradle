@@ -27,28 +27,28 @@ repositories {
 
 dependencies {
     // Fabric API
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    implementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    api "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    common(project(path: ":common")) { transitive false }
+    shadowCommon(project(path: ":common")) { transitive false }
 
     // Tells Gradle to use cloth config
-    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}", {
+    implementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}", {
         exclude module: 'fabric-api'
     }
     include "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
 
     // Tells Gradle to use mod menu
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}", {
+    implementation "com.terraformersmc:modmenu:${project.modmenu_version}", {
         exclude module: 'fabric-api'
     }
 
     // Tells Gradle to use fabric resource loader in order to use language files
     // Note: Do NOT use include() here - bundling these modules breaks Quilt compatibility
     // because they have internal dependencies that conflict with QFAPI
-    modImplementation(fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version))
-    modImplementation(fabricApi.module("fabric-resource-loader-v1", project.fabric_api_version))
+    implementation "net.fabricmc.fabric-api:fabric-resource-loader-v0:${project.fabric_api_version}"
+    implementation "net.fabricmc.fabric-api:fabric-resource-loader-v1:${project.fabric_api_version}"
 
     // Tells Gradle to use night config
     implementation 'com.electronwill.night-config:json:3.6.6'
@@ -67,15 +67,8 @@ processResources {
 
 shadowJar {
     configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set("dev-shadow")
-    relocate 'com.electronwill.nightconfig', 'codes.atomys.advr.libs.nightconfig'
-}
-
-remapJar {
-    injectAccessWidener = true
-    inputFile.set(shadowJar.archiveFile)
-    dependsOn(shadowJar)
     archiveClassifier.set("fabric-${rootProject.minecraft_version}")
+    relocate 'com.electronwill.nightconfig', 'codes.atomys.advr.libs.nightconfig'
 
     from rootProject.file("LICENSE.txt")
 }
@@ -111,7 +104,7 @@ unifiedPublishing {
         gameVersions.set mcVersions
         gameLoaders = ["fabric","quilt"]
 
-        mainPublication tasks.remapJar
+        mainPublication tasks.shadowJar
 
         relations {
             depends {
@@ -129,7 +122,7 @@ unifiedPublishing {
             curseforge {
                 token.set CURSE_API_KEY
                 id = rootProject.curseforge_id
-                gameVersions.addAll("Java 21")
+                gameVersions.addAll("Java 25")
             }
         }
 
