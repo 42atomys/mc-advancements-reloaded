@@ -3,6 +3,7 @@ package codes.atomys.advr.screens;
 import codes.atomys.advr.ClickableRegion;
 import codes.atomys.advr.ReloadedCriterionProgress;
 import codes.atomys.advr.TabPlacement;
+import codes.atomys.advr.compat.ScreenCompat;
 import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.config.gui.ConfigurationScreen;
 import codes.atomys.advr.utils.Memory;
@@ -33,6 +34,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.protocol.game.ServerboundSeenAdvancementsPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
@@ -149,7 +151,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     this.searchBox.setHint(SEARCH_HINT_TEXT);
     this.searchBox.setCanLoseFocus(true);
     this.searchBox.setVisible(true);
-    this.searchBox.setTextColor(ARGB.opaque(ChatFormatting.WHITE.getColor()));
+    this.searchBox.setTextColor(CommonColors.WHITE);
     this.searchBox.setBordered(true);
     this.searchBox.setMaxLength(32);
     this.searchBox.setValue(this.searchText);
@@ -161,7 +163,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     final SpriteIconButton settingsIconButton = this.addRenderableWidget(
         SpriteIconButton.builder(
             Component.translatable("options.settings"),
-            button -> this.minecraft.setScreen(ConfigurationScreen.screen(this)),
+            button -> ScreenCompat.setScreen(this.minecraft, ConfigurationScreen.screen(this)),
             true)
             .width(20)
             .sprite(GEAR_GUI_SPRITE_TEXURE, 14, 14)
@@ -215,7 +217,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public void onClose() {
-    this.minecraft.setScreen(this.parent);
+    ScreenCompat.setScreen(this.minecraft, this.parent);
   }
 
   /**
@@ -467,7 +469,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     }
 
     if (this.minecraft.options.keyAdvancements.matches(event)) {
-      this.minecraft.setScreen(this.parent);
+      ScreenCompat.setScreen(this.minecraft, this.parent);
       this.minecraft.mouseHandler.grabMouse();
       return true;
     } else if (InputConstants.KEY_ESCAPE == event.key()) {
@@ -686,7 +688,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     // Drawing description
     if (Configuration.displayDescription && description != null) {
       context.textWithWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
-          ARGB.opaque(this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor().getColor()));
+          ARGB.opaque(TextColor.fromLegacyFormat(this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor()).getValue()));
       // 4 are the padding bottom added
       paddingTop += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
       this.contentHeight += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
