@@ -9,8 +9,8 @@ import codes.atomys.advr.config.gui.ConfigurationScreen;
 import codes.atomys.advr.utils.Memory;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +19,6 @@ import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
@@ -31,7 +30,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
@@ -259,7 +258,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public boolean mouseClicked(final MouseButtonEvent event, final boolean isDoubleClick) {
-    if (event.button() == 0) {
+    if (event.button() == 1) {
       ClickableRegion.foundRegions(this.clickableRegions, event.x(), event.y()).forEach(region -> {
         region.setClicked(true);
       });
@@ -341,7 +340,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public boolean mouseReleased(final MouseButtonEvent event) {
-    if (event.button() == 0) {
+    if (event.button() == 1) {
       ClickableRegion.foundClickedRegions(this.clickableRegions).forEach(region -> {
         region.setClicked(false);
       });
@@ -580,7 +579,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         break;
       case Configuration.BackgroundStyle.ACHIEVEMENT:
         this.selectedTab.ifPresent(tab -> {
-          final Identifier textureResourceLocation = tab.getDisplay().getBackground()
+          final Identifier textureResourceLocation = tab.getDisplay().background()
               .orElse(Utils.INTENTIONAL_MISSING_TEXTURE)
               .texturePath();
           context.blit(this.renderTypeGui, textureResourceLocation, 0, 0, 0.0F, 0.0F, width, height, 16, 16);
@@ -662,7 +661,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     final int maxTextWidth = Configuration.criteriasWidth - (this.needScrollbarOnCriterias() ? 6 : 0) - 12;
 
     final Component title = this.getSelectedWidget().getAdvancement().name().get();
-    final Component description = this.getSelectedWidget().getAdvancement().display().get().getDescription();
+    final Component description = this.getSelectedWidget().getAdvancement().display().get().description();
 
     context.fill(width - Configuration.criteriasWidth, Configuration.headerHeight, width,
         height - Configuration.footerHeight, Mth.floor(0.5F * 255.0F) << 24);
@@ -688,7 +687,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     // Drawing description
     if (Configuration.displayDescription && description != null) {
       context.textWithWordWrap(this.font, description, sidebarXOffset, paddingTop, maxTextWidth,
-          ARGB.opaque(TextColor.fromLegacyFormat(this.getSelectedWidget().getAdvancement().display().get().getType().getChatColor()).getValue()));
+          ARGB.opaque(TextColor.fromLegacyFormat(this.getSelectedWidget().getAdvancement().display().get().type().getChatColor()).getValue()));
       // 4 are the padding bottom added
       paddingTop += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
       this.contentHeight += (this.font.lineHeight) * this.font.split(description, maxTextWidth).size() + 4;
@@ -788,9 +787,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public void renderWindow(final GuiGraphicsExtractor context, final int x, int y) {
 
     if (this.selectedTab.isPresent()) {
-      final DisplayInfo display = this.selectedTab.get().getDisplay();
-      final Identifier textureResourceLocation = display.getBackground()
-          .map(ClientAsset.ResourceTexture::texturePath).orElse(TextureManager.INTENTIONAL_MISSING_TEXTURE);
+      final DisplayInfo display = this.selectedTab.get().getDisplay().getDisplayInfo();
+      final Identifier textureResourceLocation = display.background()
+          .map(ClientAsset.ResourceTexture::texturePath).orElse(MissingTextureAtlasSprite.getLocation());
 
       // Draw header
       final int headerDrawHeight = Configuration.headerHeight / 16 + 1;
@@ -828,7 +827,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       this.drawSeparators(context, 0.7F);
 
       // Draw title on header
-      context.centeredText(this.font, display.getTitle(), width / 2,
+      context.centeredText(this.font, display.title(), width / 2,
           (Configuration.headerHeight - 20) / 2 - this.font.lineHeight / 2, 0xffffff);
     }
 
@@ -996,29 +995,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   /**
-   * Adds a new root advancement to the list of tabs, if the given root's
-   * advancement has a display information.
-   *
-   * @param root the root advancement node to add
-   */
-  public void onRootAdded(final AdvancementNode root) {
-    final AdvancementReloadedTab advancementTab = AdvancementReloadedTab.create(this.minecraft, this, this.tabs.size(),
-        root);
-    if (advancementTab != null) {
-      this.tabs.put(root.holder(), advancementTab);
-      this.sortTabs();
-    }
-  }
-
-  /**
-   * This implementation does nothing.
-   *
-   * @param root the removed root advancement node
-   */
-  public void onRootRemoved(final AdvancementNode root) {
-  }
-
-  /**
    * Called when a dependent of the given root advancement is added.
    * The given dependent is added to the tab the root is in.
    *
@@ -1028,33 +1004,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
     final AdvancementReloadedTab advancementTab = this.getTab(dependent);
     if (advancementTab != null) {
       advancementTab.addAdvancement(dependent);
-    }
-  }
-
-  /**
-   * Called when a dependent of the given root advancement is removed.
-   * The given dependent is removed from the tab the root is in.
-   *
-   * @param dependent the dependent to remove
-   */
-  public void onDependentRemoved(final AdvancementNode dependent) {
-  }
-
-  /**
-   * Called when the progress of an advancement changes.
-   * The given advancement is the advancement with changed progress, and the given
-   * progress is the new progress.
-   * The given progress is set on the widget for the given advancement, if such a
-   * widget exists.
-   *
-   * @param advancement the advancement with changed progress
-   * @param progress    the new progress
-   */
-  @Override
-  public void onUpdateAdvancementProgress(final AdvancementNode advancement, final AdvancementProgress progress) {
-    final AdvancementReloadedWidget advancementWidget = this.getAdvancementWidget(advancement);
-    if (advancementWidget != null) {
-      advancementWidget.setProgress(progress);
     }
   }
 
@@ -1178,64 +1127,57 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   /**
-   * Adds a new root advancement to the list of tabs, if the given root's
-   * advancement has a display information.
-   * If a tab ID is stored in memory (from a previous reload), and this tab matches,
-   * the tab selection is restored.
-   *
-   * @param advancement the root advancement node to add
+   * Rebuilds tabs and widgets from the current advancement tree and applies all
+   * known progress after an advancement packet is processed.
    */
   @Override
-  public void onAddAdvancementRoot(final AdvancementNode advancement) {
-    final AdvancementReloadedTab advancementTab = AdvancementReloadedTab.create(this.minecraft, this, this.tabs.size(),
-        advancement);
-    if (advancementTab != null) {
-      this.tabs.put(advancement.holder(), advancementTab);
-      this.sortTabs();
+  public void onAdvancementsUpdated() {
+    final AdvancementHolder selectedRoot = this.selectedTab.map(tab -> tab.getRoot().holder()).orElse(null);
+    this.tabs.clear();
 
-      // Check if this tab should be restored from memory (after a reload)
-      final String storedTabId = Memory.getTabId();
-      if (storedTabId != null && advancement.holder().id().toString().equals(storedTabId)) {
-        // Restore the selected tab
-        this.advancementHandler.setSelectedTab(advancement.holder(), true);
-        // Clear the stored tab ID since we've successfully restored it
-        Memory.clearTabId();
+    final var tree = this.advancementHandler.tree();
+    for (final AdvancementNode root : tree.roots()) {
+      final AdvancementReloadedTab tab = AdvancementReloadedTab.create(this.minecraft, this, this.tabs.size(), root);
+      if (tab != null) {
+        this.tabs.put(root.holder(), tab);
       }
     }
-  }
+    this.sortTabs();
 
-  /**
-   * Removes the tab associated with the given root advancement, if such a tab
-   * exists.
-   *
-   * @param advancement the root advancement node to remove
-   */
-  @Override
-  public void onRemoveAdvancementRoot(final AdvancementNode advancement) {
-  }
-
-  /**
-   * Adds a new advancement to the tab associated with its root advancement, if
-   * such a tab exists.
-   *
-   * @param advancement the advancement to add
-   */
-  @Override
-  public void onAddAdvancementTask(final AdvancementNode advancement) {
-    final AdvancementReloadedTab advancementTab = this.getTab(advancement);
-    if (advancementTab != null) {
-      advancementTab.addAdvancement(advancement);
+    for (final AdvancementNode task : tree.tasks()) {
+      final AdvancementReloadedTab tab = this.getTab(task);
+      if (tab != null) {
+        tab.addAdvancement(task);
+      }
     }
-  }
 
-  /**
-   * Removes the widget associated with the given advancement from its tab, if
-   * such a tab and widget exist.
-   *
-   * @param advancement the advancement to remove
-   */
-  @Override
-  public void onRemoveAdvancementTask(final AdvancementNode advancement) {
+    this.advancementHandler.progress().forEach((holder, progress) -> {
+      final AdvancementNode node = tree.get(holder);
+      if (node != null) {
+        final AdvancementReloadedWidget widget = this.getAdvancementWidget(node);
+        if (widget != null) {
+          widget.setProgress(progress);
+        }
+      }
+    });
+
+    final String storedTabId = Memory.getTabId();
+    final AdvancementReloadedTab storedTab = storedTabId == null ? null : this.tabs.values().stream()
+        .filter(tab -> tab.getRoot().holder().id().toString().equals(storedTabId))
+        .findFirst()
+        .orElse(null);
+    final AdvancementReloadedTab tabToSelect = storedTab != null ? storedTab : this.tabs.get(selectedRoot);
+    if (tabToSelect != null) {
+      this.setSelectedTab(tabToSelect);
+      if (!tabToSelect.getRoot().holder().equals(selectedRoot)) {
+        this.advancementHandler.setSelectedTab(tabToSelect.getRoot().holder(), true);
+      }
+      if (storedTab != null) {
+        Memory.clearTabId();
+      }
+    } else {
+      this.setSelectedTab(Optional.empty());
+    }
   }
 
   /**

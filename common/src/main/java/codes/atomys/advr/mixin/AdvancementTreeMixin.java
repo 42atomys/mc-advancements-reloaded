@@ -1,10 +1,8 @@
 package codes.atomys.advr.mixin;
 
 import codes.atomys.advr.AdvancementTreePositioning;
-import java.util.Set;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementTree;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,11 +22,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * </p>
  */
 @Mixin(AdvancementTree.class)
-public class AdvancementTreeMixin {
+public abstract class AdvancementTreeMixin {
 
+  /**
+   * Returns the root advancement nodes in the tree.
+   *
+   * @return the root advancement nodes
+   */
   @Shadow
-  @Final
-  private Set<AdvancementNode> roots;
+  public abstract Iterable<AdvancementNode> roots();
 
   /**
    * Recalculates tree positions after a root advancement is inserted.
@@ -45,7 +47,7 @@ public class AdvancementTreeMixin {
     // Only recalculate if insertion was successful and it's a root advancement
     if (cir.getReturnValue() && advancement.value().parent().isEmpty()) {
       // Find the newly added root node
-      for (final AdvancementNode root : this.roots) {
+      for (final AdvancementNode root : this.roots()) {
         if (root.holder().equals(advancement) && root.advancement().display().isPresent()) {
           // Force recalculation of tree positions using our custom algorithm
           AdvancementTreePositioning.run(root);

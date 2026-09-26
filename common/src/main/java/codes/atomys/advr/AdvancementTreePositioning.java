@@ -110,7 +110,7 @@ public class AdvancementTreePositioning {
       case ALPHABETIC:
         children.sort(Comparator.comparing(
             child -> child.advancement().display()
-                .map(display -> display.getTitle().getString())
+                .map(display -> display.title().getString())
                 .orElse(""),
             String.CASE_INSENSITIVE_ORDER));
         break;
@@ -140,10 +140,10 @@ public class AdvancementTreePositioning {
 
           // Neither in configured order - sort alphabetically
           final String title1 = node1.advancement().display()
-              .map(display -> display.getTitle().getString())
+              .map(display -> display.title().getString())
               .orElse("");
           final String title2 = node2.advancement().display()
-              .map(display -> display.getTitle().getString())
+              .map(display -> display.title().getString())
               .orElse("");
           return title1.compareToIgnoreCase(title2);
         });
@@ -394,11 +394,10 @@ public class AdvancementTreePositioning {
 
   /**
    * Finalizes the position by writing the calculated X and Y coordinates
-   * to the advancement's display info.
+   * to the advancement node.
    */
   private void finalizePosition() {
-    this.node.advancement().display().ifPresent(displayInfo ->
-        displayInfo.setLocation(this.x, this.y));
+    this.node.setLocation(this.x, this.y);
 
     if (!this.children.isEmpty()) {
       for (final AdvancementTreePositioning child : this.children) {

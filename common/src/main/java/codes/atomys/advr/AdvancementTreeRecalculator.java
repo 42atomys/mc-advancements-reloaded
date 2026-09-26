@@ -40,7 +40,7 @@ public final class AdvancementTreeRecalculator {
     Utils.LOGGER.info("Recalculating all advancement tree positions due to configuration change");
 
     // Recalculate position for each root advancement
-    for (final AdvancementNode root : advancements.getTree().roots()) {
+    for (final AdvancementNode root : advancements.tree().roots()) {
       if (root.advancement().display().isPresent()) {
         AdvancementTreePositioning.run(root);
       }

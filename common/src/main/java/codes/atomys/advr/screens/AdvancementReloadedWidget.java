@@ -6,7 +6,7 @@ import codes.atomys.advr.config.Configuration;
 import codes.atomys.advr.utils.TextUtils;
 import codes.atomys.advr.utils.Utils;
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -98,14 +98,14 @@ public class AdvancementReloadedWidget {
     this.advancement = advancement;
     this.display = display;
     this.client = client;
-    this.title = Language.getInstance().getVisualOrder(client.font.substrByWidth(display.getTitle(), 163));
-    this.x = Mth.floor(display.getX() * 28.0F);
-    this.y = Mth.floor(display.getY() * 27.0F);
+    this.title = Language.getInstance().getVisualOrder(client.font.substrByWidth(display.title(), 163));
+    this.x = Mth.floor(advancement.x() * 28.0F);
+    this.y = Mth.floor(advancement.y() * 27.0F);
     final int i = this.getProgressWidth();
     int j = 29 + client.font.width(this.title) + i;
     this.description = Language.getInstance()
-        .getVisualOrder(this.wrapDescription(ComponentUtils.mergeStyles(display.getDescription().copy(),
-            Style.EMPTY.withColor(display.getType().getChatColor())), j));
+        .getVisualOrder(this.wrapDescription(ComponentUtils.mergeStyles(display.description().copy(),
+            Style.EMPTY.withColor(display.type().getChatColor())), j));
 
     for (final FormattedCharSequence orderedText : this.description) {
       j = Math.max(j, client.font.width(orderedText));
@@ -274,7 +274,7 @@ public class AdvancementReloadedWidget {
 
     final String searchLower = search.toLowerCase();
     // Pass by display getTitle getString to have the translated string
-    if (TextUtils.toString(this.display.getTitle()).toLowerCase()
+    if (TextUtils.toString(this.display.title()).toLowerCase()
         .contains(searchLower)) {
       return true;
     }
@@ -340,7 +340,7 @@ public class AdvancementReloadedWidget {
    * @param y       the y-coordinate of the widget
    */
   public void renderWidgets(final GuiGraphicsExtractor context, final int x, final int y) {
-    if (!this.display.isHidden() || (this.progress != null && this.progress.isDone())) {
+    if (!this.display.hidden() || (this.progress != null && this.progress.isDone())) {
       final ReloadedWidgetType widgetType;
       final float currentProgress = (this.progress == null) ? 0.0F : this.progress.getPercent();
       if (currentProgress >= 1.0F) {
@@ -350,15 +350,15 @@ public class AdvancementReloadedWidget {
       }
 
       final boolean isDimmed = !this.isSearchQueryMatched();
-      final Identifier backgroundResource = widgetType.frameSprite(this.display.getType(), isDimmed);
+      final Identifier backgroundResource = widgetType.frameSprite(this.display.type(), isDimmed);
 
       context.blitSprite(this.renderTypeGui, backgroundResource, x + this.x + 3, y + this.y, 26, 26);
 
-      context.fakeItem(this.display.getIcon().create(), x + this.x + 8, y + this.y + 5);
+      context.fakeItem(this.display.icon().create(), x + this.x + 8, y + this.y + 5);
 
       if (isDimmed) {
         // Force the dimmed sprite to be rendered with a lower alpha
-        final Identifier dimmedResource = widgetType.frameSprite(this.display.getType(), true);
+        final Identifier dimmedResource = widgetType.frameSprite(this.display.type(), true);
         context.blitSprite(this.renderTypeGui, dimmedResource, x + this.x + 3, y + this.y, 26, 26, 0.6f);
       }
     }
@@ -514,7 +514,7 @@ public class AdvancementReloadedWidget {
     context.blitSprite(this.renderTypeGui, advancementObtainedStatus2.boxSprite(isDimmed), 200, 26, 200 - k, 0,
         m + j, l, k,
         26);
-    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.getType(), isDimmed),
+    context.blitSprite(this.renderTypeGui, advancementObtainedStatus3.frameSprite(this.display.type(), isDimmed),
         originX + this.x + 3,
         originY + this.y, 26, 26);
     if (bl) {
@@ -540,7 +540,7 @@ public class AdvancementReloadedWidget {
             -5592406, false);
       }
     }
-    context.fakeItem(this.display.getIcon().create(), originX + this.x + 8, originY + this.y + 5);
+    context.fakeItem(this.display.icon().create(), originX + this.x + 8, originY + this.y + 5);
   }
 
   /**
@@ -558,7 +558,7 @@ public class AdvancementReloadedWidget {
    *         otherwise
    */
   public boolean shouldRender(final int originX, final int originY, final int mouseX, final int mouseY) {
-    if (this.display.isHidden() && (this.progress == null || !this.progress.isDone()))
+    if (this.display.hidden() && (this.progress == null || !this.progress.isDone()))
       return false;
 
     return this.isMouseOn(originX, originY, mouseX, mouseY);

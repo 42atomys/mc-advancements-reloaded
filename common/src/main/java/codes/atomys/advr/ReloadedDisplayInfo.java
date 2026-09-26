@@ -8,15 +8,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStackTemplate;
 
 /**
- * The ReloadedDisplayInfo class extends DisplayInfo and provides additional
+ * The ReloadedDisplayInfo class wraps DisplayInfo and provides additional
  * functionality for managing display information in the advancement tab GUI.
- * It includes coordinates for the icon's position and methods to create
- * instances from existing DisplayInfo objects.
  *
  * @see DisplayInfo
  */
-public class ReloadedDisplayInfo extends DisplayInfo {
+public class ReloadedDisplayInfo {
 
+  private final DisplayInfo displayInfo;
   private float x;
   private float y;
 
@@ -38,25 +37,107 @@ public class ReloadedDisplayInfo extends DisplayInfo {
       final Optional<ClientAsset.ResourceTexture> background, final AdvancementType type, final boolean showToast,
       final boolean announceChat,
       final boolean hidden) {
-    super(icon, title, description, background, type, showToast, announceChat, hidden);
+    this(new DisplayInfo(icon, title, description, background, type, showToast, announceChat, hidden));
   }
 
   /**
-   * Creates a new ReloadedDisplayInfo with the same properties as the given
-   * DisplayInfo. This is used to copy the properties of an existing DisplayInfo
-   * and turn it into a ReloadedDisplayInfo.
+   * Wraps an existing DisplayInfo.
+   *
+   * @param displayInfo The display information to wrap.
+   */
+  public ReloadedDisplayInfo(final DisplayInfo displayInfo) {
+    this.displayInfo = displayInfo;
+  }
+
+  /**
+   * Wraps the given DisplayInfo in a ReloadedDisplayInfo.
    *
    * @param display The DisplayInfo to copy.
    * @return The new ReloadedDisplayInfo.
    */
   public static ReloadedDisplayInfo cast(final DisplayInfo display) {
-    final ReloadedDisplayInfo ard = new ReloadedDisplayInfo(display.getIcon(), display.getTitle(),
-        display.getDescription(), display.getBackground(), display.getType(), display.shouldShowToast(),
-        display.shouldAnnounceChat(), display.isHidden());
-    ard.x = display.getX();
-    ard.y = display.getY();
+    return new ReloadedDisplayInfo(display);
+  }
 
-    return ard;
+  /**
+   * Returns the wrapped display information.
+   *
+   * @return the wrapped display information
+   */
+  public DisplayInfo getDisplayInfo() {
+    return this.displayInfo;
+  }
+
+  /**
+   * Returns the advancement icon.
+   *
+   * @return the icon
+   */
+  public ItemStackTemplate icon() {
+    return this.displayInfo.icon();
+  }
+
+  /**
+   * Returns the advancement title.
+   *
+   * @return the title
+   */
+  public Component title() {
+    return this.displayInfo.title();
+  }
+
+  /**
+   * Returns the advancement description.
+   *
+   * @return the description
+   */
+  public Component description() {
+    return this.displayInfo.description();
+  }
+
+  /**
+   * Returns the optional advancement background texture.
+   *
+   * @return the optional background texture
+   */
+  public Optional<ClientAsset.ResourceTexture> background() {
+    return this.displayInfo.background();
+  }
+
+  /**
+   * Returns the advancement frame type.
+   *
+   * @return the frame type
+   */
+  public AdvancementType type() {
+    return this.displayInfo.type();
+  }
+
+  /**
+   * Returns whether completing the advancement should show a toast.
+   *
+   * @return {@code true} if a toast should be shown
+   */
+  public boolean showToast() {
+    return this.displayInfo.showToast();
+  }
+
+  /**
+   * Returns whether completing the advancement should be announced in chat.
+   *
+   * @return {@code true} if the completion should be announced in chat
+   */
+  public boolean announceToChat() {
+    return this.displayInfo.announceToChat();
+  }
+
+  /**
+   * Returns whether the advancement is hidden.
+   *
+   * @return {@code true} if the advancement is hidden
+   */
+  public boolean hidden() {
+    return this.displayInfo.hidden();
   }
 
   /**

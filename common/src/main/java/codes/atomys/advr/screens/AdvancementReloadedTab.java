@@ -5,7 +5,7 @@ import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
@@ -102,9 +102,9 @@ public class AdvancementReloadedTab {
     this.index = index;
     this.root = root;
     this.display = display;
-    this.icon = display.getIcon();
-    this.title = display.getTitle();
-    this.rootWidget = new AdvancementReloadedWidget(this, client, root, display);
+    this.icon = display.icon();
+    this.title = display.title();
+    this.rootWidget = new AdvancementReloadedWidget(this, client, root, display.getDisplayInfo());
     this.addWidget(this.rootWidget, root.holder());
   }
 
@@ -552,7 +552,7 @@ public class AdvancementReloadedTab {
     final Optional<DisplayInfo> optional = advancement.advancement().display();
     if (optional.isPresent()) {
       final AdvancementReloadedWidget advancementWidget = new AdvancementReloadedWidget(this, this.client, advancement,
-          ReloadedDisplayInfo.cast(optional.get()));
+          ReloadedDisplayInfo.cast(optional.get()).getDisplayInfo());
       this.addWidget(advancementWidget, advancement.holder());
     }
   }
