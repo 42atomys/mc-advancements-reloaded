@@ -787,7 +787,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   public void renderWindow(final GuiGraphicsExtractor context, final int x, int y) {
 
     if (this.selectedTab.isPresent()) {
-      final DisplayInfo display = this.selectedTab.get().getDisplay().getDisplayInfo();
+      final DisplayInfo display = this.selectedTab.get().getDisplay();
       final Identifier textureResourceLocation = display.background()
           .map(ClientAsset.ResourceTexture::texturePath).orElse(MissingTextureAtlasSprite.getLocation());
 

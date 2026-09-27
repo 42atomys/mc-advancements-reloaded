@@ -387,7 +387,7 @@ public class AdvancementReloadedWidget {
    * @param progress the progress to set
    */
   public void setProgress(final AdvancementProgress progress) {
-    if(this.progress == progress) return;
+    if (this.progress == progress) return;
     this.progress = progress;
     this.setSteps(progress);
   }

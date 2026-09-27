@@ -1,6 +1,5 @@
 package codes.atomys.advr.screens;
 
-import codes.atomys.advr.ReloadedDisplayInfo;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
@@ -54,13 +53,13 @@ import org.jetbrains.annotations.Nullable;
  * @see AdvancementReloadedWidget
  * @see TabPlacement
  * @see AdvancementNode
- * @see ReloadedDisplayInfo
+ * @see DisplayInfo
  */
 public class AdvancementReloadedTab {
   private final Minecraft client;
   private final AdvancementReloadedScreen screen;
   private final AdvancementNode root;
-  private final ReloadedDisplayInfo display;
+  private final DisplayInfo display;
   private final ItemStackTemplate icon;
   private final Component title;
   private final AdvancementReloadedWidget rootWidget;
@@ -95,7 +94,7 @@ public class AdvancementReloadedTab {
    * @param display the display information for the tab
    */
   public AdvancementReloadedTab(final Minecraft client, final AdvancementReloadedScreen screen,
-      final TabPlacement type, final int index, final AdvancementNode root, final ReloadedDisplayInfo display) {
+      final TabPlacement type, final int index, final AdvancementNode root, final DisplayInfo display) {
     this.client = client;
     this.screen = screen;
     this.tabPlacement = type;
@@ -104,7 +103,7 @@ public class AdvancementReloadedTab {
     this.display = display;
     this.icon = display.icon();
     this.title = display.title();
-    this.rootWidget = new AdvancementReloadedWidget(this, client, root, display.getDisplayInfo());
+    this.rootWidget = new AdvancementReloadedWidget(this, client, root, display);
     this.addWidget(this.rootWidget, root.holder());
   }
 
@@ -183,7 +182,7 @@ public class AdvancementReloadedTab {
    *
    * @return the display information of the tab
    */
-  public ReloadedDisplayInfo getDisplay() {
+  public DisplayInfo getDisplay() {
     return this.display;
   }
 
@@ -501,8 +500,7 @@ public class AdvancementReloadedTab {
       for (int i = 0; i < numberOfTypes; ++i) {
         final TabPlacement advancementTabType = types[i];
         if (index < advancementTabType.getTabLimit()) {
-          return new AdvancementReloadedTab(client, screen, advancementTabType, index, root,
-              ReloadedDisplayInfo.cast(optional.get()));
+          return new AdvancementReloadedTab(client, screen, advancementTabType, index, root, optional.get());
         }
 
         index -= advancementTabType.getTabLimit();
@@ -552,7 +550,7 @@ public class AdvancementReloadedTab {
     final Optional<DisplayInfo> optional = advancement.advancement().display();
     if (optional.isPresent()) {
       final AdvancementReloadedWidget advancementWidget = new AdvancementReloadedWidget(this, this.client, advancement,
-          ReloadedDisplayInfo.cast(optional.get()).getDisplayInfo());
+          optional.get());
       this.addWidget(advancementWidget, advancement.holder());
     }
   }
