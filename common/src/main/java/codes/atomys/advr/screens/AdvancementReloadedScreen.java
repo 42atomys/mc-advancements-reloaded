@@ -258,7 +258,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public boolean mouseClicked(final MouseButtonEvent event, final boolean isDoubleClick) {
-    if (event.button() == 1) {
+    if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
       ClickableRegion.foundRegions(this.clickableRegions, event.x(), event.y()).forEach(region -> {
         region.setClicked(true);
       });
@@ -340,7 +340,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    */
   @Override
   public boolean mouseReleased(final MouseButtonEvent event) {
-    if (event.button() == 1) {
+    if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
       ClickableRegion.foundClickedRegions(this.clickableRegions).forEach(region -> {
         region.setClicked(false);
       });
