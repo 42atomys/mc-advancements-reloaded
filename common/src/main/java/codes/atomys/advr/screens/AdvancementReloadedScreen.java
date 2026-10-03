@@ -472,7 +472,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       ScreenCompat.setScreen(this.minecraft, this.parent);
       this.minecraft.mouseHandler.grabMouse();
       return true;
-    } else if (InputConstants.KEY_ESCAPE == event.key()) {
+    } else if (event.isEscape()) {
       if (this.searchBox.isFocused()) {
         // Remove focus from search box before processing Escape
         this.searchBox.setFocused(false);
@@ -996,19 +996,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   }
 
   /**
-   * Called when a dependent of the given root advancement is added.
-   * The given dependent is added to the tab the root is in.
-   *
-   * @param dependent the dependent to add
-   */
-  public void onDependentAdded(final AdvancementNode dependent) {
-    final AdvancementReloadedTab advancementTab = this.getTab(dependent);
-    if (advancementTab != null) {
-      advancementTab.addAdvancement(dependent);
-    }
-  }
-
-  /**
    * Called when the selected tab changes.
    * The given advancement is the selected tab, or null if no tab is selected.
    * The selected tab is set to the given tab.
@@ -1089,14 +1076,6 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
   @Nullable
   public AdvancementReloadedWidget getSelectedWidget() {
     return this.selectedWidget;
-  }
-
-  /**
-   * Clears all tabs and resets the selected tab to none.
-   */
-  public void onClear() {
-    this.tabs.clear();
-    this.selectedTab = Optional.empty();
   }
 
   /**
