@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
@@ -233,6 +234,15 @@ public class AdvancementReloadedWidget {
   }
 
   /**
+   * Gets the holder of the advancement this widget belongs to.
+   *
+   * @return the holder of the advancement this widget belongs to
+   */
+  public AdvancementHolder holder() {
+    return this.advancement.holder();
+  }
+
+  /**
    * Returns the progress of this widget's advancement (vanilla minecraft
    * progress).
    *
@@ -273,7 +283,7 @@ public class AdvancementReloadedWidget {
     }
 
     final String searchLower = search.toLowerCase();
-    // Pass by display getTitle getString to have the translated string
+    // Pass by display title getString to have the translated string
     if (TextUtils.toString(this.display.title()).toLowerCase()
         .contains(searchLower)) {
       return true;

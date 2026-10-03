@@ -19,6 +19,7 @@ import java.util.Optional;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementNode;
+import net.minecraft.advancements.AdvancementTree;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
@@ -1128,17 +1129,24 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
   /**
    * Rebuilds tabs and widgets from the current advancement tree and applies all
-   * known progress after an advancement packet is processed.
+   * known progress after an advancement packet is processed. The rebuilt tabs
+   * keep the panning of the previous ones, and the selected widget is moved to
+   * its rebuilt counterpart so the sidebar shows the new progress.
    */
   @Override
   public void onAdvancementsUpdated() {
     final AdvancementHolder selectedRoot = this.selectedTab.map(tab -> tab.getRoot().holder()).orElse(null);
+    final Map<AdvancementHolder, AdvancementReloadedTab> previousTabs = Map.copyOf(this.tabs);
     this.tabs.clear();
 
     final var tree = this.advancementHandler.tree();
     for (final AdvancementNode root : tree.roots()) {
       final AdvancementReloadedTab tab = AdvancementReloadedTab.create(this.minecraft, this, this.tabs.size(), root);
       if (tab != null) {
+        final AdvancementReloadedTab previousTab = previousTabs.get(root.holder());
+        if (previousTab != null) {
+          tab.copyPosition(previousTab);
+        }
         this.tabs.put(root.holder(), tab);
       }
     }
@@ -1161,6 +1169,11 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       }
     });
 
+    this.refreshSelectedWidget(tree);
+    if (this.isSearching) {
+      this.tabs.values().forEach(AdvancementReloadedTab::updateDoesWidgetMatchSearch);
+    }
+
     final String storedTabId = Memory.getTabId();
     final AdvancementReloadedTab storedTab = storedTabId == null ? null : this.tabs.values().stream()
         .filter(tab -> tab.getRoot().holder().id().toString().equals(storedTabId))
@@ -1177,6 +1190,26 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
       }
     } else {
       this.setSelectedTab(Optional.empty());
+    }
+  }
+
+  /**
+   * Points the selected widget to its rebuilt counterpart, keeping the sidebar
+   * and its scroll position. The selection is cleared if the advancement no
+   * longer exists.
+   *
+   * @param tree the client advancement tree
+   */
+  private void refreshSelectedWidget(final AdvancementTree tree) {
+    if (this.selectedWidget == null) {
+      return;
+    }
+
+    final AdvancementNode node = tree.get(this.selectedWidget.holder().id());
+    this.selectedWidget = node == null ? null : this.getAdvancementWidget(node);
+    Memory.setWidget(this.selectedWidget);
+    if (this.selectedWidget == null) {
+      this.initClickableRegions();
     }
   }
 
