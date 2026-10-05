@@ -16,12 +16,6 @@ description = '''
 Make it easier to see which advancements you have and what's missing.
 '''
 
-[[accessTransformers]]
-file = "META-INF/accesstransformer.cfg"
-
-[[mixins]]
-config = "advancements_reloaded.neoforge.mixins.json"
-
 [[mixins]]
 config = "advancements_reloaded.mixins.json"
 

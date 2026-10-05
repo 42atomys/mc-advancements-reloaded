@@ -1,4 +1,4 @@
-package codes.atomys.advr;
+package codes.atomys.advr.neoforge;
 
 import codes.atomys.advr.config.gui.ConfigurationScreen;
 import net.minecraft.client.gui.screens.Screen;

@@ -1,4 +1,4 @@
-package codes.atomys.advr;
+package codes.atomys.advr.neoforge;
 
 import codes.atomys.advr.config.ModConfigurationFile;
 import codes.atomys.advr.utils.Utils;

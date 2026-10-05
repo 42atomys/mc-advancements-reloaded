@@ -18,6 +18,11 @@ architectury {
 loom {
     neoForge {
         accessWidenerPath = project(":common").loom.accessWidenerPath // Access widener file
+        // Converts the access widener to META-INF/accesstransformer.cfg in the shipped jar, the path NeoForge loads by default
+        // (not declared in neoforge.mods.toml so dev runs, which don't have the file, don't log it as missing)
+        convertAccessWideners(tasks.named("shadowJar")) {
+            accessWideners.add(loom.accessWidenerPath.get().asFile.name)
+        }
     }
     runs {
         client {
@@ -44,6 +49,9 @@ dependencies {
 
     common(project(path: ":common")) { transitive false }
     shadowCommon(project(path: ":common")) { transitive = false }
+
+    // Cloth Config is a mandatory dependency installed by players, only needed to start the dev client
+    localRuntime "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_version}"
 }
 
 processResources {

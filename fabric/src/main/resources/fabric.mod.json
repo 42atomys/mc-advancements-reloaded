@@ -33,7 +33,6 @@
   },
   "accessWidener": "advancements_reloaded.accesswidener",
   "mixins": [
-    "advancements_reloaded.mixins.json",
-    "advancements_reloaded.fabric.mixins.json"
+    "advancements_reloaded.mixins.json"
   ]
 }
