@@ -452,8 +452,8 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
    * </p>
    * <p>
    * If the key is the escape key and there is a visible sidebar, it resets the
-   * screen's state by setting the selected widget to null and calling the
-   * {@link #init()} method.
+   * screen's state by setting the selected widget to null and rebuilding the
+   * screen with {@link #rebuildWidgets()}.
    * </p>
    *
    * @param event the key event containing key code, scan code, and modifiers
@@ -485,7 +485,9 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
         return true;
       } else if (this.hasVisibleSidebar()) {
         this.setSelectedWidget(null);
-        this.init();
+        // Clear the previous widgets before init() adds new ones, calling init()
+        // directly would stack a second search box and settings button
+        this.rebuildWidgets();
         return true;
       }
     }
@@ -829,7 +831,7 @@ public class AdvancementReloadedScreen extends Screen implements ClientAdvanceme
 
       // Draw title on header
       context.centeredText(this.font, display.title(), width / 2,
-          (Configuration.headerHeight - 20) / 2 - this.font.lineHeight / 2, 0xffffff);
+          (Configuration.headerHeight - 20) / 2 - this.font.lineHeight / 2, CommonColors.WHITE);
     }
 
     if (this.tabs.size() > 0) {
