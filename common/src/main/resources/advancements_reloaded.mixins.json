@@ -4,9 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "AdvancementTreeMixin",
+    "ClientAdvancementsMixin",
     "GuiMixin",
-    "MinecraftClientMixin",
     "PauseScreenMixin",
     "TreeNodePositionMixin"
   ]

@@ -12,26 +12,20 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 /**
  * Replaces the vanilla advancements screen with {@link AdvancementReloadedScreen}
- * on Minecraft 26.2+, where keybind handling and screen management moved from
- * {@code Minecraft} to {@link Gui}.
- *
- * <p>
- * On 26.1.x this opening happens in {@code Minecraft.handleKeybinds} and is
- * handled by {@code MinecraftClientMixin} instead; there {@code Gui} has no such
- * call, so this redirect simply matches nothing ({@code require = 0}).
- * </p>
+ * when the player opens the menu with the keybinding, which is handled by
+ * {@link Gui} since Minecraft 26.2.
  */
 @Mixin(Gui.class)
 public class GuiMixin {
 
   /**
    * Redirects the {@code Gui#setScreen(Screen)} call used to open the
-   * advancements screen from the keybinding on Minecraft 26.2+.
+   * advancements screen from the keybinding.
    *
    * @param instance the Gui instance opening the screen
    * @param screen   the screen Minecraft was about to open
    */
-  @Redirect(method = "handleKeybinds", require = 0, at = @At(value = "INVOKE",
+  @Redirect(method = "handleKeybinds", at = @At(value = "INVOKE",
       target = "Lnet/minecraft/client/gui/Gui;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
   private void replaceAdvancementsScreen(final Gui instance, final Screen screen) {
     if (screen instanceof AdvancementsScreen) {

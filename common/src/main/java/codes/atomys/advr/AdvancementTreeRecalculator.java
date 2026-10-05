@@ -2,6 +2,7 @@ package codes.atomys.advr;
 
 import codes.atomys.advr.utils.Utils;
 import net.minecraft.advancements.AdvancementNode;
+import net.minecraft.advancements.AdvancementTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientAdvancements;
 
@@ -39,13 +40,22 @@ public final class AdvancementTreeRecalculator {
 
     Utils.LOGGER.info("Recalculating all advancement tree positions due to configuration change");
 
-    // Recalculate position for each root advancement
-    for (final AdvancementNode root : advancements.tree().roots()) {
+    recalculate(advancements.tree());
+
+    Utils.LOGGER.info("Advancement tree positions recalculated");
+  }
+
+  /**
+   * Recalculates the position of every visible root of the given tree, and of
+   * their children, using the current configuration.
+   *
+   * @param tree the advancement tree to reposition
+   */
+  public static void recalculate(final AdvancementTree tree) {
+    for (final AdvancementNode root : tree.roots()) {
       if (root.advancement().display().isPresent()) {
         AdvancementTreePositioning.run(root);
       }
     }
-
-    Utils.LOGGER.info("Advancement tree positions recalculated");
   }
 }

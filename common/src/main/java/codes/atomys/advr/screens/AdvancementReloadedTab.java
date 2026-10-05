@@ -537,6 +537,21 @@ public class AdvancementReloadedTab {
   }
 
   /**
+   * Copies the panning state of another tab into this tab.
+   * <p>
+   * Used when the tabs are rebuilt after an advancement update, so the tree
+   * keeps its current position instead of being re-centered.
+   * </p>
+   *
+   * @param other the tab to copy the panning state from
+   */
+  public void copyPosition(final AdvancementReloadedTab other) {
+    this.originX = other.originX;
+    this.originY = other.originY;
+    this.initialized = other.initialized;
+  }
+
+  /**
    * Adds a new advancement to the tab.
    * <p>
    * This method first checks if the given advancement node has a display, and
