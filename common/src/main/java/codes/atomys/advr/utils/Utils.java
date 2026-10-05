@@ -1,6 +1,6 @@
 package codes.atomys.advr.utils;
 
-import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -22,7 +22,7 @@ public final class Utils {
   public static final Logger LOGGER = LoggerFactory.getLogger("AdvancementsReloaded");
 
   public static final ClientAsset.ResourceTexture INTENTIONAL_MISSING_TEXTURE = new ClientAsset.ResourceTexture(
-      TextureManager.INTENTIONAL_MISSING_TEXTURE);
+      MissingTextureAtlasSprite.getLocation());
 
   private static String modVersion;
 

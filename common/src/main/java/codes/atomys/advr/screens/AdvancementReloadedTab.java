@@ -1,11 +1,10 @@
 package codes.atomys.advr.screens;
 
-import codes.atomys.advr.ReloadedDisplayInfo;
 import codes.atomys.advr.ReloadedWidgetType;
 import codes.atomys.advr.TabPlacement;
 import codes.atomys.advr.config.Configuration;
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
@@ -54,13 +53,13 @@ import org.jetbrains.annotations.Nullable;
  * @see AdvancementReloadedWidget
  * @see TabPlacement
  * @see AdvancementNode
- * @see ReloadedDisplayInfo
+ * @see DisplayInfo
  */
 public class AdvancementReloadedTab {
   private final Minecraft client;
   private final AdvancementReloadedScreen screen;
   private final AdvancementNode root;
-  private final ReloadedDisplayInfo display;
+  private final DisplayInfo display;
   private final ItemStackTemplate icon;
   private final Component title;
   private final AdvancementReloadedWidget rootWidget;
@@ -95,15 +94,15 @@ public class AdvancementReloadedTab {
    * @param display the display information for the tab
    */
   public AdvancementReloadedTab(final Minecraft client, final AdvancementReloadedScreen screen,
-      final TabPlacement type, final int index, final AdvancementNode root, final ReloadedDisplayInfo display) {
+      final TabPlacement type, final int index, final AdvancementNode root, final DisplayInfo display) {
     this.client = client;
     this.screen = screen;
     this.tabPlacement = type;
     this.index = index;
     this.root = root;
     this.display = display;
-    this.icon = display.getIcon();
-    this.title = display.getTitle();
+    this.icon = display.icon();
+    this.title = display.title();
     this.rootWidget = new AdvancementReloadedWidget(this, client, root, display);
     this.addWidget(this.rootWidget, root.holder());
   }
@@ -183,7 +182,7 @@ public class AdvancementReloadedTab {
    *
    * @return the display information of the tab
    */
-  public ReloadedDisplayInfo getDisplay() {
+  public DisplayInfo getDisplay() {
     return this.display;
   }
 
@@ -501,8 +500,7 @@ public class AdvancementReloadedTab {
       for (int i = 0; i < numberOfTypes; ++i) {
         final TabPlacement advancementTabType = types[i];
         if (index < advancementTabType.getTabLimit()) {
-          return new AdvancementReloadedTab(client, screen, advancementTabType, index, root,
-              ReloadedDisplayInfo.cast(optional.get()));
+          return new AdvancementReloadedTab(client, screen, advancementTabType, index, root, optional.get());
         }
 
         index -= advancementTabType.getTabLimit();
@@ -539,6 +537,21 @@ public class AdvancementReloadedTab {
   }
 
   /**
+   * Copies the panning state of another tab into this tab.
+   * <p>
+   * Used when the tabs are rebuilt after an advancement update, so the tree
+   * keeps its current position instead of being re-centered.
+   * </p>
+   *
+   * @param other the tab to copy the panning state from
+   */
+  public void copyPosition(final AdvancementReloadedTab other) {
+    this.originX = other.originX;
+    this.originY = other.originY;
+    this.initialized = other.initialized;
+  }
+
+  /**
    * Adds a new advancement to the tab.
    * <p>
    * This method first checks if the given advancement node has a display, and
@@ -552,7 +565,7 @@ public class AdvancementReloadedTab {
     final Optional<DisplayInfo> optional = advancement.advancement().display();
     if (optional.isPresent()) {
       final AdvancementReloadedWidget advancementWidget = new AdvancementReloadedWidget(this, this.client, advancement,
-          ReloadedDisplayInfo.cast(optional.get()));
+          optional.get());
       this.addWidget(advancementWidget, advancement.holder());
     }
   }

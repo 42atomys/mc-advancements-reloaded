@@ -59,6 +59,7 @@ dependencies {
 processResources {
     // Replaces the version in mods.toml with the project version
     inputs.property "version", project.version
+    from project(":common").file("src/main/resources/advancements_reloaded.accesswidener")
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version

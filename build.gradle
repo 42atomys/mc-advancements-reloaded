@@ -2,8 +2,8 @@ import java.text.SimpleDateFormat
 
 plugins {
     id "architectury-plugin" version "3.5-SNAPSHOT" // Uses Architectury plugin https://github.com/architectury/architectury-plugin
-    id "dev.architectury.loom" version "1.14-SNAPSHOT" apply false // Uses Architectury Loom
-    id "dev.architectury.loom-no-remap" version "1.14-SNAPSHOT" apply false // No-remap variant for unobfuscated MC 26.x+
+    id "dev.architectury.loom" version "1.17-SNAPSHOT" apply false // Uses Architectury Loom
+    id "dev.architectury.loom-no-remap" version "1.17-SNAPSHOT" apply false // No-remap variant for unobfuscated MC 26.x+
     // (fork of Fabric Loom) https://github.com/architectury/architectury-loom - does not apply to root project
     id "net.kyori.indra" version "3.1.3" // Uses Indra plugin
     id "net.kyori.indra.git" version "3.1.3" // Uses Indra Git plugin
