@@ -72,13 +72,13 @@ public class AdvancementTreePositioning {
 
     // Debug logging for CONFIGURED_ORDER mode
     if (Configuration.advancementsOrder == Configuration.AdvancementOrder.CONFIGURED_ORDER
-        && !sortedChildren.isEmpty()) {
-      Utils.LOGGER.info("Sorting children of: " + node.holder().id());
+        && !sortedChildren.isEmpty() && Utils.LOGGER.isDebugEnabled()) {
+      Utils.LOGGER.debug("Sorting children of: {}", node.holder().id());
       for (int i = 0; i < sortedChildren.size(); i++) {
         final AdvancementNode child = sortedChildren.get(i);
         final String childId = child.holder().id().toString();
         final int configPos = Configuration.customAdvancementsOrder.indexOf(childId);
-        Utils.LOGGER.info("  [" + i + "] " + childId + " (config position: " + configPos + ")");
+        Utils.LOGGER.debug("  [{}] {} (config position: {})", i, childId, configPos);
       }
     }
 
